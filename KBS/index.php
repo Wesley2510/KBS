@@ -12,6 +12,7 @@ and open the template in the editor.
     <body>
         <?php
         // Dit is een echte comment
+        $variabele="En dit is een echte variabele";
     ?>
     </body>
 </html>
