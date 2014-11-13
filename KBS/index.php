@@ -10,7 +10,8 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php
+        <?php mfpSV;
+        kaNgwaNVGaP
         ?>
     </body>
 </html>
