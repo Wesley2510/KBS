@@ -1,0 +1,30 @@
+/*
+Wesley Oosterveen
+Studentnummer: s1084668
+klas: ICTM1K
+collegejaar: 2014-2015
+
+ 
+    Created on : 12-nov-2014, 14:35:28
+    Author     : Wesley
+*/
+
+body {
+    background-color: lightgrey;
+}
+aside {
+    display: block;
+    background: grey;
+    max-width: 10%;
+    text-align: center;
+}
+.contactgegevens{
+    text-align: center;
+    
+}
+.blok{
+    text-align: center;
+    margin: 4% 10% 10%;
+    
+   
+}
