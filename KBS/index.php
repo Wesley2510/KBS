@@ -11,10 +11,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        mfpSV;
-        kaNgwaNVGaP
-        k
-        test
-        ?>
+        // Dit is een echte comment
+    ?>
     </body>
 </html>
