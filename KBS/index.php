@@ -5,15 +5,16 @@
         <meta charset="UTF-8">
         <title>TextBug - Frontpage</title>
     </head>
-    <body>
+    <body class="background">
+        <h1 class="titel"> TextBug vertalingen </h1>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-        <aside>
-            <a href="contactformulier.php"><h4>contact formulier</h4></a>
-            <a href="achtergrondInformatie.php"><h4>Achtergrond informatie</h4></a>
-            <a href="klantenLogin.php"><h4>Klanten login</h4></a>
-            <a href="beheerLogin.php"><h4>Beheer login</h4></a>
-
-        </aside>
+        <ul>
+            <li><a href="contactformulier.php"><h4 class="linkText">contact formulier</h4></a></li>
+            <li><a href="achtergrondInformatie.php"><h4>Achtergrond informatie</h4></a></li>
+            <li><a href="klantenLogin.php"><h4>Klanten login</h4></a></li>
+            <li><a href="beheerLogin.php"><h4>Beheer login</h4></a></li>
+        </ul>
         <?php
         ?>
     </body>
