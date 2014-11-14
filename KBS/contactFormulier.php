@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <!--
 Wesley Oosterveen
-Studentnummer: s1084668
-klas: ICTM1K
-collegejaar: 2014-2015
 -->
 <html>
     <head>
