@@ -1,0 +1,43 @@
+/*
+Wesley Oosterveen
+
+*/
+.titel{
+    text-align: center;
+    font-style: italic;
+    
+
+}
+/*aside {
+    display: block;
+    background: highlight   ;
+    max-width: 10%;
+    margin:10px;
+    text-align: center;
+
+}*/
+
+/*list-style-type: none; haalt de bolletjes voor de list weg.*/
+ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+/*a:link is de normale link, a:visited is de bezochte link*/
+a:link , a:visited { 
+    display: block;
+    background: darkgray;
+    width: 120px;
+    text-align: center;  
+    color: white;
+    text-decoration: none;
+    padding: 4px;
+    font-size: small;
+}
+/*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
+a:hover, a:active {
+    background-color: black;
+}
+ 
