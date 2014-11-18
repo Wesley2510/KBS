@@ -18,24 +18,33 @@ ul{
     margin: 0px;
     padding: 0px;
     overflow: hidden;
-    
     border-style: ridge;
+    border-bottom-color: blue;
+    background-color: black;
     
+}
+.lastAlignRight li:last-child{
+    float:right;
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
 a:link , a:visited{ 
     display: block;
-    background: white;
+    background: black;
     width: 120px;
     text-align: center;  
-    color: black;
+    color: white;
     text-decoration: none;
-    padding: 4px;
+    padding: 5px;
     font-size: small;
+    
 }
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 a:hover, a:active {
-    background-color: antiquewhite;
+    background-color:Blue;
+    border: 1px;
+    border-style: solid;
+    border-color: blue;
+   
 }
  
