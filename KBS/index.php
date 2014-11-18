@@ -14,6 +14,7 @@
             <li><a href="achtergrondInformatie.php"><h4>Achtergrond info</h4></a></li>
             <li><a href="klantenLogin.php"><h4>Klanten login</h4></a></li>
             <li><a href="beheerLogin.php"><h4>Beheer login</h4></a></li>
+            <li><a href="Contactgegevens.php"><h4>Contactgegevens</h4></a></li>
         </ul>
         <?php
         ?>
