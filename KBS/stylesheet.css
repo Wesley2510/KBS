@@ -8,36 +8,34 @@ Wesley Oosterveen
     
 
 }
-/*aside {
-    display: block;
-    background: highlight   ;
-    max-width: 10%;
-    margin:10px;
-    text-align: center;
-
-}*/
+li{
+    float:left;
+}
 
 /*list-style-type: none; haalt de bolletjes voor de list weg.*/
 ul{
     list-style-type: none;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
+    
+    border-style: ridge;
     
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
-a:link , a:visited { 
+a:link , a:visited{ 
     display: block;
-    background: darkgray;
+    background: white;
     width: 120px;
     text-align: center;  
-    color: white;
+    color: black;
     text-decoration: none;
     padding: 4px;
     font-size: small;
 }
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 a:hover, a:active {
-    background-color: black;
+    background-color: antiquewhite;
 }
  
