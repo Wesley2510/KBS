@@ -10,14 +10,20 @@ body{
 
 
 h5#title{
+    margin:0.2cm;
     text-align: center;
-    padding-right: 2cm;   
-
+    padding-right: 1.5cm;   
+    font-size: 0.5cm; 
+    font-weight: bold ;
+    font-family: Arial;
 }
 li{
     float:left;
-    height: auto;
-    
+    margin: 0px;
+    border:0px;
+    padding:0px;
+    height:  0.2cm;
+   
 }
 
 /*list-style-type: none; haalt de bolletjes voor de list weg.*/
@@ -42,7 +48,7 @@ a:link , a:visited{
     width: 120px;
     text-align: center;  
     text-decoration: none;
-    padding: 5px;
+    padding: 0px 5px 5px 5px;
     font-size: small;
     color:black;
 }
