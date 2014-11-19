@@ -29,7 +29,7 @@ h5#title{
     margin: 0px;
     border:0px;
     padding:0px;
-    height:  0.2cm;
+    height: 0.2cm;
    
 }
 
@@ -45,8 +45,10 @@ h5#title{
     width: 100%;
     background-color: white;
 }
-.lastAlignRight li:last-child{
-    float:right;
+
+#headerbar li:last-of-type{
+    position: absolute;
+    right: 0px;
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
