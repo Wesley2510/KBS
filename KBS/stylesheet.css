@@ -75,14 +75,14 @@ a:hover, a:active {
     margin-left: auto;
     margin-right: auto;
     
-    // margin-top zorgt hier dat het eerste element niet bovenaan onder de menubar blijft
+    /* margin-top zorgt hier dat het eerste element niet bovenaan onder de menubar blijft */
     margin-top: 2cm;
 }
 
-// Maakt de margin-top in .pageElement ongedaan.
+/* Maakt de margin-top in .pageElement ongedaan.
 // Dit is gedaan omdat niet alle elementen 2cm van elkaar moeten staan.
 // (de ~ operator heeft als effect dat deze style op een element B wordt toegepast als het element A volgt (A ~ B),
-// in dit geval elke .pageElement die een .pageElement volgt en het effectief alleen niet op de eerste toegepast wordt)
+// in dit geval elke .pageElement die een .pageElement volgt en het effectief alleen niet op de eerste toegepast wordt) */
 .pageElement ~ .pageElement {
     margin-top: 0.3cm;
 }
