@@ -11,7 +11,6 @@ body{
 
 h5#title{
     margin:0.2cm;
-    text-align: center;
     padding-right: 1.5cm;   
     font-size: 0.5cm; 
     font-weight: bold ;
@@ -19,34 +18,26 @@ h5#title{
 }
 
 #headerbar {
-     position: fixed !important;
+    display: flex;
+    flex-direction: row;
+     position: fixed;
     width: 100%;
-    top: 0px;
-}
-
-#headerbar li{
-    float:left;
-    margin: 0px;
-    border:0px;
-    padding:0px;
-    height: 0.2cm;
-   
-}
-
-/*list-style-type: none; haalt de bolletjes voor de list weg.*/
-#headerbar ul{
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
-    border-bottom-style: solid;
-    border-bottom-color: grey;
     height: 1.5cm;
-    width: 100%;
-    background-color: white;
+    top: 0px;
+    
+     background-color: white;
+     border-bottom: 2px solid grey;
 }
 
-#headerbar li:last-of-type{
+#headerbar section{
+    flex: 0 1 auto;
+    align-self: flex-start;
+    height: 100%;
+    border: 0px;
+    width: 4cm;
+}
+
+#headerbar section:last-of-type{
     position: absolute;
     right: 0px;
 }
@@ -54,23 +45,18 @@ h5#title{
 /*a:link is de normale link, a:visited is de bezochte link*/
 #headerbar a:link , a:visited{ 
     display: block;
-    width: 120px;
     text-align: center;  
     text-decoration: none;
     padding: 0px 5px 5px 5px;
     font-size: small;
+     background-color: white;
     color:black;
 }
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 #headerbar a:hover, a:active {
-    background-color:lightgrey;
-    border: 1px;
-    color:black;
-    border-style: double;
-    border-color: gray;
-    height:1cm;
-   
+    background-color: lightgrey;
+    color: black;
 }
 
 .pageElement {
