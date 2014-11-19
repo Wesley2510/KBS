@@ -9,9 +9,8 @@
 
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-
-        <div>
-            <ul class='lastAlignRight'>
+        <div id="headerbar">
+            <ul class="lastAlignRight">
                 <li><h5>TextBug</h5></li>
                 <li><a href="ontactformulier.php"><h4>Contactformulier</h4></a></li>
                 <li><a href="achtergrondInformatie.php"><h4>Achtergrondinfo</h4></a></li>
