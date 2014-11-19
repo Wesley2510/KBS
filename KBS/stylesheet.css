@@ -17,7 +17,14 @@ h5#title{
     font-weight: bold ;
     font-family: Arial;
 }
-li{
+
+#headerbar {
+     position: fixed !important;
+    width: 100%;
+    top: 0px;
+}
+
+#headerbar li{
     float:left;
     margin: 0px;
     border:0px;
@@ -26,14 +33,8 @@ li{
    
 }
 
-#headerbar {
-     position: fixed !important;
-    width: 100%;
-    top: 0px;
-}
-
 /*list-style-type: none; haalt de bolletjes voor de list weg.*/
-ul{
+#headerbar ul{
     list-style-type: none;
     margin: 0px;
     padding: 0px;
@@ -49,7 +50,7 @@ ul{
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
-a:link , a:visited{ 
+#headerbar a:link , a:visited{ 
     display: block;
     width: 120px;
     text-align: center;  
@@ -60,7 +61,7 @@ a:link , a:visited{
 }
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
-a:hover, a:active {
+#headerbar a:hover, a:active {
     background-color:lightgrey;
     border: 1px;
     color:black;

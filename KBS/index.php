@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-        <div id="headerbar">
+        <nav id="headerbar">
             <ul class="lastAlignRight">
                 <li><h5>TextBug</h5></li>
                 <li><a href="ontactformulier.php"><h4>Contactformulier</h4></a></li>
@@ -17,7 +17,7 @@
                 <li><a href="Contactgegevens.php"><h4>Contactgegevens</h4></a></li>
                 <li><a href="Login.php"><h4>Login</h4></a></li>
             </ul>
-        </div>
+        </nav>
         
         <div class="pageElement">
             <h2>Lorem ipsum dolor sit amet,</h2>
