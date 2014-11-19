@@ -2,14 +2,28 @@
 Wesley Oosterveen
 Lewis Clement
 */
-.titel{
-    text-align: center;
-    font-style: italic;
-    
 
+body{
+    background-color: white;
+    margin:0px;
+}
+
+
+h5#title{
+    margin:0.2cm;
+    text-align: center;
+    padding-right: 1.5cm;   
+    font-size: 0.5cm; 
+    font-weight: bold ;
+    font-family: Arial;
 }
 li{
     float:left;
+    margin: 0px;
+    border:0px;
+    padding:0px;
+    height:  0.2cm;
+   
 }
 
 /*list-style-type: none; haalt de bolletjes voor de list weg.*/
@@ -18,26 +32,36 @@ ul{
     margin: 0px;
     padding: 0px;
     overflow: hidden;
+    border-bottom-style: solid;
+    border-bottom-color: grey;
+    height: 1cm;
     
-    border-style: ridge;
     
+}
+.lastAlignRight li:last-child{
+    float:right;
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
 a:link , a:visited{ 
     display: block;
-    background: white;
     width: 120px;
     text-align: center;  
-    color: black;
     text-decoration: none;
-    padding: 4px;
+    padding: 0px 5px 5px 5px;
     font-size: small;
+    color:black;
 }
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 a:hover, a:active {
-    background-color: antiquewhite;
+    background-color:lightgrey;
+    border: 1px;
+    color:black;
+    border-style: double;
+    border-color: gray;
+    height:1cm;
+   
 }
 
 .pageElement {
