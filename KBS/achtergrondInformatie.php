@@ -12,11 +12,13 @@ Wesley Oosterveen
     </head>
     <body>
         <nav id="headerbar">
-            <section><aside><a href="index.php"><h5>Terug naar hoofdpagina</h5></a></aside></section>
-            <section><aside><a href="contactFormulier.php"><h5>Contactformulier</h5></a></aside></section>
-            <section><aside><a href="klantenLogin.php"><h5>Klantlogin</h5></a></aside></section>
+            <section><a href="index.php"><h5>Hoofdpagina</h5></a></section>
+            <section><a href="contactFormulier.php"><h5>Contactformulier</h5></a></section>
+            <section><a href="klantenLogin.php"><h5>Klantlogin</h5></a></section>
         </nav>
-        <h1>Hier komt de achtergrond informatie!</h1>
+        <div class="pageElement">
+            <h1>Hier komt de achtergrondinformatie!</h1>
+        </div>
         <?php
         ?>
     </body>
