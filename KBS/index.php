@@ -5,11 +5,10 @@
         <meta charset="UTF-8">
         <title>TextBug - Frontpage</title>
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="stylesheet.css" />
     </head>
-    <body class="background">
+    <body>
 
-        
 
         <nav id="headerbar">
             <section><h5>TextBug</h5></section>
