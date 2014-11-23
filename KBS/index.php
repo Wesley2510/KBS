@@ -37,9 +37,21 @@ if ($link->connect_error) {
         </nav>
 
         <?php
+            $inputP = filter_input(INPUT_GET, "p");
+            //Als er geen "p" in de URL aangegeven is terugvallen op de menuitem met de laagste positie (aka. de eerste link)
+            if($inputP === NULL) {
+                $rows = $link->query("SELECT naam FROM pagina WHERE positie = 1;");
+                if($rows === false) {
+                trigger_error("SQL query: \"" . sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
+                } else {
+                    $rows->data_seek(0);
+                    $row = $rows->fetch_assoc();
+                    $inputP = $row["naam"];
+                }
+            }
             //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
-            //Subquery: vertaal de text van menuItems in een pagina ID
-            $sql = "SELECT inhoud, datum FROM bericht WHERE pagina IN (SELECT paginaID FROM pagina WHERE naam='" . filter_input(INPUT_GET, "p") . "');";
+            //Subquery: vertaal de text van menuitems in een pagina ID
+            $sql = "SELECT inhoud, datum FROM bericht WHERE pagina IN (SELECT paginaID FROM pagina WHERE naam='" . $inputP . "');";
             
             $berichten = $link->query($sql);
             if($berichten === false) {
