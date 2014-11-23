@@ -11,7 +11,7 @@ if ( $GLOBALS["link"]->connect_error) {
 }
 
 function printHeader() {
-   print("<nav id=\"headerbar\"><section><h5>TextBug</h5></section>");
+   print("<nav id=\"headerbar\"><section><h1>TextBug</h1></section>");
             
     //Haal alle text columns uit tabel Menuitem
     $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
@@ -27,11 +27,11 @@ function printHeader() {
         }
         $list[0] = NULL;
 
-        for($i = 1; $i <= count($list); $i++) {
+        for($i = 1; $i < count($list); $i++) {
             //Plaats de text columns met behulp van <section> tags in het menu
             echo "<section><a href =\"index.php?p=" . $list[$i] . "\" ><h4>" . $list[$i] . "</h4></a></section>";
         }
     }
 
-    print("<section><a href=\"Login.php\"><h4>Login</h4></a></section></nav>");
+    print("<section><a href=\"login.php\"><h2>Login</h2></a></section></nav>");
 }
