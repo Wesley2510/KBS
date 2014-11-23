@@ -11,14 +11,21 @@ function printHeader() {
             <section><h5>TextBug</h5></section>");
             
             //Haal alle text columns uit tabel Menuitem
-            $menuitems = $GLOBALS["link"]->query("SELECT naam FROM pagina;");
+            $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
             if($menuitems === false) {
                 trigger_error("SQL: \"" . sql .  "\" \n\r Error: \"" . $GLOBALS["link"]->error, E_USER_ERROR);
             } else {
+                $list = array();
+                
                 $menuitems->data_seek(0);
                 while($row = $menuitems->fetch_assoc()) {
+                    //Plaats de menuitems op de juiste positie in de array $list
+                    $list[$row["positie"]] = $row["naam"];
+                }
+                
+                for($i = 1; $i <= count($list); $i++) {
                     //Plaats de text columns met behulp van <section> tags in het menu
-                    echo "<section><a href =\"index.php?p=" . $row["naam"] . "\" ><h4>" . $row["naam"] . "</h4></a></section>";
+                    echo "<section><a href =\"index.php?p=" . $list[$i] . "\" ><h4>" . $list[$i] . "</h4></a></section>";
                 }
             }
        
