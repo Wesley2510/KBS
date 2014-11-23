@@ -40,7 +40,7 @@ h5#title{
 
 #headerbar section:last-of-type{
     position: absolute;
-    right: 0px;
+    right: -1cm;
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
@@ -50,7 +50,7 @@ h5#title{
     text-decoration: none;
     padding: 0px 5px 5px 5px;
     font-size: small;
-     background-color: white;
+    background-color: white;
     color:black;
 }
 
@@ -77,6 +77,15 @@ h5#title{
 // in dit geval elke .pageElement die een .pageElement volgt en het effectief alleen niet op de eerste toegepast wordt) */
 .pageElement ~ .pageElement {
     margin-top: 0.3cm;
+}
+
+.pageElement .datum {
+    font-size: 0.25cm;
+    margin-left: 0.1cm;
+}
+
+.pageElement .content {
+    margin-left: 0.5cm;
 }
  
 @media screen and (max-width: 15cm) {
