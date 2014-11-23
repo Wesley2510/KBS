@@ -22,6 +22,7 @@ function printHeader() {
                     //Plaats de menuitems op de juiste positie in de array $list
                     $list[$row["positie"]] = $row["naam"];
                 }
+                $list[0] = null;
                 
                 for($i = 1; $i <= count($list); $i++) {
                     //Plaats de text columns met behulp van <section> tags in het menu
