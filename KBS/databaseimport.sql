@@ -158,3 +158,24 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- Inserts
+
+-- Paginas
+INSERT INTO `Textbug`.`Pagina` (`pagina`, `naam`) VALUES (0, 'nieuws');
+INSERT INTO `Textbug`.`Pagina` (`pagina`, `naam`) VALUES (1, 'contact');
+INSERT INTO `Textbug`.`Pagina` (`pagina`, `naam`) VALUES (2, 'info');
+
+-- Menuitems
+INSERT INTO `Textbug`.`Menuitem` (`menuitem`, `text`, `pagina`) VALUES (0, 'Nieuws', 0);
+INSERT INTO `Textbug`.`Menuitem` (`menuitem`, `text`, `pagina`) VALUES (1, 'Contact', 1);
+INSERT INTO `Textbug`.`Menuitem` (`menuitem`, `text`, `pagina`) VALUES (2, 'Info', 2);
+
+-- Berichten
+INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (0, 'Test1', '2014-11-23', 0);
+INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (1, 'Test2', '2014-11-23', 0);
+INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (2, 'Dit is ons contactformulier', '2014-11-23', 1);
+INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (3, 'Dit is info', '2014-11-23', 2);
+
+
