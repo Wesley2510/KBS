@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-$link = new mysqli("127.0.0.1", "root", "password", "Textbug", 3306);
-
-if ($link->connect_error) {
-  trigger_error('Database connection failed: '  . $link->connect_error, E_USER_ERROR);
-}
+include_once("global.php");
 
 $inputP = filter_input(INPUT_GET, "p");
             //Als er geen "p" in de URL aangegeven is terugvallen op de menuitem met de laagste positie (aka. de eerste link)
@@ -30,24 +26,7 @@ $inputP = filter_input(INPUT_GET, "p");
     </head>
     <body>
 
-
-        <nav id="headerbar">
-            <section><h5>TextBug</h5></section>
-            <?php
-            //Haal alle text columns uit tabel Menuitem
-            $menuitems = $link->query("SELECT naam FROM pagina;");
-            if($menuitems === false) {
-                trigger_error("SQL: \"" . sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
-            } else {
-                $menuitems->data_seek(0);
-                while($row = $menuitems->fetch_assoc()) {
-                    //Plaats de text columns met behulp van <section> tags in het menu
-                    echo "<section><a href =\"index.php?p=" . $row["naam"] . "\" ><h4>" . $row["naam"] . "</h4></a></section>";
-                }
-            }
-            ?>
-            <section><a href="Login.php"><h4>Login</h4></a></section>
-        </nav>
+       <?php printHeader(); ?>
 
         <?php
             //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
