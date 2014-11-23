@@ -29,7 +29,7 @@ function printHeader() {
 
         for($i = 1; $i < count($list); $i++) {
             //Plaats de text columns met behulp van <section> tags in het menu
-            echo "<section><a href =\"index.php?p=" . $list[$i] . "\" ><h4>" . $list[$i] . "</h4></a></section>";
+            echo "<section><a href =\"index.php?p=" . $list[$i] . "\" ><h2>" . $list[$i] . "</h2></a></section>";
         }
     }
 

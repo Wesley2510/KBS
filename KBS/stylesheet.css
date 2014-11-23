@@ -8,25 +8,27 @@ body{
     margin: 0px;
 }
 
-
-
-
 #headerbar {
     display: flex;
     flex-direction: row;
     position: fixed;
     width: 100%;
-    height: 1.5cm;
+    height: 3.5rem;
     top: 0px;
     
     background-color: white;
-    border-bottom: 2px solid grey;
+    box-shadow: 0 0.06rem 0.24rem 0.12rem grey;
 }
 
 #headerbar h1 {
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
+}
+
+#headerbar h2 {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 1.1rem;
+    margin-top: 15%;
 }
 
 #headerbar section{
@@ -34,7 +36,9 @@ body{
     flex: 0 1 auto;
     align-self: flex-start;
     height: 100%;
-    width: 4cm;
+    
+    /* De width hier zorgt voor wat ruimte tussen de menuitems */
+    width: 8rem;
     text-align: center;  
 }
 
@@ -45,31 +49,28 @@ body{
 
 /*a:link is de normale link, a:visited is de bezochte link*/
 #headerbar a:link , a:visited{ 
-    display: block;
     text-decoration: none;
-    padding: 0px 5px 5px 5px;
-    font-size: small;
     background-color: white;
     color:black;
-    width: 3cm;
+    width: 7rem;
 }
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 #headerbar a:hover, a:active {
     background-color: lightgrey;
     color: black;
-    width: 3cm;
+    width: 7rem;
 }
 
 .pageElement {
-    box-shadow: 2px 2px 10px #888888;
+    box-shadow: 0.12rem 0.12rem 0.4rem #888888;
     margin-left: auto;
     margin-right: auto;
     
     background-color: white;
     
     /* margin-top zorgt hier dat het eerste element niet bovenaan onder de menubar blijft */
-    margin-top: 2cm;
+    margin-top: 3.8rem;
 }
 
 /* Maakt de margin-top in .pageElement ongedaan.
@@ -77,25 +78,25 @@ body{
 // (de ~ operator heeft als effect dat deze style op een element B wordt toegepast als het element A volgt (A ~ B),
 // in dit geval elke .pageElement die een .pageElement volgt en het effectief alleen niet op de eerste toegepast wordt) */
 .pageElement ~ .pageElement {
-    margin-top: 0.3cm;
+    margin-top: 0.8rem;
 }
 
 .pageElement .datum {
-    font-size: 0.25cm;
-    margin-left: 0.1cm;
+    font-size: 0.6rem;
+    margin-left: 0.25rem;
 }
 
 .pageElement .content {
-    margin-left: 0.5cm;
+    margin-left: 1.25rem;
 }
  
-@media screen and (max-width: 15cm) {
+@media screen and (max-width: 35rem) {
     .pageElement {
         width: 100%;
     }
 }
 
-@media screen and (min-width: 15cm) {
+@media screen and (min-width: 35rem) {
     .pageElement {
         width: 80%;
     }
