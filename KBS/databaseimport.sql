@@ -2,14 +2,16 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+CREATE SCHEMA IF NOT EXISTS `Textbug` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `Textbug` ;
 
 -- -----------------------------------------------------
--- Table `Textbug`.`Klant`
+-- Table `Textbug`.`klant`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`Klant` ;
+DROP TABLE IF EXISTS `Textbug`.`klant` ;
 
-CREATE  TABLE IF NOT EXISTS `Textbug`.`Klant` (
-  `klant` INT NOT NULL ,
+CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
+  `klantID` INT NOT NULL ,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
   `postcode` VARCHAR(7) NOT NULL ,
@@ -18,41 +20,41 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`Klant` (
   `mobiel` VARCHAR(11) NULL ,
   `woonplaats` VARCHAR(45) NOT NULL ,
   `adres` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`klant`) )
+  PRIMARY KEY (`klantID`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Textbug`.`User`
+-- Table `Textbug`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`User` ;
+DROP TABLE IF EXISTS `Textbug`.`user` ;
 
-CREATE  TABLE IF NOT EXISTS `Textbug`.`User` (
+CREATE  TABLE IF NOT EXISTS `Textbug`.`user` (
   `username` VARCHAR(20) NOT NULL ,
-  `klant` INT NOT NULL ,
+  `klant` INT NULL ,
   `wachtwoord` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`username`, `klant`) ,
+  PRIMARY KEY (`username`) ,
   INDEX `fk_User_Klant_idx` (`klant` ASC) ,
   CONSTRAINT `fk_User_Klant`
     FOREIGN KEY (`klant` )
-    REFERENCES `Textbug`.`Klant` (`klant` )
+    REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Textbug`.`Admin`
+-- Table `Textbug`.`admin`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`Admin` ;
+DROP TABLE IF EXISTS `Textbug`.`admin` ;
 
-CREATE  TABLE IF NOT EXISTS `Textbug`.`Admin` (
-  `admin` VARCHAR(20) NOT NULL ,
-  `voornaam` VARCHAR(45) NULL ,
-  `achternaam` VARCHAR(45) NULL ,
+CREATE  TABLE IF NOT EXISTS `Textbug`.`admin` (
+  `adminID` VARCHAR(20) NOT NULL ,
+  `voornaam` VARCHAR(45) NOT NULL ,
+  `achternaam` VARCHAR(45) NOT NULL ,
   `emailadres` VARCHAR(45) NULL ,
   `wachtwoord` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`admin`) )
+  PRIMARY KEY (`adminID`) )
 ENGINE = InnoDB;
 
 
@@ -65,90 +67,72 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`notitie` (
   `klant` INT NOT NULL ,
   `plaatser` VARCHAR(20) NOT NULL ,
   `notitie` TEXT NOT NULL ,
-  `datum` DATE NULL ,
+  `datum` DATE NOT NULL ,
   PRIMARY KEY (`klant`, `plaatser`) ,
   INDEX `fk_notitie_Admin1_idx` (`plaatser` ASC) ,
   CONSTRAINT `fk_notitie_Klant1`
     FOREIGN KEY (`klant` )
-    REFERENCES `Textbug`.`Klant` (`klant` )
+    REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_notitie_Admin1`
     FOREIGN KEY (`plaatser` )
-    REFERENCES `Textbug`.`Admin` (`admin` )
+    REFERENCES `Textbug`.`admin` (`adminID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Textbug`.`Factuur`
+-- Table `Textbug`.`factuur`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`Factuur` ;
+DROP TABLE IF EXISTS `Textbug`.`factuur` ;
 
-CREATE  TABLE IF NOT EXISTS `Textbug`.`Factuur` (
-  `factuur` INT NOT NULL ,
+CREATE  TABLE IF NOT EXISTS `Textbug`.`factuur` (
+  `factuurID` INT NOT NULL ,
   `klant` INT NOT NULL ,
   `service` VARCHAR(128) NOT NULL ,
   `prijs` INT NOT NULL ,
   `betaald` TINYINT(1) NULL ,
-  `papierenfactuur` VARCHAR(45) NULL ,
-  PRIMARY KEY (`factuur`, `klant`) ,
+  `papierenfactuur` TINYINT(1) NULL ,
+  PRIMARY KEY (`factuurID`, `klant`) ,
   INDEX `fk_Factuur_Klant1_idx` (`klant` ASC) ,
   CONSTRAINT `fk_Factuur_Klant1`
     FOREIGN KEY (`klant` )
-    REFERENCES `Textbug`.`Klant` (`klant` )
+    REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Textbug`.`Pagina`
+-- Table `Textbug`.`pagina`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`Pagina` ;
+DROP TABLE IF EXISTS `Textbug`.`pagina` ;
 
-CREATE  TABLE IF NOT EXISTS `Textbug`.`Pagina` (
-  `pagina` INT NOT NULL ,
-  `naam` VARCHAR(45) NULL ,
-  PRIMARY KEY (`pagina`) )
+CREATE  TABLE IF NOT EXISTS `Textbug`.`pagina` (
+  `paginaID` TINYINT(4) NOT NULL ,
+  `naam` VARCHAR(45) NOT NULL ,
+  `positie` TINYINT(4) NULL ,
+  PRIMARY KEY (`paginaID`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Textbug`.`Bericht`
+-- Table `Textbug`.`bericht`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`Bericht` ;
+DROP TABLE IF EXISTS `Textbug`.`bericht` ;
 
-CREATE  TABLE IF NOT EXISTS `Textbug`.`Bericht` (
-  `berichtid` INT NOT NULL ,
-  `bericht` TEXT NOT NULL ,
+CREATE  TABLE IF NOT EXISTS `Textbug`.`bericht` (
+  `berichtID` INT NOT NULL ,
+  `inhoud` TEXT NOT NULL ,
   `datum` DATE NULL ,
-  `pagina` INT NOT NULL ,
-  PRIMARY KEY (`berichtid`) ,
+  `pagina` TINYINT(4) NOT NULL ,
+  PRIMARY KEY (`berichtID`) ,
   INDEX `fk_Bericht_Pagina1` (`pagina` ASC) ,
   CONSTRAINT `fk_Bericht_Pagina1`
     FOREIGN KEY (`pagina` )
-    REFERENCES `Textbug`.`Pagina` (`pagina` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Textbug`.`Menuitem`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`Menuitem` ;
-
-CREATE  TABLE IF NOT EXISTS `Textbug`.`Menuitem` (
-  `menuitem` INT NOT NULL ,
-  `text` TEXT NULL ,
-  `pagina` INT NOT NULL ,
-  PRIMARY KEY (`menuitem`) ,
-  INDEX `fk_Menuitem_Pagina1` (`pagina` ASC) ,
-  CONSTRAINT `fk_Menuitem_Pagina1`
-    FOREIGN KEY (`pagina` )
-    REFERENCES `Textbug`.`Pagina` (`pagina` )
+    REFERENCES `Textbug`.`pagina` (`paginaID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -160,22 +144,23 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+
+
+
 -- Inserts
 
 -- Paginas
-INSERT INTO `Textbug`.`Pagina` (`pagina`, `naam`) VALUES (0, 'nieuws');
-INSERT INTO `Textbug`.`Pagina` (`pagina`, `naam`) VALUES (1, 'contact');
-INSERT INTO `Textbug`.`Pagina` (`pagina`, `naam`) VALUES (2, 'info');
-
--- Menuitems
-INSERT INTO `Textbug`.`Menuitem` (`menuitem`, `text`, `pagina`) VALUES (0, 'Nieuws', 0);
-INSERT INTO `Textbug`.`Menuitem` (`menuitem`, `text`, `pagina`) VALUES (1, 'Contact', 1);
-INSERT INTO `Textbug`.`Menuitem` (`menuitem`, `text`, `pagina`) VALUES (2, 'Info', 2);
+INSERT INTO `Textbug`.`pagina` (`paginaID`, `naam`, `positie`) VALUES (0, 'Nieuws', 1);
+INSERT INTO `Textbug`.`pagina` (`paginaID`, `naam`, `positie`) VALUES (1, 'Contact', 2);
+INSERT INTO `Textbug`.`pagina` (`paginaID`, `naam`, `positie`) VALUES (2, 'Info', 3);
 
 -- Berichten
-INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (0, 'Test1', '2014-11-23', 0);
-INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (1, 'Test2', '2014-11-23', 0);
-INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (2, 'Dit is ons contactformulier', '2014-11-23', 1);
-INSERT INTO `Textbug`.`Bericht` (`berichtid`, `bericht`, `datum`, `pagina`) VALUES (3, 'Dit is info', '2014-11-23', 2);
+INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (0, 'Test1', '2014-11-23', 0);
+INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (1, 'Test2', '2014-11-23', 0);
+INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (2, 'Dit is ons contactformulier', '2014-11-23', 1);
+INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (3, 'Dit is info', '2014-11-23', 2);
+
+
+
 
 
