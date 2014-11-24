@@ -8,7 +8,7 @@ include_once("global.php");
 <html>
     <head>
         <meta charset="UTF-8">
-        <?php echo "<title>TextBug - 404</title>"; ?>
+        <title>TextBug - 404</title>
 
         <link rel="stylesheet" type="text/css" href="stylesheet.css" />
     </head>

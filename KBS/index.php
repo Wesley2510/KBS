@@ -24,6 +24,7 @@ if($inputP === NULL) {
         $row = $rows->fetch_assoc();
         $pID = $row["paginaID"];
         
+        //Als er in de query geen id gevonden is bestaat de pagina niet, dus wordt er naar 404 doorverwezen
         if($pID === NULL) {
             header("Location: 404.php");
             die();
@@ -38,6 +39,8 @@ if($inputP === NULL) {
         <?php echo "<title>TextBug - " . $inputP . "</title>"; ?>
 
         <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+        
+        <script src="adminfunctions.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
 
@@ -50,7 +53,7 @@ if($inputP === NULL) {
         if ($aantalBerichten["A"] === "1") {
             $unit = "bericht";
         }
-        echo "<div class=\"pageElement topBarElement\"><a class=\"button\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["A"] . " " . $unit . "</span></div>";
+        echo "<div class=\"pageElement\"><div class=\"topBarElement\"><a class=\"button\" onclick=\"composeMessage();\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["A"] . " " . $unit . "</span></div></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
