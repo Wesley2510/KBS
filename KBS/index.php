@@ -12,7 +12,6 @@ if($inputP === NULL) {
     if($rows === false) {
         trigger_error(" \n\r Error: \"" . $link->error, E_USER_ERROR);
     } else {
-        $rows->data_seek(0);
         $row = $rows->fetch_assoc();
         $inputP = $row["naam"];
         $pID = $row["paginaID"];
@@ -22,7 +21,6 @@ if($inputP === NULL) {
     if($rows === false) {
         trigger_error(" \n\r Error: \"" . $link->error, E_USER_ERROR);
     } else {
-        $rows->data_seek(0);
         $row = $rows->fetch_assoc();
         $pID = $row["paginaID"];
     }
@@ -57,7 +55,6 @@ if($inputP === NULL) {
         if($berichten === false) {
             trigger_error("SQL query: \"" . $sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
         } else {
-            $berichten->data_seek(0);
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
                 echo "<div class=\"pageElement\"><span class=\"datum\">" . date("d-m-Y", strtotime($row["datum"])) . "</span><br/><span class=\"content\">" . $row["inhoud"] . "</span></div>\n";

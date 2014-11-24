@@ -20,7 +20,6 @@ function printHeader() {
     } else {
         $list = array();
 
-        $menuitems->data_seek(0);
         while($row = $menuitems->fetch_assoc()) {
             //Plaats de menuitems op de juiste positie in de array $list
             $list[$row["positie"]] = $row["naam"];
