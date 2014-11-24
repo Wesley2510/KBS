@@ -31,6 +31,16 @@ if($inputP === NULL) {
         }
     }
 }
+
+
+
+/* Als er een bericht toegevoegd wordt, plaats in database */
+$inputBericht = filter_input(INPUT_POST, "bericht");
+if($inputBericht != NULL && $inputBericht != "") {
+    $day = date("Y-m-d H:i:s", getdate()[0]);
+    $sql = "INSERT INTO bericht (inhoud, datum, pagina) VALUES (\"" . $inputBericht . "\",\"" . $day . "\"," . $pID . ");";
+    $link->query($sql);
+}
 ?>
 
 <html>
@@ -57,7 +67,7 @@ if($inputP === NULL) {
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
-        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina =" . $pID;
+        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC;";
 
         $berichten = $link->query($sql);
         if($berichten === false) {

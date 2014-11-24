@@ -11,7 +11,7 @@ USE `Textbug` ;
 DROP TABLE IF EXISTS `Textbug`.`klant` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
-  `klantID` INT NOT NULL ,
+  `klantID` INT NOT NULL AUTO_INCREMENT,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
   `postcode` VARCHAR(7) NOT NULL ,
@@ -49,7 +49,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Textbug`.`admin` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`admin` (
-  `adminID` VARCHAR(20) NOT NULL ,
+  `adminID` VARCHAR(20) NOT NULL,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
   `emailadres` VARCHAR(45) NULL ,
@@ -67,7 +67,7 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`notitie` (
   `klant` INT NOT NULL ,
   `plaatser` VARCHAR(20) NOT NULL ,
   `notitie` TEXT NOT NULL ,
-  `datum` DATE NOT NULL ,
+  `datum` DATETIME NOT NULL ,
   PRIMARY KEY (`klant`, `plaatser`) ,
   INDEX `fk_notitie_Admin1_idx` (`plaatser` ASC) ,
   CONSTRAINT `fk_notitie_Klant1`
@@ -89,7 +89,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Textbug`.`factuur` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`factuur` (
-  `factuurID` INT NOT NULL ,
+  `factuurID` INT NOT NULL AUTO_INCREMENT,
   `klant` INT NOT NULL ,
   `service` VARCHAR(128) NOT NULL ,
   `prijs` INT NOT NULL ,
@@ -111,7 +111,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Textbug`.`pagina` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`pagina` (
-  `paginaID` TINYINT(4) NOT NULL ,
+  `paginaID` TINYINT(4) NOT NULL AUTO_INCREMENT,
   `naam` VARCHAR(45) NOT NULL ,
   `positie` TINYINT(4) NULL ,
   PRIMARY KEY (`paginaID`) )
@@ -124,9 +124,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Textbug`.`bericht` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`bericht` (
-  `berichtID` INT NOT NULL ,
+  `berichtID` INT NOT NULL AUTO_INCREMENT,
   `inhoud` TEXT NOT NULL ,
-  `datum` DATE NULL ,
+  `datum` DATETIME NULL ,
   `pagina` TINYINT(4) NOT NULL ,
   PRIMARY KEY (`berichtID`) ,
   INDEX `fk_Bericht_Pagina1` (`pagina` ASC) ,
@@ -150,15 +150,15 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- Inserts
 
 -- Paginas
-INSERT INTO `Textbug`.`pagina` (`paginaID`, `naam`, `positie`) VALUES (0, 'Nieuws', 1);
-INSERT INTO `Textbug`.`pagina` (`paginaID`, `naam`, `positie`) VALUES (1, 'Contact', 2);
-INSERT INTO `Textbug`.`pagina` (`paginaID`, `naam`, `positie`) VALUES (2, 'Info', 3);
+INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Nieuws', 1);
+INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Contact', 2);
+INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Info', 3);
 
 -- Berichten
-INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (0, 'Test1', '2014-11-23', 0);
-INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (1, 'Test2', '2014-11-23', 0);
-INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (2, 'Dit is ons contactformulier', '2014-11-23', 1);
-INSERT INTO `Textbug`.`bericht` (`berichtID`, `inhoud`, `datum`, `pagina`) VALUES (3, 'Dit is info', '2014-11-23', 2);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test1', '2014-11-23', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test2', '2014-11-23', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is ons contactformulier', '2014-11-23', 2);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is info', '2014-11-23', 3);
 
 
 
