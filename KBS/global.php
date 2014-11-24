@@ -1,8 +1,8 @@
+<?php
+
 /*
 Lewis Clement
 */
-
-<?php
 
  $GLOBALS["link"] = new mysqli("127.0.0.1", "root", "usbw", "Textbug", 3307);
 

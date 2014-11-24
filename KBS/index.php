@@ -29,6 +29,8 @@ if($inputP === NULL) {
     <?php printHeader(); ?>
 
     <?php
+        echo "<div class=\"pageElement\"><a class=\"button\" href=\"#\">Nieuw bericht</a></div>";
+    
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
         $sql = "SELECT inhoud, datum FROM bericht WHERE pagina IN (SELECT paginaID FROM pagina WHERE naam='" . $inputP . "');";

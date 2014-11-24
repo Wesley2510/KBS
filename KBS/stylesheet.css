@@ -3,6 +3,11 @@ Wesley Oosterveen
 Lewis Clement
 */
 
+/* Fonts voor knoppen */
+#headerbar h2, .pageElement a {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
 body{
     background-color: #EEEEEE;
     margin: 0px;
@@ -26,7 +31,6 @@ body{
 }
 
 #headerbar h2 {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-size: 1.1rem;
     margin-top: 15%;
 }
@@ -48,7 +52,7 @@ body{
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
-#headerbar a:link , a:visited{ 
+#headerbar a:link, a:visited{ 
     text-decoration: none;
     background-color: white;
     color:black;
@@ -62,6 +66,30 @@ body{
     width: 7rem;
 }
 
+a.button {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    
+    border: 0.15rem solid black;
+    margin: 0.24rem;
+    width: 10rem;
+    height: 1.6rem;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+    
+    background-color: lightgrey;
+}
+
+a:active.button {
+    width: 10rem;
+    
+    background-color: grey;
+}
+
 .pageElement {
     box-shadow: 0.12rem 0.12rem 0.4rem #888888;
     margin-left: auto;
@@ -70,7 +98,10 @@ body{
     background-color: white;
     
     /* margin-top zorgt hier dat het eerste element niet bovenaan onder de menubar blijft */
-    margin-top: 3.8rem;
+    margin-top: 4.4rem;
+    
+    
+    padding: 0.24rem;
 }
 
 /* Maakt de margin-top in .pageElement ongedaan.
