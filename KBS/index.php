@@ -40,7 +40,7 @@ if($inputP === NULL) {
             $berichten->data_seek(0);
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
-                echo "<div class=\"pageElement\"><span class=\"datum\">" . $row["datum"] . "</span><br/><span class=\"content\">" . $row["inhoud"] . "</span></div>\n";
+                echo "<div class=\"pageElement\"><span class=\"datum\">" . date("d-m-Y", strtotime($row["datum"])) . "</span><br/><span class=\"content\">" . $row["inhoud"] . "</span></div>\n";
             }
         }
     ?>
