@@ -40,6 +40,7 @@ if($inputBericht != NULL && $inputBericht != "") {
     $day = date("Y-m-d H:i:s", getdate()[0]);
     $sql = "INSERT INTO bericht (inhoud, datum, pagina) VALUES (\"" . $inputBericht . "\",\"" . $day . "\"," . $pID . ");";
     $link->query($sql);
+    header( 'Location: #' ) ;
 }
 ?>
 
