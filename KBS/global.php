@@ -4,7 +4,7 @@ Lewis Clement
 
 <?php
 
- $GLOBALS["link"] = new mysqli("127.0.0.1", "root", "password", "Textbug", 3306);
+ $GLOBALS["link"] = new mysqli("127.0.0.1", "root", "usbw", "Textbug", 3307);
 
 if ( $GLOBALS["link"]->connect_error) {
   trigger_error('Database connection failed: '  . $link->connect_error, E_USER_ERROR);
