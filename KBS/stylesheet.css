@@ -32,13 +32,12 @@ body{
 
 #headerbar h2 {
     font-size: 1.1rem;
-    margin-top: 15%;
 }
 
-#headerbar section{
+#headerbar section {
     display: flex;
     flex: 0 1 auto;
-    align-self: flex-start;
+    align-self: center;
     height: 100%;
     
     /* De width hier zorgt voor wat ruimte tussen de menuitems */
@@ -46,13 +45,13 @@ body{
     text-align: center;  
 }
 
-#headerbar section:last-of-type{
+#headerbar section:last-of-type {
     position: absolute;
     right: 0px;
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/
-#headerbar a:link, a:visited{ 
+#headerbar a { 
     text-decoration: none;
     background-color: white;
     color:black;
@@ -62,8 +61,6 @@ body{
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 #headerbar a:hover, a:active {
     background-color: lightgrey;
-    color: black;
-    width: 7rem;
 }
 
 a.button {

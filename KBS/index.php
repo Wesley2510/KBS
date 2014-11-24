@@ -23,6 +23,11 @@ if($inputP === NULL) {
     } else {
         $row = $rows->fetch_assoc();
         $pID = $row["paginaID"];
+        
+        if($pID === NULL) {
+            header("Location: 404.php");
+            die();
+        }
     }
 }
 ?>
