@@ -90,6 +90,11 @@ a:active.button {
     background-color: grey;
 }
 
+.textRightAlign {
+    margin-right: 0.5rem;
+    align-self: center;
+}
+
 .pageElement {
     box-shadow: 0.12rem 0.12rem 0.4rem #888888;
     margin-left: auto;
@@ -99,9 +104,15 @@ a:active.button {
     
     /* margin-top zorgt hier dat het eerste element niet bovenaan onder de menubar blijft */
     margin-top: 4.4rem;
-    
-    
     padding: 0.24rem;
+    
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.topBarElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 /* Maakt de margin-top in .pageElement ongedaan.

@@ -4,15 +4,27 @@
 include_once("global.php");
 
 $inputP = filter_input(INPUT_GET, "p");
+$pID = null;
 //Als er geen "p" in de URL aangegeven is terugvallen op de menuitem met de laagste positie (aka. de eerste link)
+//Vertaal tevens de naam naar paginaID
 if($inputP === NULL) {
-    $rows = $link->query("SELECT naam FROM pagina WHERE positie = 1;");
+    $rows = $link->query("SELECT paginaID, naam FROM pagina WHERE positie = 1;");
     if($rows === false) {
-    trigger_error("SQL query: \"" . sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
+        trigger_error(" \n\r Error: \"" . $link->error, E_USER_ERROR);
     } else {
         $rows->data_seek(0);
         $row = $rows->fetch_assoc();
         $inputP = $row["naam"];
+        $pID = $row["paginaID"];
+    }
+} else {
+    $rows = $link->query("SELECT paginaID FROM pagina WHERE naam = \"" . $inputP . "\";");
+    if($rows === false) {
+        trigger_error(" \n\r Error: \"" . $link->error, E_USER_ERROR);
+    } else {
+        $rows->data_seek(0);
+        $row = $rows->fetch_assoc();
+        $pID = $row["paginaID"];
     }
 }
 ?>
@@ -29,15 +41,17 @@ if($inputP === NULL) {
     <?php printHeader(); ?>
 
     <?php
-        echo "<div class=\"pageElement\"><a class=\"button\" href=\"#\">Nieuw bericht</a></div>";
+        $sql = "SELECT COUNT(berichtID) AS A FROM bericht WHERE pagina =" . $pID;
+        $aantalBerichten = $link->query($sql)->fetch_assoc();
+        echo "<div class=\"pageElement topBarElement\"><a class=\"button\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["A"] . " berichten</span></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
-        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina IN (SELECT paginaID FROM pagina WHERE naam='" . $inputP . "');";
+        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina =" . $pID;
 
         $berichten = $link->query($sql);
         if($berichten === false) {
-            trigger_error("SQL query: \"" . sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
+            trigger_error("SQL query: \"" . $sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
         } else {
             $berichten->data_seek(0);
             while($row = $berichten->fetch_assoc()) {
