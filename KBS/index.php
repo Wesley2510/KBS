@@ -43,7 +43,11 @@ if($inputP === NULL) {
     <?php
         $sql = "SELECT COUNT(berichtID) AS A FROM bericht WHERE pagina =" . $pID;
         $aantalBerichten = $link->query($sql)->fetch_assoc();
-        echo "<div class=\"pageElement topBarElement\"><a class=\"button\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["A"] . " berichten</span></div>";
+        $unit = "berichten";
+        if ($aantalBerichten["A"] === "1") {
+            $unit = "bericht";
+        }
+        echo "<div class=\"pageElement topBarElement\"><a class=\"button\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["A"] . " " . $unit . "</span></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
