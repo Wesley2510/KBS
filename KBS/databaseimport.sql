@@ -155,11 +155,14 @@ INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Contact', 2);
 INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Info', 3);
 
 -- Berichten
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test1', '2014-11-23', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test2', '2014-11-23', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is ons contactformulier', '2014-11-23', 2);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is info', '2014-11-23', 3);
-
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test1', '2014-11-23 12:30:00', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test2', '2014-11-23 13:00:00', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is ons contactformulier', '2014-11-23 00:00:00', 2);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is info', '2014-11-23 00:00:00', 3);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/FeHf0fx.jpg" alt="onzin" />', '2014-11-25 13:30:00', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/kfQy1OT.jpg" alt="onzin" />', '2014-11-25 13:40:00', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/bnqPpl5.jpg" alt="onzin" />', '2014-11-25 13:50:00', 1);
+INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/aLZzedG.jpg" alt="onzin" />', '2014-11-25 13:55:00', 1);
 
 
 

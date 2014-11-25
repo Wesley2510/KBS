@@ -134,6 +134,7 @@ a:active.button {
     box-shadow: 0.12rem 0.12rem 0.4rem #888888;
     margin-left: auto;
     margin-right: auto;
+    overflow:hidden;
     
     background-color: white;
     
