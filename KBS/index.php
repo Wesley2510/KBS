@@ -36,10 +36,12 @@ if($inputP === NULL) {
 
 /* Als er een bericht toegevoegd wordt, plaats in database */
 $inputBericht = filter_input(INPUT_POST, "bericht");
-if($inputBericht != NULL && $inputBericht != "") {
-    $day = date("Y-m-d H:i:s", getdate()[0]);
-    $sql = "INSERT INTO bericht (inhoud, datum, pagina) VALUES (\"" . $inputBericht . "\",\"" . $day . "\"," . $pID . ");";
-    $link->query($sql);
+if($inputBericht != NULL) {
+    //Controleer of input niet alleen uit spaties bestaat
+    if(!(ltrim($inputBericht, ' ') === '')) {
+        $day = date("Y-m-d H:i:s", getdate()[0]);
+        $link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES (\"" . $inputBericht . "\",\"" . $day . "\"," . $pID . ");");
+    }
     header( 'Location: #' ) ;
 }
 ?>
