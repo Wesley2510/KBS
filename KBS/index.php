@@ -49,9 +49,9 @@ if($inputBericht != NULL) {
     header( 'Location: ?p=' . $inputP . '&b=0' ) ;
 }
 
-$inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited");
-if($inputBerichtEdit != NULL) {
-    $inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
+$inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
+if($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
+    $inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited");
     
     //Controleer of input niet alleen uit spaties bestaat
     if(!(ltrim($inputBerichtEdit, ' ') === '')) {
@@ -61,7 +61,7 @@ if($inputBerichtEdit != NULL) {
 }
 
 $inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
-if($inputBerichtVerwijderID != NULL) {
+if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
     $link->query("DELETE FROM bericht WHERE berichtID=" . $inputBerichtVerwijderID);
     header( 'Location: ?p=' . $inputP . '&b=0' ) ;
 }
@@ -87,7 +87,7 @@ if($inputBerichtVerwijderID != NULL) {
         if ($aantalBerichten["aantal"] === "1") {
             $unit = "bericht";
         }
-        echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' class='button' onclick='composeMessage();' href='#'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
+        echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' class='button' onclick='composeMessage();'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
