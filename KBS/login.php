@@ -18,7 +18,7 @@ and open the template in the editor.
         <?php
         printHeader();
         ?>
-        <table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+        <table class="pageElement" width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
             <tr>
             <form name="form1" method="post" action="checkLogin.php">
                 <td>

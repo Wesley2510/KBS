@@ -3,6 +3,43 @@ Wesley Oosterveen
 Lewis Clement
 */
 
+/*
+Index:
+    #headerbar
+        ID voor het menu.
+    #headerbar h1
+        TextBug titel.
+    #headerbar h2
+        Menuitems text.
+    #headerbar section
+        Container voor knoppen in menu.
+    #headerbar a
+        Knop in het menu.
+
+    a.button
+        <a> tags met deze class krijgen het uiterlijk van een knop.
+
+    .textRightAlign
+        Plaatst stukje tekst rechts in pageElement.
+
+    .pageElement
+        Een container op de pagina. Alles komt in deze elementen te staan.
+    .pageElement .datum
+        Datum voor bovenaan in een pageElement.
+    .pageElement .content
+        Bericht voor in een pageElement.
+
+    .flexRowSpace
+        Een rij die objecten verspreid over de volle breedte van de parent element.
+        Combineer met .pageElement of plaats in een .pageElement
+
+    #berichtFormText
+        Textarea momenteel gebruikt voor plaatsen van bericht.
+
+    #footer
+        De footer
+*/
+
 /* Fonts voor knoppen */
 #headerbar h2, .pageElement a {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
@@ -107,12 +144,6 @@ a:active.button {
     font-family: "Lucida Console", Monaco, monospace;
 }
 
-.flexRowSpace {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 /* Maakt de margin-top in .pageElement ongedaan.
 // Dit is gedaan omdat niet alle elementen 2cm van elkaar moeten staan.
 // (de ~ operator heeft als effect dat deze style op een element B wordt toegepast als het element A volgt (A ~ B),
@@ -128,6 +159,12 @@ a:active.button {
 
 .pageElement .content {
     margin-left: 1.25rem;
+}
+
+.flexRowSpace {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 #berichtFormText {
