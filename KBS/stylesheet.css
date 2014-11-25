@@ -125,6 +125,10 @@ a:active.button {
     background-color: grey;
 }
 
+#buttonVerwijder {
+    background-color: lightcoral;
+}
+
 .textRightAlign {
     margin-right: 0.5rem;
     align-self: center;
@@ -179,7 +183,7 @@ a:active.button {
     cursor: pointer;
 }
 
-#berichtFormText, #berichtEditText {
+#berichtFormText {
     margin-left: auto;
     margin-right: auto;
     width: calc(100% - 0.96rem);
