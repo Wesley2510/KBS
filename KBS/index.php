@@ -81,7 +81,7 @@ if($inputBerichtEdit != NULL) {
         if ($aantalBerichten["aantal"] === "1") {
             $unit = "bericht";
         }
-        echo "<div class='pageElement'><div class='flexRowSpace'><a class='button' onclick='composeMessage();' href='#'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
+        echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' class='button' onclick='composeMessage();' href='#'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID

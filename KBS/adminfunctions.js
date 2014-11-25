@@ -5,7 +5,7 @@ function composeMessage() {
         cancelComposingMessage();
     }
     
-    var topBarElement = document.getElementsByClassName("flexRowSpace")[0].parentNode;
+    var topBarElement = document.getElementById("buttonPlaats").parentNode.parentNode;
     messageOriginalText = topBarElement.innerHTML;
     topBarElement.innerHTML = "<form action='#' id='berichtForm' method='post'>";
     topBarElement.innerHTML += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
