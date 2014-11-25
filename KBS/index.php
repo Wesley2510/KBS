@@ -111,7 +111,7 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
             if($aantalBerichten["aantal"] > 5) {
                 echo "<div class='pageElement flexRowSpace'>";
                 
-                if( !( ($inputB+1)*5 > $aantalBerichten["aantal"]) ) {
+                if( !( ($inputB+1)*5 >= $aantalBerichten["aantal"]) ) {
                     echo "<a class='button' href='?p=" . $inputP . "&amp;b=" . ($inputB+1) . "'>Oudere berichten</a>";
                 } else { echo "<a></a>";} //Zodat de "Nieuwere berichten" knop rechts komt te staan
                 
