@@ -57,7 +57,7 @@ if($inputBerichtEdit != NULL) {
     if(!(ltrim($inputBerichtEdit, ' ') === '')) {
         $link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID);
     }
-    header( 'Location: ?p=' . $inputP . '&b=' . $inputB ) ;
+    header( 'Location: ?p=' . $inputP . '&b=' . $inputB . "#bericht" . $inputBerichtEditID) ;
 }
 
 $inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
@@ -100,7 +100,7 @@ if($inputBerichtVerwijderID != NULL) {
             $berichtNum = 0;
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
-                echo "<div class='pageElement'>";
+                echo "<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
                 echo "<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
                 echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";
                 echo "<br/><span class='content'>" . $row["inhoud"] . "</span>";
