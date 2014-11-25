@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
+<?php
+include_once("global.php");
+?>
+
 <html>
-    <?php
-    include_once("global.php");
-    ?>
     <head>
         <meta charset="UTF-8">
-        <?php        printStyles();
-        ?>
-        <title></title>
+        <title>TextBug - Login</title>
+        
+        <?php printStyles(); ?>
     </head>
     <body>
         <?php
         printHeader();
         ?>
+        <form name="form1" method="post" action="checkLogin.php">
         <table class="pageElement" width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
             <tr>
-            <form name="form1" method="post" action="checkLogin.php">
                 <td>
                     <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
                         <tr>
@@ -42,12 +39,12 @@ and open the template in the editor.
                             <td><input type="submit" name="Submit" value="Login"></td>
                         </tr>
                     </table>
-                </td>
-            </form>
-        </tr>
-    </table>
-        <?php
-        printFooter()
-        ?>
+                </td> 
+            </tr>
+        </table>
+        </form>
+    <?php
+    printFooter()
+    ?>
 </body>
 </html>
