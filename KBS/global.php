@@ -34,3 +34,9 @@ function printHeader() {
 
     print("<section><a href=\"login.php\"><h2>Login</h2></a></section></nav>");
 }
+
+
+function printStyles() {
+    echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>";
+    echo "<link rel='stylesheet' type='text/css' href='stylesheet.css' />";
+}

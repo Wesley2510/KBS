@@ -26,6 +26,9 @@ body{
 }
 
 #headerbar h1 {
+    font-family: 'Montserrat', sans-serif;
+    align-self: center;
+    font-size: 1.5rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -37,8 +40,6 @@ body{
 #headerbar section {
     display: flex;
     flex: 0 1 auto;
-    align-self: center;
-    height: 100%;
     
     /* De width hier zorgt voor wat ruimte tussen de menuitems */
     width: 8rem;

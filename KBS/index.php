@@ -49,7 +49,7 @@ if($inputBericht != NULL && $inputBericht != "") {
         <meta charset="UTF-8">
         <?php echo "<title>TextBug - " . $inputP . "</title>"; ?>
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+        <?php printStyles(); ?>
         
         <script src="adminfunctions.js" type="text/javascript" charset="utf-8"></script>
     </head>
