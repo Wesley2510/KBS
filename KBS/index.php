@@ -48,6 +48,17 @@ if($inputBericht != NULL) {
     }
     header( 'Location: ?p=' . $inputP . '&b=0' ) ;
 }
+
+$inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited");
+if($inputBerichtEdit != NULL) {
+    $inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
+    
+    //Controleer of input niet alleen uit spaties bestaat
+    if(!(ltrim($inputBerichtEdit, ' ') === '')) {
+        $link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID);
+    }
+    header( 'Location: ?p=' . $inputP . '&b=0' ) ;
+}
 ?>
 
 <html>
@@ -74,16 +85,18 @@ if($inputBericht != NULL) {
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
-        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB*5) . ", 5;";
+        $sql = "SELECT berichtID, inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB*5) . ", 5;";
 
         $berichten = $link->query($sql);
         if($berichten === false) {
             trigger_error("SQL query: " . $sql .  " \n\r Error: " . $link->error, E_USER_ERROR);
         } else {
+            $berichtNum = 0;
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
                 echo "<div class='pageElement'>";
                 echo "<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
+                echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";
                 echo "<br/><span class='content'>" . $row["inhoud"] . "</span>";
                 echo "</div>\n";
             }

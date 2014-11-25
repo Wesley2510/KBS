@@ -13,9 +13,29 @@ function composeMessage() {
 }
 
 function cancelComposingMessage() {
-    document.getElementsByClassName("flexRowSpace")[0].parentNode.innerHTML = messageOriginalText;
+    document.getElementById("berichtForm").parentNode.innerHTML = messageOriginalText;
 }
 
 function submitMessage() {
     document.forms["berichtForm"].submit();
+}
+
+function editMessage(berichtNum, ID) {
+    if (document.getElementById("berichtFormText") !== null) {
+        cancelComposingMessage();
+    }
+    
+    var pageElement = document.getElementsByClassName("iconEdit")[berichtNum].parentNode.parentNode;
+    var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
+    
+    messageOriginalText = pageElement.innerHTML;
+    pageElement.innerHTML = "<form action='#' id='berichtForm' method='post'>";
+    pageElement.innerHTML += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
+    pageElement.innerHTML += "<div class='flexRowSpace'><a class='button' id='buttonBewerk' href='#'>Bewerk bericht</a><a class='button' id='buttonAnnuleer' href='#'>Annuleer</a></div>";
+    pageElement.innerHTML += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
+    pageElement.innerHTML += "</form>";
+    
+    document.getElementById("berichtFormText").value = pageElementContent;
+    document.getElementById("buttonBewerk").addEventListener("click", submitMessage);
+    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
 }
