@@ -18,6 +18,9 @@ Index:
 
     a.button
         <a> tags met deze class krijgen het uiterlijk van een knop.
+    
+    #buttonVerwijder
+        Rode verwijderknop
 
     .textRightAlign
         Plaatst stukje tekst rechts in pageElement.
@@ -46,7 +49,7 @@ Index:
 }
 
 body{
-    background-color: #EEEEEE;
+    background-color: #C7D0D5;
     margin: 0px;
 }
 
@@ -58,8 +61,8 @@ body{
     height: 3.5rem;
     top: 0px;
     
-    background-color: white;
-    box-shadow: 0 0.06rem 0.24rem 0.12rem grey;
+    background-color: #FF7148;
+    box-shadow: 0 0.06rem 0.24rem 0.12rem black;
 }
 
 #headerbar h1 {
@@ -91,14 +94,13 @@ body{
 /*a:link is de normale link, a:visited is de bezochte link*/
 #headerbar a { 
     text-decoration: none;
-    background-color: white;
     color:black;
     width: 7rem;
 }
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 #headerbar a:hover, a:active {
-    background-color: lightgrey;
+    background-color: #EC583A;
 }
 
 a.button {
