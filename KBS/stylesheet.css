@@ -20,7 +20,7 @@ Index:
         <a> tags met deze class krijgen het uiterlijk van een knop.
     
     #buttonVerwijder
-        Rode verwijderknop
+        Rode verwijderknop.
 
     .textRightAlign
         Plaatst stukje tekst rechts in pageElement.
@@ -34,7 +34,13 @@ Index:
 
     .flexRowSpace
         Een rij die objecten verspreid over de volle breedte van de parent element.
-        Combineer met .pageElement of plaats in een .pageElement
+        Combineer met .pageElement of plaats in een .pageElement.
+
+    .iconEdit
+        Icoontje voor bewerken van berichten.
+
+    .warningText
+        Waarschuwingstext die getoont wordt als op de verwijderknop geklikt is.
 
     #berichtFormText
         Textarea momenteel gebruikt voor plaatsen van bericht.
@@ -182,6 +188,10 @@ a:active.button {
 }
 .iconEdit:hover {
     cursor: pointer;
+}
+
+.warningText {
+    text-align: center;
 }
 
 #berichtFormText {
