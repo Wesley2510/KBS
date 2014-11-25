@@ -35,6 +35,9 @@ function printHeader() {
     print("<section><a href=\"login.php\"><h2>Login</h2></a></section></nav>");
 }
 
+function printFooter() {
+    echo "<span id='footer'><div>Icons made by Stephen Hutchings from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a>         is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a><br/>Gemaakt in opdracht van Hogeschool Windesheim</div></span>";
+}
 
 function printStyles() {
     echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>";

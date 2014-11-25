@@ -82,5 +82,7 @@ if($inputBericht != NULL) {
             }
         }
     ?>
+        
+    <?php printFooter(); ?>
     </body>
 </html>
