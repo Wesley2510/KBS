@@ -33,6 +33,10 @@ if($inputP === NULL) {
 }
 
 
+//Vind uit op welke "bladzijde" de gebruiker zich bevind
+$inputB = filter_input(INPUT_GET, "b");
+if(!is_numeric($inputB)) {$inputB = 0;}
+
 
 /* Als er een bericht toegevoegd wordt, plaats in database */
 $inputBericht = filter_input(INPUT_POST, "bericht");
@@ -60,17 +64,17 @@ if($inputBericht != NULL) {
     <?php printHeader(); ?>
 
     <?php
-        $sql = "SELECT COUNT(berichtID) AS A FROM bericht WHERE pagina =" . $pID;
+        $sql = "SELECT COUNT(berichtID) AS aantal FROM bericht WHERE pagina =" . $pID;
         $aantalBerichten = $link->query($sql)->fetch_assoc();
         $unit = "berichten";
-        if ($aantalBerichten["A"] === "1") {
+        if ($aantalBerichten["aantal"] === "1") {
             $unit = "bericht";
         }
-        echo "<div class=\"pageElement\"><div class=\"topBarElement\"><a class=\"button\" onclick=\"composeMessage();\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["A"] . " " . $unit . "</span></div></div>";
+        echo "<div class=\"pageElement\"><div class=\"flexRowSpace\"><a class=\"button\" onclick=\"composeMessage();\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
-        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC;";
+        $sql = "SELECT inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB*5) . ", 5;";
 
         $berichten = $link->query($sql);
         if($berichten === false) {
@@ -79,6 +83,20 @@ if($inputBericht != NULL) {
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
                 echo "<div class=\"pageElement\"><span class=\"datum\">" . date("d-m-Y", strtotime($row["datum"])) . "</span><br/><span class=\"content\">" . $row["inhoud"] . "</span></div>\n";
+            }
+            
+            if($aantalBerichten["aantal"] > 5) {
+                echo "<div class='pageElement flexRowSpace'>";
+                
+                if( !( ($inputB+1)*5 > $aantalBerichten["aantal"]) ) {
+                    echo "<a class='button' href='?p=" . $inputP . "&b=" . ($inputB+1) . "'>Oudere berichten</a>";
+                } else { echo "<a></a>";} //Zodat de "Nieuwere berichten" knop rechts komt te staan
+                
+                if ($inputB > 0) {
+                    echo "<a class='button' href='?p=" . $inputP . "&b=" . ($inputB-1) . "'>Nieuwere berichten</a>";
+                }
+                
+                echo "</div>";
             }
         }
     ?>
