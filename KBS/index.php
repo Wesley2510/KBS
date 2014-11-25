@@ -57,6 +57,12 @@ if($inputBerichtEdit != NULL) {
     if(!(ltrim($inputBerichtEdit, ' ') === '')) {
         $link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID);
     }
+    header( 'Location: ?p=' . $inputP . '&b=' . $inputB ) ;
+}
+
+$inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
+if($inputBerichtVerwijderID != NULL) {
+    $link->query("DELETE FROM bericht WHERE berichtID=" . $inputBerichtVerwijderID);
     header( 'Location: ?p=' . $inputP . '&b=0' ) ;
 }
 ?>
