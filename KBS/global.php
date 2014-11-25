@@ -11,7 +11,7 @@ if ( $GLOBALS["link"]->connect_error) {
 }
 
 function printHeader() {
-   print("<nav id='headerbar'><section><h1>TextBug</h1></section>");
+   print("<nav id='headerbar'><div><h1>TextBug</h1></div>");
             
     //Haal alle text columns uit tabel Menuitem
     $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
@@ -28,18 +28,18 @@ function printHeader() {
 
         for($i = 1; $i < count($list); $i++) {
             //Plaats de text columns met behulp van <section> tags in het menu
-            echo "<section><a href ='index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></section>";
+            echo "<div><a href ='index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
         }
     }
 
-    print("<section style='width:100%;'></section><section><a href='login.php'><h2>Login</h2></a></section></nav>");
+    print("<div style='flex:1;'></div><div><a href='login.php'><h2>Login</h2></a></div></nav>");
 }
 
 function printFooter() {
-    echo "<span id='footer'><div>Icons made by Stephen Hutchings from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a>         is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a><br/>Gemaakt in opdracht van Hogeschool Windesheim</div></span>";
+    echo "<div id='footer'><div>Icons made by Stephen Hutchings from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a>         is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a><br/>Gemaakt in opdracht van Hogeschool Windesheim</div></div>";
 }
 
 function printStyles() {
     echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>";
-    echo "<link rel='stylesheet' type='text/css' href='stylesheet.css' />";
+    echo "<link rel='stylesheet' type='text/css' href='/stylesheet.css' />";
 }
