@@ -1,6 +1,10 @@
 var messageOriginalText;
             
 function composeMessage() {
+    if (document.getElementById("berichtFormText") !== null) {
+        cancelComposingMessage();
+    }
+    
     var topBarElement = document.getElementsByClassName("flexRowSpace")[0].parentNode;
     messageOriginalText = topBarElement.innerHTML;
     topBarElement.innerHTML = "<form action='#' id='berichtForm' method='post'>";
