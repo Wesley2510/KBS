@@ -1,5 +1,7 @@
+//Hierin wordt de originele inhoud van de pageElement bewaard.
 var messageOriginalText;
 
+//Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
 function cancelComposingMessage() {
     document.getElementById("berichtForm").parentNode.innerHTML = messageOriginalText;
 }

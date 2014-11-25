@@ -44,7 +44,7 @@ Index:
 */
 
 /* Fonts voor knoppen */
-#headerbar h2, .pageElement a {
+#headerbar h2, .button {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
@@ -61,7 +61,7 @@ body{
     height: 3.5rem;
     top: 0px;
     
-    background-color: #FF7148;
+    background-color: rgba(255, 220, 200, 0.9);
     box-shadow: 0 0.06rem 0.24rem 0.12rem black;
 }
 
@@ -80,15 +80,12 @@ body{
 #headerbar section {
     display: flex;
     flex: 0 1 auto;
+    flex-direction: row;
+    justify-content: center;
     
     /* De width hier zorgt voor wat ruimte tussen de menuitems */
-    width: 8rem;
+    min-width: 8rem;
     text-align: center;  
-}
-
-#headerbar section:last-of-type {
-    position: absolute;
-    right: 0px;
 }
 
 /*a:link is de normale link, a:visited is de bezochte link*/

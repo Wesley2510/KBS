@@ -32,7 +32,7 @@ function printHeader() {
         }
     }
 
-    print("<section><a href='login.php'><h2>Login</h2></a></section></nav>");
+    print("<section style='width:100%;'></section><section><a href='login.php'><h2>Login</h2></a></section></nav>");
 }
 
 function printFooter() {
