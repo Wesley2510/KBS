@@ -10,16 +10,16 @@ $pID = null;
 if($inputP === NULL) {
     $rows = $link->query("SELECT paginaID, naam FROM pagina WHERE positie = 1;");
     if($rows === false) {
-        trigger_error(" \n\r Error: \"" . $link->error, E_USER_ERROR);
+        trigger_error("Error: " . $link->error, E_USER_ERROR);
     } else {
         $row = $rows->fetch_assoc();
         $inputP = $row["naam"];
         $pID = $row["paginaID"];
     }
 } else {
-    $rows = $link->query("SELECT paginaID FROM pagina WHERE naam = \"" . $inputP . "\";");
+    $rows = $link->query("SELECT paginaID FROM pagina WHERE naam = '" . $inputP . "';");
     if($rows === false) {
-        trigger_error(" \n\r Error: \"" . $link->error, E_USER_ERROR);
+        trigger_error("Error: " . $link->error, E_USER_ERROR);
     } else {
         $row = $rows->fetch_assoc();
         $pID = $row["paginaID"];
@@ -44,7 +44,7 @@ if($inputBericht != NULL) {
     //Controleer of input niet alleen uit spaties bestaat
     if(!(ltrim($inputBericht, ' ') === '')) {
         $day = date("Y-m-d H:i:s", getdate()[0]);
-        $link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES (\"" . $inputBericht . "\",\"" . $day . "\"," . $pID . ");");
+        $link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $day . "'," . $pID . ");");
     }
     header( 'Location: ?p=' . $inputP . '&b=0' ) ;
 }
@@ -70,7 +70,7 @@ if($inputBericht != NULL) {
         if ($aantalBerichten["aantal"] === "1") {
             $unit = "bericht";
         }
-        echo "<div class=\"pageElement\"><div class=\"flexRowSpace\"><a class=\"button\" onclick=\"composeMessage();\" href=\"#\">Nieuw bericht</a><span class=\"textRightAlign\">" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
+        echo "<div class='pageElement'><div class='flexRowSpace'><a class='button' onclick='composeMessage();' href='#'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
     
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
@@ -78,13 +78,17 @@ if($inputBericht != NULL) {
 
         $berichten = $link->query($sql);
         if($berichten === false) {
-            trigger_error("SQL query: \"" . $sql .  "\" \n\r Error: \"" . $link->error, E_USER_ERROR);
+            trigger_error("SQL query: " . $sql .  " \n\r Error: " . $link->error, E_USER_ERROR);
         } else {
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
-                echo "<div class=\"pageElement\"><span class=\"datum\">" . date("d-m-Y", strtotime($row["datum"])) . "</span><br/><span class=\"content\">" . $row["inhoud"] . "</span></div>\n";
+                echo "<div class='pageElement'>";
+                echo "<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
+                echo "<br/><span class='content'>" . $row["inhoud"] . "</span>";
+                echo "</div>\n";
             }
             
+            //Plaats een pageElement om door de oudere berichten te navigeren
             if($aantalBerichten["aantal"] > 5) {
                 echo "<div class='pageElement flexRowSpace'>";
                 
