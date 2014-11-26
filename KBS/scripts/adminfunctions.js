@@ -7,7 +7,11 @@ function cancelComposingMessage() {
 }
 
 function submit() {
-    document.forms["berichtForm"].submit();
+    if(document.forms["berichtForm"] !== undefined) {
+        document.forms["berichtForm"].submit();
+    } else if(document.forms["menuForm"] !== undefined) {
+        document.forms["menuForm"].submit();
+    }
 }
 
 function composeMessage() {
@@ -63,7 +67,28 @@ function deleteWarning(berichtNum, ID) {
 
 
 
-
 function moveMenuItem(position) {
     document.forms["moveDownForm" + position].submit();
+}
+
+function cancelMenuItemEdit() {
+    document.getElementById("menuForm").parentNode.innerHTML = messageOriginalText;
+}
+
+function editMenuItem(itemNum) {
+    if (document.getElementById("menuForm") !== null) {
+        cancelMenuItemEdit();
+    }
+    
+    var pageElement = document.getElementById("menuItem" + itemNum);
+    var menuItemText = document.getElementById("menuItemText" + itemNum).innerHTML;
+    
+    messageOriginalText = pageElement.innerHTML;
+    pageElement.innerHTML = "<form action='#' id='menuForm' method='post'>";
+    pageElement.innerHTML += "<a class='button' id='buttonBewerk'>Bewerk</a><input type='text' class='textbox' style='font-size:1.2em;' id='menuFormText' form='menuForm' name='menuItemEdited'></textarea><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
+    pageElement.innerHTML += "</form>";
+    
+    document.getElementById("menuFormText").value = menuItemText;
+    document.getElementById("buttonBewerk").addEventListener("click", submit);
+    document.getElementById("buttonVerwijder").addEventListener("click", function() { /*deleteWarning(berichtNum, ID);*/});
 }

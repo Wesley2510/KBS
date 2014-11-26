@@ -42,9 +42,6 @@ Index:
     .warningText
         Waarschuwingstext die getoont wordt als op de verwijderknop geklikt is.
 
-    #berichtFormText
-        Textarea momenteel gebruikt voor plaatsen van bericht.
-
     #footer
         De footer
 */
@@ -173,10 +170,15 @@ a:active.button {
     margin-left: 1.25rem;
 }
 
+.pageElement h2 {
+    margin: 0.25rem;
+}
+
 .flexRowSpace {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .iconEdit {
@@ -189,12 +191,21 @@ a:active.button {
 .iconEdit:hover {
     cursor: pointer;
 }
+.iconDown {
+    margin: 0.25rem;
+    
+    width: 2rem;
+    height: 2rem;
+}
+.iconDown:hover {
+    cursor: pointer;
+}
 
 .warningText {
     text-align: center;
 }
 
-#berichtFormText {
+textarea, .textbox {
     margin-left: auto;
     margin-right: auto;
     width: calc(100% - 0.96rem);

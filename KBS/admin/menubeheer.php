@@ -7,8 +7,16 @@ include_once '../global.php';
 $rowDown = filter_input(INPUT_POST, "rowDown");
 if($rowDown != NULL && is_numeric($rowDown)) {
     $tempID = $GLOBALS["link"]->query("SELECT paginaID FROM pagina WHERE positie =" . $rowDown)->fetch_assoc()["paginaID"];
-    $GLOBALS["link"]->query("UPDATE pagina SET positie=" . $rowDown . " WHERE positie =" . ($rowDown + 1));
-    $GLOBALS["link"]->query("UPDATE pagina SET positie=" . ($rowDown + 1) . " WHERE paginaID =" . $tempID);
+    $GLOBALS["link"]->query("UPDATE pagina SET positie =" . $rowDown . " WHERE positie =" . ($rowDown + 1));
+    $GLOBALS["link"]->query("UPDATE pagina SET positie =" . ($rowDown + 1) . " WHERE paginaID =" . $tempID);
+    header( 'Location: #' ) ;
+}
+
+//Code om menuItem te hernoemen
+$menuItemEditedPos = filter_input(INPUT_POST, "menuItemEditedPos");
+if($menuItemEditedPos != NULL && is_numeric($menuItemEditedPos)) {
+    $menuItemEdited = filter_input(INPUT_POST, "menuItemEdited");
+    $GLOBALS["link"]->query("UPDATE pagina SET naam ='" . $menuItemEdited . "' WHERE positie =" . $menuItemEditedPos);
     header( 'Location: #' ) ;
 }
 ?>
@@ -38,12 +46,12 @@ if($rowDown != NULL && is_numeric($rowDown)) {
 
             $listCount = count($list);
             for($i = 1; $i < $listCount; $i++) {
-                echo "<div class='pageElement flexRowSpace'>";
+                echo "<div id='menuItem" . $i . "' class='pageElement flexRowSpace'>";
                 if($i < $listCount - 1) {
-                    echo "<form id='moveDownForm" . $i . "' action='#' method='post'><input form='moveDownForm" . $i . "' type='hidden' name='rowDown' value='" . $i . "' /><img src='../imgs/the13.svg' alt='Positie omlaag' onclick='moveMenuItem(" . $i . ");' style='cursor: pointer;' /></form>";
-                }
-                echo "<span>" . $list[$i] . "</span>";
-                echo "<div style='flex:1;'></div></div>";
+                    echo "<form id='moveDownForm" . $i . "' action='#' method='post'><input form='moveDownForm" . $i . "' type='hidden' name='rowDown' value='" . $i . "' /><img src='../imgs/the13.svg' alt='Positie omlaag' class='iconDown' onclick='moveMenuItem(" . $i . ");'/></form>";
+                } else { echo "<div class='iconDown' style='cursor: default;'></div>"; }
+                echo "<h2 id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
+                echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editMenuItem(" . $i . ")' /></div>";
             }
         }
         ?>
