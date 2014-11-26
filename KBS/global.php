@@ -4,6 +4,8 @@
 Lewis Clement
 */
 
+date_default_timezone_set('Europe/Amsterdam');
+
  $GLOBALS["link"] = new mysqli("127.0.0.1", "root", "usbw", "Textbug", 3307);
 
 if ( $GLOBALS["link"]->connect_error) {
