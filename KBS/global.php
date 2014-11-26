@@ -41,5 +41,13 @@ function printFooter() {
 
 function printStyles() {
     echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>";
-    echo "<link rel='stylesheet' type='text/css' href='/stylesheet.css' />";
+    echo "<link rel='stylesheet' type='text/css' href='/styles/stylesheet.css' />";
+}
+
+function printScripts() {
+    
+}
+
+function printAdminScripts() {
+    echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>";
 }

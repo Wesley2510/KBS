@@ -74,7 +74,8 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
 
         <?php printStyles(); ?>
         
-        <script src="adminfunctions.js" type="text/javascript" charset="utf-8"></script>
+        <?php printScripts(); ?>
+        <?php printAdminScripts(); ?>
     </head>
     <body>
 
