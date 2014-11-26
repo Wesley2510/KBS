@@ -101,16 +101,16 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
             $berichtNum = 0;
             while($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
-                echo "<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
-                echo "<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
+                echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
+                echo "\n\t\t<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
                 echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";
-                echo "<br/><span class='content'>" . $row["inhoud"] . "</span>";
-                echo "</div>\n";
+                echo "<br/>\n\t\t<span class='content'>\n\t\t\t" . $row["inhoud"] . "\n\t\t</span>";
+                echo "\n\t</div>";
             }
             
             //Plaats een pageElement om door de oudere berichten te navigeren
             if($aantalBerichten["aantal"] > 5) {
-                echo "<div class='pageElement flexRowSpace'>";
+                echo "\n\t<div class='pageElement flexRowSpace'>";
                 
                 if( !( ($inputB+1)*5 >= $aantalBerichten["aantal"]) ) {
                     echo "<a class='button' href='?p=" . $inputP . "&amp;b=" . ($inputB+1) . "'>Oudere berichten</a>";
@@ -120,7 +120,7 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
                     echo "<a class='button' href='?p=" . $inputP . "&amp;b=" . ($inputB-1) . "'>Nieuwere berichten</a>";
                 }
                 
-                echo "</div>";
+                echo "\n\t</div>";
             }
         }
     ?>
@@ -130,27 +130,27 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
     <?php 
     //Script om na bewerking van bericht te focussen op de bijbehorende pageElement.
     //Deze methode is gebruikt omdat met gewone internal links (#bericht) het bericht onder de menubar landde.
-            $berichtFocus = filter_input(INPUT_GET, "bericht");
-            if($berichtFocus != NULL && is_numeric($berichtFocus)) {
-                //Bestaat uit convertRem, een functie om rem values naar px te vertalen,
-                //en getPosition om de y positie van het object te verkrijgen.
-                //Vervolgens scrolled de pagina naar de y van de pageElement - 4.4rem
-                echo "<script type='text/javascript'>
-                function convertRem(value) {
-                    return value * parseFloat(getComputedStyle(document.documentElement).fontSize);
-                }
+    $berichtFocus = filter_input(INPUT_GET, "bericht");
+    if($berichtFocus != NULL && is_numeric($berichtFocus)) {
+        //Bestaat uit convertRem, een functie om rem values naar px te vertalen,
+        //en getPosition om de y positie van het object te verkrijgen.
+        //Vervolgens scrolled de pagina naar de y van de pageElement - 4.4rem
+        echo "<script type='text/javascript'>
+        function convertRem(value) {
+            return value * parseFloat(getComputedStyle(document.documentElement).fontSize);
+        }
 
-                function getPosition(element) {
-                    var yPosition = 0;
+        function getPosition(element) {
+            var yPosition = 0;
 
-                    while(element) {
-                        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-                        element = element.offsetParent;
-                    }
-                    return yPosition;
-                }
-                window.scrollTo(0, getPosition(document.getElementById(\"bericht\"+" . $berichtFocus . ")) - convertRem(4.4));</script>";
+            while(element) {
+                yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                element = element.offsetParent;
             }
-        ?>
+            return yPosition;
+        }
+        window.scrollTo(0, getPosition(document.getElementById(\"bericht\"+" . $berichtFocus . ")) - convertRem(4.4));</script>";
+    }
+    ?>
     </body>
 </html>
