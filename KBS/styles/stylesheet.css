@@ -229,10 +229,28 @@ textarea, .textbox {
     .pageElement {
         width: 100%;
     }
+    
+    .flexAdjust {
+        flex: 0.8;
+    }
 }
 
-@media screen and (min-width: 35rem) {
+@media screen and (min-width: 35rem) and (max-width: 45rem) {
     .pageElement {
         width: 80%;
+    }
+    
+    .flexAdjust {
+        flex: 0.7;
+    }
+}
+
+@media screen and (min-width: 45rem) {
+    .pageElement {
+        width: 75%;
+    }
+    
+    .flexAdjust {
+        flex: 0.6;
     }
 }

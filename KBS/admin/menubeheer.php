@@ -85,7 +85,7 @@ if($newMenuItemName != NULL) {
                 if($i < $listCount - 1) {
                     echo "<form id='moveDownForm" . $i . "' action='#' method='post'><input form='moveDownForm" . $i . "' type='hidden' name='rowDown' value='" . $i . "' /><img src='../imgs/the13.svg' alt='Positie omlaag' class='iconDown' onclick='moveMenuItem(" . $i . ");'/></form>";
                 } else { echo "<div class='iconDown' style='cursor: default;'></div>"; }
-                echo "<div class='flexRowSpace' style='flex:0.6;'><h2 id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
+                echo "<div class='flexRowSpace flexAdjust'><h2 id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
                 echo $aantalBerichten . " berichten</div>";
                 echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editMenuItem(" . $i . "," . $aantalBerichten . ")' /></div>";
             }
