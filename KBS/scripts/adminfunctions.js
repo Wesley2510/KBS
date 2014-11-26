@@ -25,10 +25,10 @@ function composeMessage() {
     
     var pageElement = document.getElementById("buttonPlaats").parentNode.parentNode;
     messageOriginalText = pageElement.innerHTML;
-    pageElement.innerHTML = "<form action='#' id='berichtForm' method='post'>";
-    pageElement.innerHTML += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
-    pageElement.innerHTML += "<div class='flexRowSpace'><a class='button' id='buttonPlaats'>Plaats bericht</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
-    pageElement.innerHTML += "</form>";
+    var temp = "<form action='#' id='berichtForm' method='post'></form>";
+    temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
+    temp += "<div class='flexRowSpace'><a class='button' id='buttonPlaats'>Plaats bericht</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    pageElement.innerHTML = temp;
     
     document.getElementById("buttonPlaats").addEventListener("click", submit);
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
@@ -43,11 +43,11 @@ function editMessage(berichtNum, ID) {
     var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
     
     messageOriginalText = pageElement.innerHTML;
-    pageElement.innerHTML = "<form action='#' id='berichtForm' method='post'>";
-    pageElement.innerHTML += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
-    pageElement.innerHTML += "<div class='flexRowSpace'><a class='button' id='buttonBewerk'>Bewerk bericht</a><a class='button' id='buttonVerwijder'>Verwijder</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
-    pageElement.innerHTML += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
-    pageElement.innerHTML += "</form>";
+    var temp = "<form action='#' id='berichtForm' method='post'></form>";
+    temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
+    temp += "<div class='flexRowSpace'><a class='button' id='buttonBewerk'>Bewerk bericht</a><a class='button' id='buttonVerwijder'>Verwijder</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
+    pageElement.innerHTML = temp;
     
     document.getElementById("berichtFormText").value = pageElementContent;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
@@ -84,9 +84,9 @@ function editMenuItem(itemNum, berichtCount) {
     var menuItemText = document.getElementById("menuItemText" + itemNum).innerHTML;
     
     messageOriginalText = pageElement.innerHTML;
-    pageElement.innerHTML = "<form action='#' id='menuForm' method='post'>";
-    pageElement.innerHTML += "<a class='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
-    pageElement.innerHTML += "</form>";
+    var temp = "<form action='#' id='menuForm' method='post'></form>";
+    temp += "<a class='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
+    pageElement.innerHTML = temp;
     
     document.getElementById("menuFormText").value = menuItemText;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
