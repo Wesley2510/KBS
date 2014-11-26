@@ -113,7 +113,7 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
             echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
             echo "\n\t\t<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
             echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";
-            echo "<br/>\n\t\t<span class='content'>\n\t\t\t" . $row["inhoud"] . "\n\t\t</span>";
+            echo "<br/>\n\t\t<span class='content'>" . $row["inhoud"] . "</span>";
             echo "\n\t</div>";
         }
 
