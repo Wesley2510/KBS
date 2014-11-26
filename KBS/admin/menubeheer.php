@@ -26,6 +26,19 @@ if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
     $paginaToDeleteID = $link->query("SELECT paginaID FROM pagina WHERE positie =" . $paginaToDeletePos)->fetch_assoc()["paginaID"];
     $link->query("DELETE FROM bericht WHERE pagina =" . $paginaToDeleteID);
     $link->query("DELETE FROM pagina WHERE paginaID =" . $paginaToDeleteID);
+    
+    $paginasHigherPos = $link->query("SELECT paginaID FROM pagina WHERE positie > " . $paginaToDeletePos . " ORDER BY positie ASC;");
+    $i = 0;
+    while($row = $paginasHigherPos->fetch_assoc()) {
+        $pID = $row["paginaID"];
+        if($pID === NULL) {
+            break;
+        }
+        
+        $link->query("UPDATE pagina SET positie=" . ($paginaToDeletePos + $i) . " WHERE paginaID=" . $pID);
+        $i++;
+    }
+    
     header( 'Location: #' ) ;
 }
 

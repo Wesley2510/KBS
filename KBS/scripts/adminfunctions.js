@@ -99,9 +99,13 @@ function deleteMenuItem(itemNum, berichtCount) {
     var temp = "<form class='flexRowSpace' style='flex: 1;flex-direction:column;justify-content:center;' action='#' id='menuForm' method='post' />";
     temp += "<h2 class='warningText'>Weet u zeker dat deze pagina verwijderd moet worden?</h2><h3 class='warningText'>Er zullen " + berichtCount + " berichten verwijderd worden!</h3>";
     temp += "<div class='flexRowSpace' style='width:100%;'><a class='button' id='buttonJa'>Ja</a><a class='button' id='buttonNee'>Nee</a></div>";
-    temp += "<input type='hidden' name='paginaToDeletePos' value='" + itemNum + "' form='menuForm'>";
+    temp += "<input type='hidden' name='paginaToDeletePos' value='" + itemNum + "' form='menuForm' />";
     temp += "</form>";
     pageElement.innerHTML = temp;
+    
+    if(berichtCount === 0) {
+        submit();
+    }
 
     document.getElementById("buttonJa").addEventListener("click", submit);
     document.getElementById("buttonNee").addEventListener("click", function() { cancelComposingMessage(); editMenuItem(itemNum, berichtCount); } );
