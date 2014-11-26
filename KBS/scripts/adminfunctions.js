@@ -3,7 +3,11 @@ var messageOriginalText;
 
 //Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
 function cancelComposingMessage() {
-    document.getElementById("berichtForm").parentNode.innerHTML = messageOriginalText;
+    if(document.forms["berichtForm"] !== undefined) {
+        document.getElementById("berichtForm").parentNode.innerHTML = messageOriginalText;
+    } else if(document.forms["menuForm"] !== undefined) {
+        document.getElementById("menuForm").parentNode.innerHTML = messageOriginalText;
+    }
 }
 
 function submit() {
@@ -71,13 +75,9 @@ function moveMenuItem(position) {
     document.forms["moveDownForm" + position].submit();
 }
 
-function cancelMenuItemEdit() {
-    document.getElementById("menuForm").parentNode.innerHTML = messageOriginalText;
-}
-
 function editMenuItem(itemNum, berichtCount) {
     if (document.getElementById("menuForm") !== null) {
-        cancelMenuItemEdit();
+        cancelComposingMessage();
     }
     
     var pageElement = document.getElementById("menuItem" + itemNum);
@@ -85,10 +85,25 @@ function editMenuItem(itemNum, berichtCount) {
     
     messageOriginalText = pageElement.innerHTML;
     pageElement.innerHTML = "<form action='#' id='menuForm' method='post'>";
-    pageElement.innerHTML += "<a class='button' id='buttonBewerk'>Bewerk</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'></textarea><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
+    pageElement.innerHTML += "<a class='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'></textarea><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
     pageElement.innerHTML += "</form>";
     
     document.getElementById("menuFormText").value = menuItemText;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
-    document.getElementById("buttonVerwijder").addEventListener("click", function() { /*deleteWarning(berichtNum, ID);*/});
+    document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteMenuItem(itemNum, berichtCount);});
+}
+
+function deleteMenuItem(itemNum, berichtCount) {
+    var pageElement = document.getElementById("menuForm").parentNode;
+
+    editOriginalText = pageElement.innerHTML;
+    var temp = "<form class='flexRowSpace' style='flex: 1;flex-direction:column;justify-content:center;' action='#' id='menuForm' method='post' />";
+    temp += "<h2 class='warningText'>Weet u zeker dat deze pagina verwijderd moet worden?</h2><h3 class='warningText'>Er zullen " + berichtCount + " berichten verwijderd worden!</h3>";
+    temp += "<div class='flexRowSpace' style='width:100%;'><a class='button' id='buttonJa'>Ja</a><a class='button' id='buttonNee'>Nee</a></div>";
+    temp += "<input type='hidden' name='paginaToDeletePos' value='" + itemNum + "' form='menuForm'>";
+    temp += "</form>";
+    pageElement.innerHTML = temp;
+
+    document.getElementById("buttonJa").addEventListener("click", submit);
+    document.getElementById("buttonNee").addEventListener("click", function() { cancelComposingMessage(); editMenuItem(itemNum, berichtCount); } );
 }

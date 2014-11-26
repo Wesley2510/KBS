@@ -19,6 +19,15 @@ if($menuItemEditedPos != NULL && is_numeric($menuItemEditedPos)) {
     $link->query("UPDATE pagina SET naam ='" . $menuItemEdited . "' WHERE positie =" . $menuItemEditedPos);
     header( 'Location: #' ) ;
 }
+
+//Code om pagina te verwijderen
+$paginaToDeletePos = filter_input(INPUT_POST, "paginaToDeletePos");
+if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
+    $paginaToDeleteID = $link->query("SELECT paginaID FROM pagina WHERE positie =" . $paginaToDeletePos)->fetch_assoc()["paginaID"];
+    $link->query("DELETE FROM bericht WHERE pagina =" . $paginaToDeleteID);
+    $link->query("DELETE FROM pagina WHERE paginaID =" . $paginaToDeleteID);
+    header( 'Location: #' ) ;
+}
 ?>
 
 <html>
