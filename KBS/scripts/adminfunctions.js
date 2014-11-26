@@ -75,7 +75,7 @@ function cancelMenuItemEdit() {
     document.getElementById("menuForm").parentNode.innerHTML = messageOriginalText;
 }
 
-function editMenuItem(itemNum) {
+function editMenuItem(itemNum, berichtCount) {
     if (document.getElementById("menuForm") !== null) {
         cancelMenuItemEdit();
     }
@@ -85,7 +85,7 @@ function editMenuItem(itemNum) {
     
     messageOriginalText = pageElement.innerHTML;
     pageElement.innerHTML = "<form action='#' id='menuForm' method='post'>";
-    pageElement.innerHTML += "<a class='button' id='buttonBewerk'>Bewerk</a><input type='text' class='textbox' style='font-size:1.2em;' id='menuFormText' form='menuForm' name='menuItemEdited'></textarea><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
+    pageElement.innerHTML += "<a class='button' id='buttonBewerk'>Bewerk</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'></textarea><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
     pageElement.innerHTML += "</form>";
     
     document.getElementById("menuFormText").value = menuItemText;

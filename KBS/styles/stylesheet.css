@@ -215,6 +215,9 @@ textarea, .textbox {
     border: 0.15rem solid black;
     box-shadow: inset 0px 0px 10px -5px rgba(0,0,0,0.75);
 }
+.textbox {
+    height: 1.5rem;
+}
 
 #footer {
     text-align: center;
