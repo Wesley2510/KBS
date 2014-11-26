@@ -7,7 +7,7 @@ include_once("global.php");
  * $pID                 = de ID bij de paginanaam. Deze wordt uit de database gehaald.
  * $inputB              = de GET value voor b (bladzij)
  * $inputBericht        = Form input voor een nieuw bericht
- * $inputBerichtEditID  = Form input van ID van bewerkt bericht
+ * $inputBerichtEditID  = Form input van ID van te bewerken bericht
  * $inputBerichtEdit    = Form input van bewerkt bericht
  * $inputBerichtVerwijderID = Form input van ID voor te verijderen bericht
  */
@@ -84,7 +84,7 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
         <meta charset="UTF-8">
         <?php echo "<title>TextBug - " . $inputP . "</title>"; ?>
 
-        <?php printStyles(); printScripts(); printAdminScripts(); ?>
+        <?php printStyles(); printScripts(); ?>
     </head>
     <body>
 

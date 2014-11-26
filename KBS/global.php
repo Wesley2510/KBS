@@ -16,7 +16,7 @@ function printHeader() {
     //Haal alle text columns uit tabel Menuitem
     $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
     if($menuitems === false) {
-        trigger_error("SQL: \"" . sql .  "\" \n\r Error: \"" . $GLOBALS["link"]->error, E_USER_ERROR);
+        trigger_error("Error:" . $GLOBALS["link"]->error, E_USER_ERROR);
     } else {
         $list = array();
 
@@ -27,8 +27,7 @@ function printHeader() {
         $list[0] = NULL;
 
         for($i = 1; $i < count($list); $i++) {
-            //Plaats de text columns met behulp van <section> tags in het menu
-            echo "<div><a href ='index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
+            echo "<div><a href ='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
         }
     }
 
@@ -45,9 +44,8 @@ function printStyles() {
 }
 
 function printScripts() {
-    echo "";
-}
-
-function printAdminScripts() {
-    echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
+    //if(admin ingelogd)
+    {
+        echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
+    }
 }

@@ -60,3 +60,10 @@ function deleteWarning(berichtNum, ID) {
     document.getElementById("buttonJa").addEventListener("click", submit);
     document.getElementById("buttonNee").addEventListener("click", function() { cancelComposingMessage(); editMessage(berichtNum, ID); } );
 }
+
+
+
+
+function moveMenuItem(position) {
+    document.forms["moveDownForm" + position].submit();
+}

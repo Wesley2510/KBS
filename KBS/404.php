@@ -10,7 +10,7 @@ include_once("global.php");
         <meta charset="UTF-8">
         <title>TextBug - 404</title>
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+        <?php printStyles(); ?>
     </head>
     <body>
 
