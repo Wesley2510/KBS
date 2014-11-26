@@ -31,7 +31,7 @@ function printHeader() {
         }
     }
 
-    echo "<div style='flex:1;'></div><div><a href='login.php'><h2>Login</h2></a></div></nav>";
+    echo "<div style='flex:1;'></div><div><a href='/admin/'><h2>Login</h2></a></div></nav>";
 }
 
 function printFooter() {
