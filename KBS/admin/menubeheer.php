@@ -28,6 +28,16 @@ if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
     $link->query("DELETE FROM pagina WHERE paginaID =" . $paginaToDeleteID);
     header( 'Location: #' ) ;
 }
+
+//Code om menuItem aan te maken
+$newMenuItemName = filter_input(INPUT_POST, "newMenuItemName");
+if($newMenuItemName != NULL) {
+    if(!(ltrim($newMenuItemName, ' ') === '')) {
+        $highestPos = $link->query("SELECT MAX(positie) AS max FROM pagina;")->fetch_assoc()["max"];
+        $link->query("INSERT INTO pagina(naam, positie) VALUES ('" . $newMenuItemName . "'," . ($highestPos + 1) . ");");
+    }
+    header('Location: #');
+}
 ?>
 
 <html>
@@ -68,6 +78,7 @@ if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
             }
         }
         ?>
+        <div id="newPageElement" class="pageElement flexRowSpace"><a class="button" onclick="createNewMenuItem()">Nieuwe pagina</a></div>
         
         <?php printFooter() ?>
         
