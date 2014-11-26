@@ -36,18 +36,18 @@ function printHeader() {
 }
 
 function printFooter() {
-    echo "<div id='footer'><div>Icons made by Stephen Hutchings from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a>         is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a><br/>Gemaakt in opdracht van Hogeschool Windesheim</div></div>";
+    echo "<div id='footer'><div>Icons made by Stephen Hutchings from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a> is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a><br/>Gemaakt in opdracht van Hogeschool Windesheim</div></div>";
 }
 
 function printStyles() {
-    echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>";
-    echo "<link rel='stylesheet' type='text/css' href='/styles/stylesheet.css' />";
+    echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>\n\t\t";
+    echo "<link rel='stylesheet' type='text/css' href='/styles/stylesheet.css' />\n\t\t";
 }
 
 function printScripts() {
-    
+    echo "";
 }
 
 function printAdminScripts() {
-    echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>";
+    echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
 }
