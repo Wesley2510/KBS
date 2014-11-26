@@ -57,7 +57,7 @@ if($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
     if(!(ltrim($inputBerichtEdit, ' ') === '')) {
         $link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID);
     }
-    header( 'Location: ?p=' . $inputP . '&b=' . $inputB . "#bericht" . $inputBerichtEditID) ;
+    header( 'Location: ?p=' . $inputP . '&b=' . $inputB . "&bericht=" . $inputBerichtEditID) ;
 }
 
 $inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
@@ -126,5 +126,31 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
     ?>
         
     <?php printFooter(); ?>
+    
+    <?php 
+    //Script om na bewerking van bericht te focussen op de bijbehorende pageElement.
+    //Deze methode is gebruikt omdat met gewone internal links (#bericht) het bericht onder de menubar landde.
+            $berichtFocus = filter_input(INPUT_GET, "bericht");
+            if($berichtFocus != NULL && is_numeric($berichtFocus)) {
+                //Bestaat uit convertRem, een functie om rem values naar px te vertalen,
+                //en getPosition om de y positie van het object te verkrijgen.
+                //Vervolgens scrolled de pagina naar de y van de pageElement - 4.4rem
+                echo "<script type='text/javascript'>
+                function convertRem(value) {
+                    return value * parseFloat(getComputedStyle(document.documentElement).fontSize);
+                }
+
+                function getPosition(element) {
+                    var yPosition = 0;
+
+                    while(element) {
+                        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                        element = element.offsetParent;
+                    }
+                    return yPosition;
+                }
+                window.scrollTo(0, getPosition(document.getElementById(\"bericht\"+" . $berichtFocus . ")) - convertRem(4.4));</script>";
+            }
+        ?>
     </body>
 </html>

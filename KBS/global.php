@@ -11,7 +11,7 @@ if ( $GLOBALS["link"]->connect_error) {
 }
 
 function printHeader() {
-   print("<nav id='headerbar'><div><h1>TextBug</h1></div>");
+   echo "<nav id='headerbar'><div><h1>TextBug</h1></div>";
             
     //Haal alle text columns uit tabel Menuitem
     $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
@@ -32,7 +32,7 @@ function printHeader() {
         }
     }
 
-    print("<div style='flex:1;'></div><div><a href='login.php'><h2>Login</h2></a></div></nav>");
+    echo "<div style='flex:1;'></div><div><a href='login.php'><h2>Login</h2></a></div></nav>";
 }
 
 function printFooter() {
