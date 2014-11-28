@@ -29,11 +29,11 @@ function printHeader() {
         $list[0] = NULL;
 
         for($i = 1; $i < count($list); $i++) {
-            echo "<div><a href ='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
+            echo "<div class='menuItem'><a href='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
         }
     }
 
-    echo "<div style='flex:1;'></div><div><a href='/admin/'><h2>Login</h2></a></div></nav>";
+    echo "<div style='flex:1;'></div><div class='menuItem'><a href='/admin/'><h2>Login</h2></a></div></nav>";
 }
 
 function printFooter() {
