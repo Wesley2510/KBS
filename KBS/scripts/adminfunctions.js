@@ -95,6 +95,17 @@ function editMenuItem(itemNum, berichtCount) {
 
 function deleteMenuItem(itemNum, berichtCount) {
     var pageElement = document.getElementById("menuForm").parentNode;
+    
+    //Als er maar 0 berichten op de pagina staan, submit direct.
+    if(berichtCount === 0) {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", document.URL, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        xmlhttp.send("paginaToDeletePos=" + itemNum);
+        
+        location.reload(); 
+        return;
+    }
 
     var temp = "<form class='flexRowSpace' style='flex: 1;flex-direction:column;justify-content:center;' action='#' id='menuForm' method='post' />";
     temp += "<h2 class='warningText'>Weet u zeker dat deze pagina verwijderd moet worden?</h2><h3 class='warningText'>Er zullen " + berichtCount + " berichten verwijderd worden!</h3>";
@@ -103,9 +114,7 @@ function deleteMenuItem(itemNum, berichtCount) {
     temp += "</form>";
     pageElement.innerHTML = temp;
     
-    if(berichtCount === 0) {
-        submit();
-    }
+    
 
     document.getElementById("buttonJa").addEventListener("click", submit);
     document.getElementById("buttonNee").addEventListener("click", function() { cancelComposingMessage(); editMenuItem(itemNum, berichtCount); } );
