@@ -113,7 +113,7 @@ DROP TABLE IF EXISTS `Textbug`.`pagina` ;
 CREATE  TABLE IF NOT EXISTS `Textbug`.`pagina` (
   `paginaID` TINYINT(4) NOT NULL AUTO_INCREMENT,
   `naam` VARCHAR(45) NOT NULL ,
-  `positie` TINYINT(4) NULL ,
+  `positie` TINYINT(4) NOT NULL ,
   PRIMARY KEY (`paginaID`) )
 ENGINE = InnoDB;
 

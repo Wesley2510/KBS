@@ -30,6 +30,7 @@ if($inputP === NULL) {
     $rows = $link->query("SELECT paginaID FROM pagina WHERE naam = '" . $inputP . "';");
     if($rows === false) {
         trigger_error("Error: " . $link->error, E_USER_ERROR);
+        echo "";
     } else {
         $row = $rows->fetch_assoc();
         $pID = $row["paginaID"];
@@ -54,9 +55,11 @@ if($inputBericht != NULL) {
     //Controleer of input niet alleen uit spaties bestaat
     if(!(ltrim($inputBericht, ' ') === '')) {
         $day = date("Y-m-d H:i:s", getdate()[0]);
-        $link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $day . "'," . $pID . ");");
+        if(!$link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $day . "'," . $pID . ");")){
+            trigger_error("Fout bij toevoegen nieuw bericht: " . $link->error, E_USER_ERROR);
+        }
     }
-    header( 'Location: ?p=' . $inputP . '&b=0' ) ;
+    header( 'Location: ?p=' . $inputP . '&b=0' );
 }
 
 //Code voor bewerken bericht
@@ -66,16 +69,20 @@ if($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
     
     //Controleer of input niet alleen uit spaties bestaat
     if(!(ltrim($inputBerichtEdit, ' ') === '')) {
-        $link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID);
+        if(!$link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID)){
+            trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
+        }
     }
-    header( 'Location: ?p=' . $inputP . '&b=' . $inputB . "&bericht=" . $inputBerichtEditID) ;
+    header( 'Location: ?p=' . $inputP . '&b=' . $inputB . "&pos=" . $inputBerichtEditID);
 }
 
 //Code voor verwijderen bericht
 $inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
 if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
-    $link->query("DELETE FROM bericht WHERE berichtID=" . $inputBerichtVerwijderID);
-    header( 'Location: ?p=' . $inputP . '&b=0' ) ;
+    if(!$link->query("DELETE FROM bericht WHERE berichtID=" . $inputBerichtVerwijderID)){
+        trigger_error("Fout bij verwijderen bericht: " . $link->error, E_USER_ERROR);
+    }
+    header( 'Location: ?p=' . $inputP . '&b=0' );
 }
 ?>
 
@@ -93,6 +100,10 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
     <?php
     $sql = "SELECT COUNT(berichtID) AS aantal FROM bericht WHERE pagina =" . $pID;
     $aantalBerichten = $link->query($sql)->fetch_assoc();
+    if(!$aantalBerichten){
+        trigger_error("Fout bij ophalen aantal berichten: " . $link->error, E_USER_ERROR);
+    }
+    
     $unit = "berichten";
     if ($aantalBerichten["aantal"] === "1") {
         $unit = "bericht";
@@ -105,7 +116,7 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
 
     $berichten = $link->query($sql);
     if($berichten === false) {
-        trigger_error("SQL query: " . $sql .  " \n\r Error: " . $link->error, E_USER_ERROR);
+        trigger_error("Fout bij selecteren berichten. SQL query: " . $sql .  "Error: " . $link->error, E_USER_ERROR);
     } else {
         $berichtNum = 0;
         while($row = $berichten->fetch_assoc()) {
@@ -139,7 +150,7 @@ if($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
     <?php 
     //Script om na bewerking van bericht te focussen op de bijbehorende pageElement.
     //Deze methode is gebruikt omdat met gewone internal links (#bericht) het bericht onder de menubar landde.
-    $berichtFocus = filter_input(INPUT_GET, "bericht");
+    $berichtFocus = filter_input(INPUT_GET, "pos");
     if($berichtFocus != NULL && is_numeric($berichtFocus)) {
         //Bestaat uit convertRem, een functie om rem values naar px te vertalen,
         //en getPosition om de y positie van het object te verkrijgen.

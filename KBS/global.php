@@ -6,7 +6,7 @@ Lewis Clement
 
 date_default_timezone_set('Europe/Amsterdam');
 
- $GLOBALS["link"] = new mysqli("127.0.0.1", "root", "usbw", "Textbug", 3307);
+$GLOBALS["link"] = new mysqli("127.0.0.1", "root", "usbw", "Textbug", 3307);
 
 if ( $GLOBALS["link"]->connect_error) {
   trigger_error('Database connection failed: '  . $link->connect_error, E_USER_ERROR);
@@ -19,6 +19,7 @@ function printHeader() {
     $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
     if($menuitems === false) {
         trigger_error("Error:" . $GLOBALS["link"]->error, E_USER_ERROR);
+        echo "<div class='menuItem'><a><h2>Probleem bij laden</h2></a></div>";
     } else {
         $list = array();
 
