@@ -4,6 +4,8 @@
 Lewis Clement
 */
 
+session_start();
+
 date_default_timezone_set('Europe/Amsterdam');
 
 $GLOBALS["link"] = new mysqli("127.0.0.1", "root", "usbw", "Textbug", 3307);
@@ -34,7 +36,12 @@ function printHeader() {
         }
     }
 
-    echo "<div style='flex:1;'></div><div class='menuItem'><a href='/admin/'><h2>Login</h2></a></div></nav>";
+    echo "<div style='flex:1;'></div><div class='menuItem'>";
+    if($_SESSION["loggedin"] != true) {
+        echo "<a href='/login.php'><h2>Login</h2></a></div></nav>";
+    } else {
+        echo "<a href='/admin/'><h2>" . $_SESSION["voornaam"] . " " . $_SESSION["achternaam"] . "</h2></a></div></nav>";
+    }
 }
 
 function printFooter() {

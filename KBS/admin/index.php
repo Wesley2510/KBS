@@ -2,6 +2,10 @@
 
 <?php
 include_once '../global.php';
+
+if(session_status() == PHP_SESSION_NONE) {
+    header("Location: /;");
+}
 ?>
 
 <html>
@@ -30,7 +34,15 @@ include_once '../global.php';
     
     <?php printHeader(); ?>
         
-        <a href="menubeheer.php" class="link"><div class="pageElement pageElementButton"><h2>Menubeheer</h2></div></a>
+        
+        
+    <?php 
+    //if (admin)
+    {
+        echo "<a href='menubeheer.php' class='link'><div class='pageElement pageElementButton'><h2>Menubeheer</h2></div></a>";
+    }
+    echo "<a href='/templogout.php' class='link'><div class='pageElement pageElementButton'><h2>Uitloggen</h2></div></a>";
+    ?>
         
     <?php printFooter(); ?>
         
