@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS `Textbug`.`klant` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `klantID` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(20) NOT NULL ,
+  `wachtwoord` VARCHAR(45) NOT NULL ,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
   `postcode` VARCHAR(7) NOT NULL ,
@@ -21,25 +23,6 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `woonplaats` VARCHAR(45) NOT NULL ,
   `adres` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`klantID`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Textbug`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`user` ;
-
-CREATE  TABLE IF NOT EXISTS `Textbug`.`user` (
-  `username` VARCHAR(20) NOT NULL ,
-  `klant` INT NULL ,
-  `wachtwoord` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`username`) ,
-  INDEX `fk_User_Klant_idx` (`klant` ASC) ,
-  CONSTRAINT `fk_User_Klant`
-    FOREIGN KEY (`klant` )
-    REFERENCES `Textbug`.`klant` (`klantID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
