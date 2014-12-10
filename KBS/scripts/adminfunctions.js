@@ -129,6 +129,8 @@ function deleteMenuItem(itemNum, berichtCount) {
         xmlhttp.open("POST", document.URL, true);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         xmlhttp.send("paginaToDeletePos=" + itemNum);
+                
+        pageElement.innerHTML = "<div></div><h2>Wordt verijderd...</h2>";
         
         location.reload(); 
         return;

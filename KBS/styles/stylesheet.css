@@ -52,7 +52,7 @@ Index:
 }
 
 body{
-    background-color: #C7D0D5;
+    background-color: #E5E5E5;
     margin: 0px;
 }
 
@@ -65,7 +65,7 @@ body{
     top: 0px;
     min-padding-left: 0.8rem;
     
-    background-color: rgba(255, 220, 200, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0 0.06rem 0.24rem 0.12rem black;
 }
 
