@@ -44,47 +44,48 @@ if ($inputP === NULL) {
 }
 
 
-//Vind uit op welke "bladzijde" de gebruiker zich bevind
+//Vind uit op welke "bladzijde" de gebruiker zich bevindt
 $inputB = filter_input(INPUT_GET, "b");
 if (!is_numeric($inputB)) {
     $inputB = 0;
 }
 
-
-//Code voor toevoegen bericht
-$inputBericht = filter_input(INPUT_POST, "bericht");
-if ($inputBericht != NULL) {
-    //Controleer of input niet alleen uit spaties bestaat
-    if (!(ltrim($inputBericht, ' ') === '')) {
-        $day = date("Y-m-d H:i:s", getdate()[0]);
-        if (!$link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $day . "'," . $pID . ");")) {
-            trigger_error("Fout bij toevoegen nieuw bericht: " . $link->error, E_USER_ERROR);
+if(!isset($_SESSION["loggedin"])) {
+    //Code voor toevoegen bericht
+    $inputBericht = filter_input(INPUT_POST, "bericht");
+    if ($inputBericht != NULL) {
+        //Controleer of input niet alleen uit spaties bestaat
+        if (!(ltrim($inputBericht, ' ') === '')) {
+            $day = date("Y-m-d H:i:s", getdate()[0]);
+            if (!$link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $day . "'," . $pID . ");")) {
+                trigger_error("Fout bij toevoegen nieuw bericht: " . $link->error, E_USER_ERROR);
+            }
         }
+        header('Location: ?p=' . $inputP . '&b=0');
     }
-    header('Location: ?p=' . $inputP . '&b=0');
-}
 
-//Code voor bewerken bericht
-$inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
-if ($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
-    $inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited");
+    //Code voor bewerken bericht
+    $inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
+    if ($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
+        $inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited");
 
-    //Controleer of input niet alleen uit spaties bestaat
-    if (!(ltrim($inputBerichtEdit, ' ') === '')) {
-        if (!$link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID)) {
-            trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
+        //Controleer of input niet alleen uit spaties bestaat
+        if (!(ltrim($inputBerichtEdit, ' ') === '')) {
+            if (!$link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID)) {
+                trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
+            }
         }
+        header('Location: ?p=' . $inputP . '&b=' . $inputB . "&pos=" . $inputBerichtEditID);
     }
-    header('Location: ?p=' . $inputP . '&b=' . $inputB . "&pos=" . $inputBerichtEditID);
-}
 
-//Code voor verwijderen bericht
-$inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
-if ($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
-    if (!$link->query("DELETE FROM bericht WHERE berichtID=" . $inputBerichtVerwijderID)) {
-        trigger_error("Fout bij verwijderen bericht: " . $link->error, E_USER_ERROR);
+    //Code voor verwijderen bericht
+    $inputBerichtVerwijderID = filter_input(INPUT_POST, "berichtToDeleteID");
+    if ($inputBerichtVerwijderID != NULL && is_numeric($inputBerichtVerwijderID)) {
+        if (!$link->query("DELETE FROM bericht WHERE berichtID=" . $inputBerichtVerwijderID)) {
+            trigger_error("Fout bij verwijderen bericht: " . $link->error, E_USER_ERROR);
+        }
+        header('Location: ?p=' . $inputP . '&b=0');
     }
-    header('Location: ?p=' . $inputP . '&b=0');
 }
 ?>
 
@@ -107,11 +108,13 @@ printScripts(); ?>
             trigger_error("Fout bij ophalen aantal berichten: " . $link->error, E_USER_ERROR);
         }
 
-        $unit = "berichten";
-        if ($aantalBerichten["aantal"] === "1") {
-            $unit = "bericht";
+        if(isset($_SESSION["loggedin"])) {
+            $unit = "berichten";
+            if ($aantalBerichten["aantal"] === "1") {
+                $unit = "bericht";
+            }
+            echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' role='button' onclick='composeMessage();'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
         }
-        echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' role='button' onclick='composeMessage();'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
 
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
@@ -126,7 +129,7 @@ printScripts(); ?>
                 //Plaats alle berichten in een <div> container met class pageElement
                 echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
                 echo "\n\t\t<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
-                echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";
+                if(isset($_SESSION["loggedin"])) {echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
                 echo "<br/>\n\t\t<span class='content'>" . $row["inhoud"] . "</span>";
                 echo "\n\t</div>";
             }

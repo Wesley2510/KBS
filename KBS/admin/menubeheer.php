@@ -3,6 +3,11 @@
 <?php 
 include_once '../global.php';
 
+if(!isset($_SESSION["loggedin"])) {
+    header("Location: /login.php");
+    die();
+}
+
 //Code om menuitem een positie omlaag te verplaatsen
 $rowDown = filter_input(INPUT_POST, "rowDown");
 if($rowDown != NULL && is_numeric($rowDown)) {
@@ -21,7 +26,7 @@ if($rowDown != NULL && is_numeric($rowDown)) {
 //Code om menuItem te hernoemen
 $menuItemEditedPos = filter_input(INPUT_POST, "menuItemEditedPos");
 if($menuItemEditedPos != NULL && is_numeric($menuItemEditedPos)) {
-    $menuItemEdited = filter_input(INPUT_POST, "menuItemEdited");
+    $menuItemEdited = preg_replace("/[^A-Za-z0-9 ]/", '', filter_input(INPUT_POST, "menuItemEdited"));
     if(!$link->query("UPDATE pagina SET naam ='" . $menuItemEdited . "' WHERE positie =" . $menuItemEditedPos)){
         trigger_error("Fout bij bewerken naam pagina: " . $link->error, E_USER_ERROR);
     }

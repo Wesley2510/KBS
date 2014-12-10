@@ -82,6 +82,7 @@ if($inputUsername !== NULL) {
                 ?>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
             </div>
+            <input type="submit" style="display:none;">
         </form>
     <?php
     printFooter()

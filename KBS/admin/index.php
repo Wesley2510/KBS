@@ -3,9 +3,11 @@
 <?php
 include_once '../global.php';
 
-if(session_status() == PHP_SESSION_NONE) {
-    header("Location: /;");
+if(!isset($_SESSION["loggedin"])) {
+    header("Location: /login.php");
+    die();
 }
+
 ?>
 
 <html>
