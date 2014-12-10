@@ -6,7 +6,7 @@ include_once("global.php");
 $inputUsername = filter_input(INPUT_POST, "username");
 $inputPassword = filter_input(INPUT_POST, "password");
 $errorUsername = 0; //0 = No error, 1 = empty username
-$errorPassword = 0; //0 = No error, 1 = empty password
+$errorPassword = 0; //0 = No error, 1 = empty password, 2 = spaces occurring
 if($inputUsername !== NULL) {
     $succes = true;
     if(ltrim($inputUsername, ' ') === '') {
@@ -14,15 +14,16 @@ if($inputUsername !== NULL) {
         $succes = false;
     }
     
-    if(ltrim($inputPassword, ' ') === '') {
+    if($inputPassword == NULL) {
         $errorPassword = 1;
+        $succes = false;
+    } else if(ltrim($inputPassword, ' ') === '') {
+        $errorPassword = 2;
         $succes = false;
     }
     
     if($succes) {
         header('Location: #');
-    } else {
-        $filledUsername = $inputUsername;
     }
 }
 
@@ -42,7 +43,7 @@ if($inputUsername !== NULL) {
         <form class="pageElement" action='#' id='loginForm' method="post">
             <div style="display:flex;flex-direction:column;align-items:center;">
                 <h3>Gebruikersnaam</h3>
-                <input type="text" name="username" <?php if($errorUsername > 0) {echo "class='error'";} echo "value='" . $filledUsername . "'"; ?> />
+                <input type="text" name="username" <?php if($errorUsername > 0) {echo "class='error'";} if($inputUsername !== NULL) {echo "value='" . $inputUsername . "'";} ?> />
                 <?php 
                     if($errorUsername == 1) {
                         echo "<h4 class='error'>Vul A.U.B. een gebruikersnaam in</h4>"; 
@@ -53,6 +54,8 @@ if($inputUsername !== NULL) {
                 <?php 
                     if($errorPassword == 1) {
                         echo "<h4 class='error'>Vul A.U.B. uw wachtwoord in</h4>"; 
+                    } else if($errorPassword == 2) {
+                        echo "<h4 class='error'>Er mogen geen spaties in het wachtwoord voorkomen</h4>"; 
                     }
                 ?>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
