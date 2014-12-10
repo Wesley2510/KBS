@@ -47,6 +47,8 @@ function printStyles() {
 }
 
 function printScripts() {
+    echo "<script src='/scripts/userfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
+    
     //if(admin ingelogd)
     {
         echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
