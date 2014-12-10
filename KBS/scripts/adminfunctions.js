@@ -54,6 +54,33 @@ function editMessage(berichtNum, ID) {
     document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
 }
+function factuurSubmit() {
+    if(document.forms["factuurForm"] !== undefined) {
+        document.forms["factuurForm"].submit();
+    } else if(document.forms["menuForm"] !== undefined) {
+        document.forms["menuForm"].submit();
+    }
+}
+function editFactuur(factuurNum, ID) {
+    if (document.getElementById("factuurForm") !== null) {
+        cancelComposingMessage();
+    }
+    
+    var pageElement = document.getElementById("factuur" + ID);
+    var pageElementContent = pageElement.getElementsByClassName("service")[0].innerHTML;
+    
+    messageOriginalText = pageElement.innerHTML;
+    var temp = "<form action='#' id='factuurForm' method='post'></form>";
+    temp += "<textarea id='factuurFormText' form='factuurForm' name='factuurEdited'></textarea>";
+    temp += "<div class='flexRowSpace'><a class='button' id='buttonBewerk'>Bewerk factuur</a><a class='button' id='buttonVerwijder'>Verwijder</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<input type='hidden' name='factuurEditedID' value='" + ID + "' form='factuurForm'>";
+    pageElement.innerHTML = temp;
+    
+    document.getElementById("factuurFormText").value = pageElementContent;
+    document.getElementById("buttonBewerk").addEventListener("click", submit);
+    document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
+    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+}
 
 function deleteWarning(berichtNum, ID) {
     var pageElement = document.getElementById("berichtForm").parentNode;
