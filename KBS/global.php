@@ -37,7 +37,7 @@ function printHeader() {
     }
 
     echo "<div style='flex:1;'></div><div class='menuItem'>";
-    if($_SESSION["loggedin"] != true) {
+    if(!isset($_SESSION["loggedin"])) {
         echo "<a href='/login.php'><h2>Login</h2></a></div></nav>";
     } else {
         echo "<a href='/admin/'><h2>" . $_SESSION["voornaam"] . " " . $_SESSION["achternaam"] . "</h2></a></div></nav>";

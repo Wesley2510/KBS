@@ -16,6 +16,7 @@ if(session_status() == PHP_SESSION_NONE) {
         
         <style type="text/css">
             .pageElementButton {
+                display: block;
                 background-color: lightgrey;
                 border:0.15rem solid black;
                 text-align: center;
@@ -39,9 +40,9 @@ if(session_status() == PHP_SESSION_NONE) {
     <?php 
     //if (admin)
     {
-        echo "<a href='menubeheer.php' class='link'><div class='pageElement pageElementButton'><h2>Menubeheer</h2></div></a>";
+        echo "<a href='menubeheer.php' class='link pageElement pageElementButton'><h2>Menubeheer</h2></a>";
     }
-    echo "<a href='/templogout.php' class='link'><div class='pageElement pageElementButton'><h2>Uitloggen</h2></div></a>";
+    echo "<a href='/templogout.php' class='link pageElement pageElementButton'><h2>Uitloggen</h2></a>";
     ?>
         
     <?php printFooter(); ?>
