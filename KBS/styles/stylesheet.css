@@ -101,7 +101,7 @@ body{
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
 #headerbar a:hover, a:active {
-    background-color: #EC583A;
+    background-color: #D5D5D5;
 }
 
 a.button {
