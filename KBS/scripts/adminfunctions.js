@@ -27,7 +27,7 @@ function composeMessage() {
     messageOriginalText = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
-    temp += "<div class='flexRowSpace'><a class='button' id='buttonPlaats'>Plaats bericht</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<div class='flexRowSpace'><a role='button' id='buttonPlaats'>Plaats bericht</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     pageElement.innerHTML = temp;
     
     document.getElementById("buttonPlaats").addEventListener("click", submit);
@@ -45,7 +45,7 @@ function editMessage(berichtNum, ID) {
     messageOriginalText = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
-    temp += "<div class='flexRowSpace'><a class='button' id='buttonBewerk'>Bewerk bericht</a><a class='button' id='buttonVerwijder'>Verwijder</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
     
@@ -72,7 +72,7 @@ function editFactuur(factuurNum, ID) {
     messageOriginalText = pageElement.innerHTML;
     var temp = "<form action='#' id='factuurForm' method='post'></form>";
     temp += "<textarea id='factuurFormText' form='factuurForm' name='factuurEdited'></textarea>";
-    temp += "<div class='flexRowSpace'><a class='button' id='buttonBewerk'>Bewerk factuur</a><a class='button' id='buttonVerwijder'>Verwijder</a><a class='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk factuur</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     temp += "<input type='hidden' name='factuurEditedID' value='" + ID + "' form='factuurForm'>";
     pageElement.innerHTML = temp;
     
@@ -87,7 +87,7 @@ function deleteWarning(berichtNum, ID) {
 
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
     temp += "<h2 class='warningText'>Weet u zeker dat dit bericht verwijderd moet worden?</h2>";
-    temp += "<div class='flexRowSpace'><a class='button' id='buttonJa'>Ja</a><a class='button' id='buttonNee'>Nee</a></div>";
+    temp += "<div class='flexRowSpace'><a role='button' id='buttonJa'>Ja</a><a role='button' id='buttonNee'>Nee</a></div>";
     temp += "<input type='hidden' name='berichtToDeleteID' value='" + ID + "' form='berichtForm'>";
     temp += "</form>";
     pageElement.innerHTML = temp;
@@ -112,7 +112,7 @@ function editMenuItem(itemNum, berichtCount) {
     
     messageOriginalText = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a class='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a class='button' id='buttonVerwijder'>Verwijder</a>";
+    temp += "<a role='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a role='button' id='buttonVerwijder'>Verwijder</a>";
     pageElement.innerHTML = temp;
     
     document.getElementById("menuFormText").value = menuItemText;
@@ -138,7 +138,7 @@ function deleteMenuItem(itemNum, berichtCount) {
 
     var temp = "<form class='flexRowSpace' style='flex: 1;flex-direction:column;justify-content:center;' action='#' id='menuForm' method='post' />";
     temp += "<h2 class='warningText'>Weet u zeker dat deze pagina verwijderd moet worden?</h2><h3 class='warningText'>Er zullen " + berichtCount + " berichten verwijderd worden!</h3>";
-    temp += "<div class='flexRowSpace' style='width:100%;'><a class='button' id='buttonJa'>Ja</a><a class='button' id='buttonNee'>Nee</a></div>";
+    temp += "<div class='flexRowSpace' style='width:100%;'><a role='button' id='buttonJa'>Ja</a><a role='button' id='buttonNee'>Nee</a></div>";
     temp += "<input type='hidden' name='paginaToDeletePos' value='" + itemNum + "' form='menuForm' />";
     temp += "</form>";
     pageElement.innerHTML = temp;
@@ -157,7 +157,7 @@ function createNewMenuItem() {
     var pageElement = document.getElementById("newPageElement");
     messageOriginalText = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a class='button' id='buttonMaak'>Maak</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='newMenuItemName' /><a id='buttonAnnuleer' class='button'>Annuleer</a>";
+    temp += "<a role='button' id='buttonMaak'>Maak</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='newMenuItemName' /><a id='buttonAnnuleer' role='button'>Annuleer</a>";
     pageElement.innerHTML = temp;
     
     document.getElementById("buttonMaak").addEventListener("click", function() { if(document.getElementById("menuFormText").value === "") {cancelComposingMessage();} else {submit();} });

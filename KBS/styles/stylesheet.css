@@ -47,7 +47,7 @@ Index:
 */
 
 /* Fonts voor knoppen */
-#headerbar h2, .button {
+#headerbar h2, a[role*="button"] {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
@@ -108,7 +108,7 @@ h3 {
     background-color: #D5D5D5;
 }
 
-a.button {
+a[role*="button"] {
     display: flex;
     text-decoration: none;
     align-items: center;
@@ -125,10 +125,10 @@ a.button {
     
     background-color: lightgrey;
 }
-a:hover.button {
+a[role*="button"]:hover {
     cursor: pointer;
 }
-a:active.button {
+a[role*="button"]:active {
     width: 10rem;
     
     background-color: grey;

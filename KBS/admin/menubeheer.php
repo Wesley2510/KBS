@@ -125,7 +125,7 @@ if($newMenuItemName != NULL) {
             }
         }
         ?>
-        <div id="newPageElement" class="pageElement flexRowSpace"><a class="button" onclick="createNewMenuItem()">Nieuwe pagina</a></div>
+        <div id="newPageElement" class="pageElement flexRowSpace"><a role="button" onclick="createNewMenuItem()">Nieuwe pagina</a></div>
         
         <?php printFooter() ?>
         

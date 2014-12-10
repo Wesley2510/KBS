@@ -21,6 +21,7 @@ include_once("global.php");
                 <input type="text"/>
                 <h3>Wachtwoord</h3>
                 <input type="text"/>
+                <a role="button">Login</a>
             </div>
         </form>
     <?php

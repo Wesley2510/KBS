@@ -111,7 +111,7 @@ printScripts(); ?>
         if ($aantalBerichten["aantal"] === "1") {
             $unit = "bericht";
         }
-        echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' class='button' onclick='composeMessage();'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
+        echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' role='button' onclick='composeMessage();'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
 
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
@@ -136,13 +136,13 @@ printScripts(); ?>
                 echo "\n\t<div class='pageElement flexRowSpace'>";
 
                 if (!( ($inputB + 1) * 5 >= $aantalBerichten["aantal"])) {
-                    echo "\n\t\t<a class='button' href='?p=" . $inputP . "&amp;b=" . ($inputB + 1) . "'>Oudere berichten</a>";
+                    echo "\n\t\t<a role='button' href='?p=" . $inputP . "&amp;b=" . ($inputB + 1) . "'>Oudere berichten</a>";
                 } else {
                     echo "<a></a>";
                 } //Zodat de "Nieuwere berichten" knop rechts komt te staan
 
                 if ($inputB > 0) {
-                    echo "\n\t\t<a class='button' href='?p=" . $inputP . "&amp;b=" . ($inputB - 1) . "'>Nieuwere berichten</a>";
+                    echo "\n\t\t<a role='button' href='?p=" . $inputP . "&amp;b=" . ($inputB - 1) . "'>Nieuwere berichten</a>";
                 }
 
                 echo "\n\t</div>";
