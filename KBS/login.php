@@ -26,23 +26,55 @@ if($inputUsername !== NULL) {
     }
 
     if($succes) {
-        $klantID = $link->query("SELECT klantID FROM klant WHERE username = '" . strtolower($inputUsername) . "'")->fetch_assoc()["klantID"];
-        if($klantID == false) {
-            $errorUsername = 2;
-        } else {
-            $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klantID)->fetch_assoc()["wachtwoord"];
-            if($password != $inputPassword) {
-                $errorPassword = 3;
+        //Admin login
+        if($inputUsername == "admin" || substr_count($inputUsername, ' ') > 0){
+            $firstSpacePos = strpos($inputUsername, ' ');
+            if($inputUsername == "admin") {
+                $voornaam = "admin";
+                $achternaam = "";
             } else {
-                $row = $link->query("SELECT voornaam, achternaam FROM klant WHERE klantID =" . $klantID)->fetch_assoc();
-                $_SESSION["loggedin"] = true;
-                $_SESSION["admin"] = false;
-                $_SESSION["voornaam"] = $row["voornaam"];
-                $_SESSION["achternaam"] = $row["achternaam"];
+                $voornaam = substr($inputUsername, 0, $firstSpacePos);
+                $achternaam = substr($inputUsername, $firstSpacePos + 1);
+            }
+            
+            $adminID = $link->query("SELECT adminID FROM admin WHERE LOWER(voornaam) = '" . strtolower($voornaam) . "' AND LOWER(achternaam) = '" . strtolower($achternaam) . "'")->fetch_assoc()["adminID"];
+            if($adminID == false) {
+                $errorUsername = 2;
+            } else {
+                $password = $link->query("SELECT wachtwoord FROM admin WHERE adminID =" . $adminID)->fetch_assoc()["wachtwoord"];
+                if($password != $inputPassword) {
+                    $errorPassword = 3;
+                } else {
+                    $row = $link->query("SELECT voornaam, achternaam FROM admin WHERE adminID =" . $adminID)->fetch_assoc();
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["admin"] = true;
+                    $_SESSION["voornaam"] = $row["voornaam"];
+                    $_SESSION["achternaam"] = $row["achternaam"];
 
-                session_write_close();
+                    session_write_close();
 
-                header('Location: /admin/');
+                    header('Location: /admin/');
+                }
+            }
+        } else { //Klant login
+            $klantID = $link->query("SELECT klantID FROM klant WHERE username = '" . strtolower($inputUsername) . "'")->fetch_assoc()["klantID"];
+            if($klantID == false) {
+                $errorUsername = 2;
+            } else {
+                $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klantID)->fetch_assoc()["wachtwoord"];
+                if($password != $inputPassword) {
+                    $errorPassword = 3;
+                } else {
+                    $row = $link->query("SELECT voornaam, achternaam FROM klant WHERE klantID =" . $klantID)->fetch_assoc();
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["admin"] = false;
+                    $_SESSION["voornaam"] = $row["voornaam"];
+                    $_SESSION["achternaam"] = $row["achternaam"];
+
+                    session_write_close();
+
+                    header('Location: /admin/');
+                }
             }
         }
     }

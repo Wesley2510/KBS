@@ -50,7 +50,7 @@ if (!is_numeric($inputB)) {
     $inputB = 0;
 }
 
-if(isset($_SESSION["loggedin"])) {
+if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     //Code voor toevoegen bericht
     $inputBericht = filter_input(INPUT_POST, "bericht");
     if ($inputBericht != NULL) {
@@ -108,7 +108,7 @@ printScripts(); ?>
             trigger_error("Fout bij ophalen aantal berichten: " . $link->error, E_USER_ERROR);
         }
 
-        if(isset($_SESSION["loggedin"])) {
+        if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             $unit = "berichten";
             if ($aantalBerichten["aantal"] === "1") {
                 $unit = "bericht";
@@ -129,7 +129,7 @@ printScripts(); ?>
                 //Plaats alle berichten in een <div> container met class pageElement
                 echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
                 echo "\n\t\t<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
-                if(isset($_SESSION["loggedin"])) {echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
+                if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
                 echo "<br/>\n\t\t<span class='content'>" . $row["inhoud"] . "</span>";
                 echo "\n\t</div>";
             }

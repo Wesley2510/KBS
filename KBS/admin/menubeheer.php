@@ -3,7 +3,7 @@
 <?php 
 include_once '../global.php';
 
-if(!isset($_SESSION["loggedin"])) {
+if(!isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     header("Location: /login.php");
     die();
 }

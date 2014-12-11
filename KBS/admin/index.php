@@ -40,8 +40,9 @@ if(!isset($_SESSION["loggedin"])) {
         
         
     <?php 
-    //if (admin)
+    if($_SESSION["admin"] == true)
     {
+        echo "<a href='factuur.php' class='link pageElement pageElementButton'><h2>Factuur</h2></a>";
         echo "<a href='menubeheer.php' class='link pageElement pageElementButton'><h2>Menubeheer</h2></a>";
     }
     echo "<a href='/templogout.php' class='link pageElement pageElementButton'><h2>Uitloggen</h2></a>";
