@@ -1,16 +1,18 @@
 //Hierin wordt de originele inhoud van de pageElement bewaard.
-var messageOriginalText;
+var originalHTML;
 
 //Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
 function cancelComposingMessage() {
+    //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
     if(document.forms["berichtForm"] !== undefined) {
-        document.getElementById("berichtForm").parentNode.innerHTML = messageOriginalText;
+        document.getElementById("berichtForm").parentNode.innerHTML = originalHTML;
     } else if(document.forms["menuForm"] !== undefined) {
-        document.getElementById("menuForm").parentNode.innerHTML = messageOriginalText;
+        document.getElementById("menuForm").parentNode.innerHTML = originalHTML;
     }
 }
 
 function submit() {
+    //Controleer of de juiste form op de pagina is, en submit
     if(document.forms["berichtForm"] !== undefined) {
         document.forms["berichtForm"].submit();
     } else if(document.forms["menuForm"] !== undefined) {
@@ -19,22 +21,28 @@ function submit() {
 }
 
 function composeMessage() {
+    //Als er een berichtForm op de pagina is wordt er iets bewerkt, en moet dat dus gestopt worden.
     if (document.getElementById("berichtForm") !== null) {
         cancelComposingMessage();
     }
     
+    //Vindt de pageElement welke de parent van de parent van de plaats button is
     var pageElement = document.getElementById("buttonPlaats").parentNode.parentNode;
-    messageOriginalText = pageElement.innerHTML;
+    
+    //Sla huidige html op in originalHTML
+    originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonPlaats'>Plaats bericht</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     pageElement.innerHTML = temp;
     
+    //Voegt event listeners toe aan de anchors
     document.getElementById("buttonPlaats").addEventListener("click", submit);
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
 }
 
 function editMessage(berichtNum, ID) {
+    //Als er een berichtForm op de pagina is wordt er iets bewerkt, en moet dat dus gestopt worden.
     if (document.getElementById("berichtForm") !== null) {
         cancelComposingMessage();
     }
@@ -42,13 +50,15 @@ function editMessage(berichtNum, ID) {
     var pageElement = document.getElementById("bericht" + ID);
     var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
     
-    messageOriginalText = pageElement.innerHTML;
+    //Sla huidige html op in originalHTML
+    originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
     
+    //Voegt event listeners toe aan de anchors
     document.getElementById("berichtFormText").value = pageElementContent;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
     document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
@@ -69,7 +79,7 @@ function editFactuur(factuurNum, ID) {
     var pageElement = document.getElementById("factuur" + ID);
     var pageElementContent = pageElement.getElementsByClassName("service")[0].innerHTML;
     
-    messageOriginalText = pageElement.innerHTML;
+    originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='factuurForm' method='post'></form>";
     temp += "<textarea id='factuurFormText' form='factuurForm' name='factuurEdited'></textarea>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk factuur</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
@@ -89,7 +99,6 @@ function deleteWarning(berichtNum, ID) {
     temp += "<h2 class='warningText'>Weet u zeker dat dit bericht verwijderd moet worden?</h2>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonJa'>Ja</a><a role='button' id='buttonNee'>Nee</a></div>";
     temp += "<input type='hidden' name='berichtToDeleteID' value='" + ID + "' form='berichtForm'>";
-    temp += "</form>";
     pageElement.innerHTML = temp;
 
     document.getElementById("buttonJa").addEventListener("click", submit);
@@ -110,7 +119,7 @@ function editMenuItem(itemNum, berichtCount) {
     var pageElement = document.getElementById("menuItem" + itemNum);
     var menuItemText = document.getElementById("menuItemText" + itemNum).innerHTML;
     
-    messageOriginalText = pageElement.innerHTML;
+    originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
     temp += "<a role='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a role='button' id='buttonVerwijder'>Verwijder</a>";
     pageElement.innerHTML = temp;
@@ -155,7 +164,7 @@ function createNewMenuItem() {
     }
     
     var pageElement = document.getElementById("newPageElement");
-    messageOriginalText = pageElement.innerHTML;
+    originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
     temp += "<a role='button' id='buttonMaak'>Maak</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='newMenuItemName' /><a id='buttonAnnuleer' role='button'>Annuleer</a>";
     pageElement.innerHTML = temp;
