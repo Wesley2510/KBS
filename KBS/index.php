@@ -50,7 +50,7 @@ if (!is_numeric($inputB)) {
     $inputB = 0;
 }
 
-if(!isset($_SESSION["loggedin"])) {
+if(isset($_SESSION["loggedin"])) {
     //Code voor toevoegen bericht
     $inputBericht = filter_input(INPUT_POST, "bericht");
     if ($inputBericht != NULL) {

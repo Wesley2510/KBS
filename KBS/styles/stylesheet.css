@@ -225,7 +225,7 @@ a[role*="button"]:active {
     text-align: center;
 }
 
-textarea, input[type*="text"], input[type*="password"] {
+textarea, input[type*="text"], input[type*="password"], input[type*="number"] {
     margin-left: auto;
     margin-right: auto;
     width: calc(100% - 0.96rem);
@@ -235,7 +235,7 @@ textarea, input[type*="text"], input[type*="password"] {
     border: 0.15rem solid black;
     box-shadow: inset 0px 0px 10px -5px rgba(0,0,0,0.75);
 }
-input[type*="text"], input[type*="password"] {
+input[type*="text"], input[type*="password"], input[type*="number"] {
     height: 1.5rem;
 }
 
