@@ -105,11 +105,17 @@ h4.error {
     text-align: center;  
 }
 
+#headerbar div:last-of-type{
+    width: auto;
+    margin-right: 0.5rem;
+}
+
 /*a:link is de normale link, a:visited is de bezochte link*/
 #headerbar a { 
     text-decoration: none;
     color:black;
-    width: 7rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
 }
 
 /*a:hover is als je muis er boven staat, a:active is de link zodra er op geklikt word*/
