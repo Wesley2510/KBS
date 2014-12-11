@@ -5,15 +5,18 @@ include_once("global.php");
 
 $inputUsername = filter_input(INPUT_POST, "username");
 $inputPassword = filter_input(INPUT_POST, "password");
-$errorUsername = 0; //0 = No error, 1 = empty username, 2 = wrong username
+$errorUsername = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = niet toegestane tekens
 $errorPassword = 0; //0 = No error, 1 = empty password, 2 = spaces occurring, 3 = wrong password
 if($inputUsername !== NULL) {
     $succes = true;
     if(ltrim($inputUsername, ' ') == '') {
         $errorUsername = 1;
         $succes = false;
+    } else if (preg_replace("/[^A-Za-z0-9 ]/", '', $inputUsername) != $inputUsername) {
+        $errorUsername = 3;
+        $succes = false;
     }
-    
+
     if($inputPassword == NULL) {
         $errorPassword = 1;
         $succes = false;
@@ -21,7 +24,7 @@ if($inputUsername !== NULL) {
         $errorPassword = 2;
         $succes = false;
     }
-    
+
     if($succes) {
         $klantID = $link->query("SELECT klantID FROM klant WHERE username = '" . strtolower($inputUsername) . "'")->fetch_assoc()["klantID"];
         if($klantID == false) {
@@ -67,6 +70,8 @@ if($inputUsername !== NULL) {
                         echo "<h4 class='error'>Vul A.U.B. een gebruikersnaam in</h4>"; 
                     } else if($errorUsername == 2) {
                         echo "<h4 class='error'>Deze gebruiker bestaat niet</h4>"; 
+                    } else if ($errorUsername == 3) {
+                        echo "<h4 class='error'>Verboden tekens in gebruikersnaam</h4>";
                     }
                 ?>
                 <h3>Wachtwoord</h3>
