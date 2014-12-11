@@ -36,6 +36,8 @@ function composeMessage() {
     temp += "<div class='flexRowSpace'><a role='button' id='buttonPlaats'>Plaats bericht</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     pageElement.innerHTML = temp;
     
+    initEditor();
+    
     //Voegt event listeners toe aan de anchors
     document.getElementById("buttonPlaats").addEventListener("click", submit);
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
@@ -57,6 +59,8 @@ function editMessage(berichtNum, ID) {
     temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
+    
+    initEditor(pageElementContent);
     
     //Voegt event listeners toe aan de anchors
     document.getElementById("berichtFormText").value = pageElementContent;
@@ -171,4 +175,25 @@ function createNewMenuItem() {
     
     document.getElementById("buttonMaak").addEventListener("click", function() { if(document.getElementById("menuFormText").value === "") {cancelComposingMessage();} else {submit();} });
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+}
+
+
+function initEditor(content) {
+    tinymce.init({
+        selector: "textarea",
+        mode: "exact",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        setup: function(editor) {
+            editor.on('init', function(e) {
+                if(content == undefined)
+                    content = "";
+                tinymce.get("berichtFormText").setContent(content);
+            });
+        }
+    });
 }
