@@ -16,8 +16,8 @@ Index:
     #headerbar a
         Knop in het menu.
 
-    a.button
-        <a> tags met deze class krijgen het uiterlijk van een knop.
+    a[role*="button"]
+        <a> tags met deze role krijgen het uiterlijk van een knop.
     
     #buttonVerwijder
         Rode verwijderknop.

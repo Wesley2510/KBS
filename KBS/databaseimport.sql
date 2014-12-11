@@ -148,5 +148,5 @@ INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src=
 INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/aLZzedG.jpg" alt="onzin" />', '2014-11-25 13:55:00', 1);
 
 
-
-
+INSERT INTO `Textbug`.`klant` (`username`, `wachtwoord`, `voornaam`, `achternaam`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`)
+VALUES("banaan", "nana", "Ba", "Naan", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1");
