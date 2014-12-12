@@ -185,11 +185,14 @@ function initEditor(content) {
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks fullscreen",
-            "insertdatetime media table contextmenu paste"
+            "insertdatetime media table contextmenu paste responsivefilemanager"
         ],
         content_css: "/styles/stylesheet.css",
         body_class: "pageElement contentEditor",
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image responsivefilemanager",
+        external_filemanager_path:"/filemanager/",
+        filemanager_title: "Bestanden" ,
+        external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
         setup: function(editor) {
             editor.on('init', function(e) {
                 if(content == undefined)
