@@ -1,3 +1,13 @@
+var originalHTML;
+
+//Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
+function cancelComposingMessage() {
+    //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
+    if(document.forms["menuForm"] !== undefined) {
+        document.getElementById("menuForm").parentNode.innerHTML = originalHTML;
+    }
+}
+
 function moveMenuItem(position) {
     document.forms["moveDownForm" + position].submit();
 }

@@ -199,7 +199,8 @@ a[role*="button"]:active {
     margin-left: 1.25rem;
 }
 
-.pageElement h2, p {
+.pageElement h2, h3, p {
+    margin: 0px;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
@@ -224,6 +225,7 @@ a[role*="button"]:active {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
 }
 
 .iconEdit {

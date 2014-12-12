@@ -63,7 +63,8 @@ if(!isset($_SESSION["loggedin"])) {
     {
         echo "<a href='klantoverzicht.php' class='link pageElement pageElementButton'><h2>Klantoverzicht</h2></a>";
         echo "<a href='menubeheer.php' class='link pageElement pageElementButton'><h2>Menubeheer</h2></a>";
-        echo "<a href='bestandsbeheer.php' class='link pageElement pageElementButton'><h2>Bestandsbeheer</h2></a>";//
+        echo "<a href='bestandsbeheer.php' class='link pageElement pageElementButton'><h2>Bestandsbeheer</h2></a>";
+        echo "<a href='adminbeheer.php' class='link pageElement pageElementButton'><h2>Adminbeheer</h2></a>";
     } else {
         echo "<a href='factuuroverzicht.php' class='link pageElement pageElementButton'><h2>Fractuuroverzicht</h2></a>";
     }

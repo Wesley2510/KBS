@@ -5,8 +5,6 @@ function cancelComposingMessage() {
     //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
     if(document.forms["berichtForm"] !== undefined) {
         document.getElementById("berichtForm").parentNode.innerHTML = originalHTML;
-    } else if(document.forms["menuForm"] !== undefined) {
-        document.getElementById("menuForm").parentNode.innerHTML = originalHTML;
     }
 }
 
