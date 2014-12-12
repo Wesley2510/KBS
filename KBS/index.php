@@ -93,9 +93,11 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     <head>
         <meta charset="UTF-8">
         <?php echo "<title>TextBug - " . $inputP . "</title>"; ?>
-        <?php printStyles(); ?>
-        <script type='text/javascript' src='/tinymce/tinymce.min.js'></script>
-        <script src='/scripts/berichtBewerking.js' type='text/javascript' charset='utf-8'></script>
+        <?php printStyles();
+        if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
+            echo "<script type='text/javascript' src='/tinymce/tinymce.min.js'></script>";
+            echo "<script src='/scripts/berichtBewerking.js' type='text/javascript' charset='utf-8'></script>";
+        } ?>
     </head>
     <body>
 
