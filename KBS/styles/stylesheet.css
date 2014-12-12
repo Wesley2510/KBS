@@ -202,6 +202,11 @@ a[role*="button"]:active {
     margin: 0.25rem;
 }
 
+.pageElement img {
+    max-width: 100%;
+    height: auto;
+}
+
 .contentEditor {
     box-shadow: none;
     margin-left: 0;
