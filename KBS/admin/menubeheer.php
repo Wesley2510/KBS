@@ -88,9 +88,11 @@ if($newMenuItemName != NULL) {
 
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>TextBug - Menubeheer</title>
         
-        <?php printStyles(); printScripts(); ?>
+        <?php printStyles(); ?>
+        <script src='/scripts/menubeheer.js' type='text/javascript' charset='utf-8'></script>
     </head>
     <body>
         
