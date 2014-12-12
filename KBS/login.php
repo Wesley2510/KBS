@@ -142,6 +142,8 @@ if($inputUsername !== NULL) {
                     } 
                 ?>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
+                <a href="vergeten.php?type=gebruikersnaam" style="font-size:0.5rem;">Gebruikersnaam vergeten</a><br/>
+                <a href="vergeten.php?type=wachtwoord" style="font-size:0.5rem;">Wachtwoord vergeten</a>
             </div>
             <input type="submit" style="display:none;">
         </form>

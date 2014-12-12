@@ -24,6 +24,7 @@ if(!isset($_SESSION["loggedin"])) {
                 border:0.15rem solid black;
                 text-align: center;
                 color:black;
+                cursor: pointer;
             }
             .pageElementButton:active {
                 background-color: grey;

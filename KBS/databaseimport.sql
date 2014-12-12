@@ -5,10 +5,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 CREATE SCHEMA IF NOT EXISTS `Textbug` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `Textbug` ;
 
+DROP TABLE IF EXISTS `Textbug`.`klant` ;
+DROP TABLE IF EXISTS `Textbug`.`admin` ;
+DROP TABLE IF EXISTS `Textbug`.`factuur` ;
+DROP TABLE IF EXISTS `Textbug`.`notitie` ;
+DROP TABLE IF EXISTS `Textbug`.`pagina` ;
+DROP TABLE IF EXISTS `Textbug`.`bericht` ;
 -- -----------------------------------------------------
 -- Table `Textbug`.`klant`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`klant` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `klantID` INT NOT NULL AUTO_INCREMENT,
@@ -16,6 +21,7 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `wachtwoord` VARCHAR(45) NOT NULL ,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
+  `emailadres` VARCHAR(45) NOT NULL ,
   `postcode` VARCHAR(7) NOT NULL ,
   `huisnummer` INT NOT NULL ,
   `telefoon` VARCHAR(11) NULL ,
@@ -29,10 +35,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Textbug`.`admin`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`admin` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`admin` (
-  `adminID` VARCHAR(20) NOT NULL,
+  `adminID` INT NOT NULL AUTO_INCREMENT,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
   `emailadres` VARCHAR(45) NULL ,
@@ -44,11 +49,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Textbug`.`notitie`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`notitie` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`notitie` (
   `klant` INT NOT NULL ,
-  `plaatser` VARCHAR(20) NOT NULL ,
+  `plaatser` INT NOT NULL ,
   `notitie` TEXT NOT NULL ,
   `datum` DATETIME NOT NULL ,
   PRIMARY KEY (`klant`, `plaatser`) ,
@@ -69,13 +73,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Textbug`.`factuur`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`factuur` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`factuur` (
   `factuurID` INT NOT NULL AUTO_INCREMENT,
   `klant` INT NOT NULL ,
   `service` VARCHAR(128) NOT NULL ,
-  `prijs` INT NOT NULL ,
+  `prijs` FLOAT NOT NULL ,
   `betaald` TINYINT(1) NULL ,
   `papierenfactuur` TINYINT(1) NULL ,
   PRIMARY KEY (`factuurID`, `klant`) ,
@@ -91,7 +94,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Textbug`.`pagina`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`pagina` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`pagina` (
   `paginaID` TINYINT(4) NOT NULL AUTO_INCREMENT,
@@ -104,7 +106,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Textbug`.`bericht`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Textbug`.`bericht` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`bericht` (
   `berichtID` INT NOT NULL AUTO_INCREMENT,
@@ -138,15 +139,22 @@ INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Contact', 2);
 INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Info', 3);
 
 -- Berichten
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test1', '2014-11-23 12:30:00', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Test2', '2014-11-23 13:00:00', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is ons contactformulier', '2014-11-23 00:00:00', 2);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('Dit is info', '2014-11-23 00:00:00', 3);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/FeHf0fx.jpg" alt="onzin" />', '2014-11-25 13:30:00', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/kfQy1OT.jpg" alt="onzin" />', '2014-11-25 13:40:00', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/bnqPpl5.jpg" alt="onzin" />', '2014-11-25 13:50:00', 1);
-INSERT INTO `Textbug`.`bericht` (`inhoud`, `datum`, `pagina`) VALUES ('<img src="http://i.imgur.com/aLZzedG.jpg" alt="onzin" />', '2014-11-25 13:55:00', 1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (1,'Test1','2014-11-23 12:30:00',1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (2,'Test2','2014-11-23 13:00:00',1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (3,'Dit is ons contactformulier','2014-11-23 00:00:00',2);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (4,'Dit is info','2014-11-23 00:00:00',3);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (5,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/FeHf0fx.jpg" alt="onzin" /></p>','2014-11-25 13:30:00',1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (6,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/kfQy1OT.jpg" alt="onzin" /></p>','2014-11-25 13:40:00',1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (7,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/bnqPpl5.jpg" alt="onzin" /></p>','2014-11-25 13:50:00',1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (8,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/aLZzedG.jpg" alt="onzin" /></p>','2014-11-25 13:55:00',1);
+INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (9,'<h1 style="text-align: center;">HI THERE!</h1>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/xXwXOf2.jpg" alt="Guyz" width="631" height="631" /></p>','2014-12-12 17:38:44',1);
 
 
-INSERT INTO `Textbug`.`klant` (`username`, `wachtwoord`, `voornaam`, `achternaam`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`)
-VALUES("banaan", "nana", "Ba", "Naan", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1");
+INSERT INTO `Textbug`.`klant` (`username`, `wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`)
+VALUES("banaan", "nana", "Ba", "Naan", "banaan@smeagol.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1");
+
+INSERT INTO `Textbug`.`admin` (`voornaam`, `achternaam`, `wachtwoord`)
+VALUES("admin", "", "lol");
+INSERT INTO `Textbug`.`admin` (`voornaam`, `achternaam`, `emailadres`, `wachtwoord`)
+VALUES("Lewis", "Clement", "lol@gmail.com", "wassup");
