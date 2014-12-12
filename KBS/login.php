@@ -1,7 +1,30 @@
-<!DOCTYPE html>
-
 <?php
 include_once("global.php");
+
+$logout = filter_input(INPUT_POST, "logout");
+if(isset($logout)) {
+    $_SESSION = array();
+
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    if(!session_destroy()) {
+        trigger_error("Kon sessie niet beeindigen.");
+    } else {
+        echo "true";
+        die();
+    }
+}
+
+if(isset($_SESSION["loggedin"])) {
+    header('Location: /admin/');
+    die();
+}
 
 $inputUsername = filter_input(INPUT_POST, "username");
 $inputPassword = filter_input(INPUT_POST, "password");
@@ -82,6 +105,7 @@ if($inputUsername !== NULL) {
 
 ?>
 
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">

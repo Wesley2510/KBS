@@ -177,6 +177,7 @@ a[role*="button"]:active {
     /* margin-top zorgt hier dat het eerste element niet bovenaan onder de menubar blijft */
     margin-top: 4.4rem;
     padding: 0.24rem;
+    padding-right: 0.48rem;
     
     font-family: "Lucida Console", Monaco, monospace;
 }
@@ -198,8 +199,9 @@ a[role*="button"]:active {
     margin-left: 1.25rem;
 }
 
-.pageElement h2 {
-    margin: 0.25rem;
+.pageElement h2, p {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .pageElement img {
