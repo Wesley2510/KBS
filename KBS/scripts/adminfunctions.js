@@ -187,6 +187,8 @@ function initEditor(content) {
             "searchreplace visualblocks fullscreen",
             "insertdatetime media table contextmenu paste"
         ],
+        content_css: "/styles/stylesheet.css",
+        body_class: "pageElement contentEditor",
         toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
         setup: function(editor) {
             editor.on('init', function(e) {
