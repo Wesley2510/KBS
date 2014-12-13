@@ -1,5 +1,11 @@
 var originalHTML;
 
+function submit() {
+    if(document.forms["adminForm"] !== undefined) {
+        document.forms["adminForm"].submit();
+    }
+}
+
 function cancelComposingMessage() {
     //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
     if(document.forms["adminForm"] !== undefined) {

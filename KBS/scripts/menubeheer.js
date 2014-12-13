@@ -1,5 +1,11 @@
 var originalHTML;
 
+function submit() {
+    if(document.forms["menuForm"] !== undefined) {
+        document.forms["menuForm"].submit();
+    }
+}
+
 //Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
 function cancelComposingMessage() {
     //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
