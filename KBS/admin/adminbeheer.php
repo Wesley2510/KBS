@@ -76,7 +76,9 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                     . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "')";
             if(!$link->query($sql)) {
                 trigger_error("Fout bij toevoegen administrator" . $sql);
-            } 
+            }
+            
+            header('Location: #');
         }
     }
 }
@@ -92,7 +94,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         <script src='/scripts/adminbeheer.js' type='text/javascript' charset='utf-8'></script>
         <script type='text/javascript'>
         <?php
-        $newAdminPageElement = "<div class='flexRowSpace'><a role='button' id='buttonNewAdmin' onclick='createNewAdmin()'>Nieuwe administrator</a></div>";
+        $newAdminPageElement = "<div class='flexRowSpace'><a role='button' id='buttonNewAdmin' onclick='createNewAdmin()'>Nieuwe administrator</a><a href='adminbeheer.php?actief=0'>Inactieve administrators</a></div>";
         
         $newAdminForm = "<form action='#' id='adminForm' method='post'></form>";
         $newAdminForm .= "<div class='flexRowSpace'><input class='' type='text' id='adminFormName' form='adminForm' name='name' placeholder='Naam' />";
@@ -143,49 +145,49 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     if(!$succesNew) {
         echo "<script type='text/javascript'>
             document.getElementById('adminFormName').value = '" . $inputName . "';
-            document.getElementById('adminFormEmail').value = '" . $inputEmail . "';
+            document.getElementById('adminFormEmail').value = '" . $inputEmail . "';";
+        if($adminNameError > 0) {
+            echo "document.getElementById('adminFormName').className = 'error';document.getElementById('adminNameErrorMessage').innerHTML =";
             
-            if(" . $adminNameError . " > 0) {
-                document.getElementById('adminFormName').className = 'error';document.getElementById('adminNameErrorMessage').innerHTML =";
-                
-        if($adminNameError == 1) {
-            echo "'Vul A.U.B. een naam in';";
-        } else if ($adminNameError == 2) {
-            echo "'Vul A.U.B. voor- en achternaam in';";
-        } else if (" . $adminNameError . " == 3) {
-            echo "'Vul A.U.B. een geldige naam in';";
+            if($adminNameError == 1) {
+                echo "'Vul A.U.B. een naam in';";
+            } else if ($adminNameError == 2) {
+                echo "'Vul A.U.B. voor- en achternaam in';";
+            } else if (" . $adminNameError . " == 3) {
+                echo "'Vul A.U.B. een geldige naam in';";
+            }
         }
         
-        echo "}
-            if(" . $adminEmailError . " > 0) {
-                document.getElementById('adminFormEmail').className = 'error';document.getElementById('adminEmailErrorMessage').innerHTML =";
-                
-        if($adminEmailError == 1) {
-            echo "'Vul A.U.B. een emailadres in';";
-        } else if ($adminEmailError == 2) {
-            echo "'Vul A.U.B. een geldig emailadres in';";
-        } 
-        
-        echo "}
-            if(" . $adminPassError . " > 0) {
-                document.getElementById('adminFormPass').className = 'error';document.getElementById('adminPassErrorMessage').innerHTML =";
-                
-        if($adminPassError == 1) {
-            echo "'Vul A.U.B. een wachtwoord in';";
-        } else if ($adminPassError == 2) {
-            echo "'Alphanumerieke tekens (a-Z, 0-9)';";
-        } 
-        
-        echo "}
-            if(" . $adminPassRepeatError . " > 0 || " . $adminPassError . " > 0) {
-                document.getElementById('adminFormPassRepeat').className = 'error';document.getElementById('adminPassRepeatErrorMessage').innerHTML =";
-                
-        if($adminPassRepeatError == 1) {
-            echo "'Herhaal A.U.B. het wachtwoord';";
-        } else if ($adminPassRepeatError == 2) {
-            echo "'Wachtwoorden komen niet overeen';";
+        if($adminEmailError > 0) {
+            echo "document.getElementById('adminFormEmail').className = 'error';document.getElementById('adminEmailErrorMessage').innerHTML =";
+            
+            if($adminEmailError == 1) {
+                echo "'Vul A.U.B. een emailadres in';";
+            } else if ($adminEmailError == 2) {
+                echo "'Vul A.U.B. een geldig emailadres in';";
+            } 
         }
-        echo "}</script>";}
+        
+        if($adminPassError > 0) {
+            echo "document.getElementById('adminFormPass').className = 'error';document.getElementById('adminPassErrorMessage').innerHTML =";
+            
+            if($adminPassError == 1) {
+                echo "'Vul A.U.B. een wachtwoord in';";
+            } else if ($adminPassError == 2) {
+                echo "'Alphanumerieke tekens (a-Z, 0-9)';";
+            } 
+        }
+        
+        if($adminPassRepeatError > 0) {
+            echo "document.getElementById('adminFormPassRepeat').className = 'error';document.getElementById('adminPassRepeatErrorMessage').innerHTML =";
+            
+            if($adminPassRepeatError == 1) {
+                echo "'Herhaal A.U.B. het wachtwoord';";
+            } else if ($adminPassRepeatError == 2) {
+                echo "'Wachtwoorden komen niet overeen';";
+            }
+        }
+        echo "</script>";}
     ?>
     </body>
 </html>

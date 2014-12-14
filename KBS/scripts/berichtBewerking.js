@@ -72,7 +72,7 @@ function deleteWarning(berichtNum, ID) {
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
     temp += "<h2 class='warningText'>Weet u zeker dat dit bericht verwijderd moet worden?</h2>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonJa'>Ja</a><a role='button' id='buttonNee'>Nee</a></div>";
-    temp += "<input type='hidden' name='berichtToDeleteID' value='" + ID + "' form='berichtForm'>";
+    temp += "<input type='hidden' name='adminToDeleteID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
 
     document.getElementById("buttonJa").addEventListener("click", submit);
