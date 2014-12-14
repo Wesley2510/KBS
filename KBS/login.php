@@ -40,10 +40,10 @@ if($inputUsername !== NULL) {
         $succes = false;
     }
 
-    if($inputPassword == NULL) {
+    if($inputPassword == NULL || ltrim($inputPassword, ' ') == '') {
         $errorPassword = 1;
         $succes = false;
-    } else if(ltrim($inputPassword, ' ') == '') {
+    } else if(strpos($inputPassword, ' ') !== false) {
         $errorPassword = 2;
         $succes = false;
     }

@@ -232,8 +232,8 @@ a[role*="button"]:active {
     float: right;
     margin: 0.25rem;
     
-    width: 2rem;
-    height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
 }
 .iconEdit:hover {
     cursor: pointer;
@@ -256,6 +256,7 @@ textarea, input[type*="text"], input[type*="password"], input[type*="number"] {
     margin-left: auto;
     margin-right: auto;
     width: calc(100% - 0.96rem);
+    min-width: 1px;
     resize: none;
     margin: 0.24rem;
     
@@ -286,6 +287,14 @@ input.error:focus {
 }
  
 @media screen and (max-width: 35rem) {
+    html {
+        font-size: 70%;
+    }
+    
+    textarea.tinyMCE {
+        font-size: 70%;
+    }
+    
     .pageElement {
         width: calc(100% - 0.24rem);
         margin-right: 0.15rem;
