@@ -15,7 +15,7 @@ $voornaam = '';
 $achternaam = '';
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
-    $inputName = filter_input(INPUT_POST, "name", FILTER_SANITIZE_ENCODED);
+    $inputName = filter_input(INPUT_POST, "name");
     $inputEmail = filter_input(INPUT_POST, "email");
     $inputPass = filter_input(INPUT_POST, "pass");
     $inputPassRepeat = filter_input(INPUT_POST, "passrepeat");
