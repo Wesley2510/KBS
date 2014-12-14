@@ -25,22 +25,6 @@ function createNewAdmin() {
     //Sla huidige html op in originalHTML
     originalHTML = pageElement.innerHTML;
     pageElement.innerHTML = newAdminForm;
-    
-    
-    submitFunction = function() {
-        if(document.getElementById("adminFormName").value == '' &&
-                document.getElementById("adminFormEmail").value == '' &&
-                document.getElementById("adminFormPass").value == '' &&
-                document.getElementById("adminFormPassRepeat").value == '') {
-            cancelComposingMessage();
-        } else {
-            submit();
-        }
-    }
-    
-    //Voegt event listeners toe aan de anchors
-    document.getElementById("buttonRegister").addEventListener("click", submitFunction);
-    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
 }
 
 function editAdminData(ID) {

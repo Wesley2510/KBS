@@ -52,7 +52,7 @@ if (!is_numeric($inputB)) {
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     //Code voor toevoegen bericht
-    $inputBericht = filter_input(INPUT_POST, "bericht");
+    $inputBericht = filter_input(INPUT_POST, "bericht", FILTER_SANITIZE_ENCODED);
     if ($inputBericht != NULL) {
         //Controleer of input niet alleen uit spaties bestaat
         if (!(ltrim($inputBericht, ' ') === '')) {
@@ -67,7 +67,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     //Code voor bewerken bericht
     $inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
     if ($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
-        $inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited");
+        $inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited", FILTER_SANITIZE_ENCODED);
 
         //Controleer of input niet alleen uit spaties bestaat
         if (!(ltrim($inputBerichtEdit, ' ') === '')) {
@@ -132,7 +132,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
                 echo "\n\t\t<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
                 if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
-                echo "<br/>\n\t\t<span class='content'>" . $row["inhoud"] . "</span>";
+                echo "<br/>\n\t\t<span class='content'>" . urldecode($row["inhoud"]) . "</span>";
                 echo "\n\t</div>";
             }
 
