@@ -26,7 +26,7 @@ if(isset($_SESSION["loggedin"])) {
     die();
 }
 
-$inputUsername = filter_input(INPUT_POST, "username");
+$inputUsername = filter_input(INPUT_POST, "username", FILTER_SANITIZE_ENCODED);
 $inputPassword = filter_input(INPUT_POST, "password");
 $errorUsername = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = forbidden symbols
 $errorPassword = 0; //0 = No error, 1 = empty password, 2 = spaces occurring, 3 = wrong password

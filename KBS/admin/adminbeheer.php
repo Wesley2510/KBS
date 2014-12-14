@@ -15,7 +15,7 @@ $voornaam = '';
 $achternaam = '';
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
-    $inputName = filter_input(INPUT_POST, "name");
+    $inputName = filter_input(INPUT_POST, "name", FILTER_SANITIZE_ENCODED);
     $inputEmail = filter_input(INPUT_POST, "email");
     $inputPass = filter_input(INPUT_POST, "pass");
     $inputPassRepeat = filter_input(INPUT_POST, "passrepeat");
@@ -26,6 +26,13 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     $succesNew = true; 
     $trimmedName = NULL;
     
+    $inputNameEdited = filter_input(INPUT_POST, "adminNameEdited");
+    $inputEmailEdited = filter_input(INPUT_POST, "adminEmailEdited");
+    $inputNewPass = filter_input(INPUT_POST, "adminNewPassword");
+    $inputNewPassRepeat = filter_input(INPUT_POST, "adminRepeatPassword");
+    $inputAdminEditID = filter_input(INPUT_POST, "adminEditedID");
+    $succesEdit = true;
+
     if ($inputName != NULL || $inputEmail != NULL || $inputPass != NULL || $inputPassRepeat != NULL) {
         if($inputName == NULL || ltrim($inputName, ' ') == '') {
             $adminNameError = 1;
@@ -80,6 +87,81 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             
             header('Location: #');
         }
+    } else if(($inputNameEdited != NULL || $inputEmailEdited != NULL || $inputNewPass != NULL) && $inputAdminEditID !== NULL && is_numeric($inputAdminEditID)) {
+        if($inputNameEdited != NULL) {
+            if(ltrim($inputNameEdited, ' ') == '') {
+                $adminNameError = 1;
+                $succesEdit = false;
+            } else if(preg_replace("/[^A-Za-z ]/", '', $inputNameEdited) != $inputNameEdited) {
+                $adminNameError = 3;
+                $succesEdit = false;
+            } else {
+                //Verwijder alle spaties aan het begin
+                $trimmedName = preg_replace("/^\s\s*/", '', $inputNameEdited);
+                //Verwijder alle spaties aan het eind
+                $trimmedName = preg_replace("/\s\s*$/", '', $trimmedName);
+                //Verwijder alle dubbele spaties
+                $trimmedName = preg_replace("/ +(?= )/", '', $trimmedName);
+
+                if(!strpos($trimmedName, ' ')) {
+                    $adminNameError = 2;
+                    $succesEdit = false;
+                } else {
+                    $voornaam = substr($trimmedName, 0, strpos($trimmedName, ' '));
+                    $achternaam = substr($trimmedName, strpos($trimmedName, ' ') + 1);
+                }
+            }
+        }
+        if($inputEmailEdited != NULL) {
+            if(ltrim($inputEmailEdited, ' ') == '') {
+                $adminEmailError = 1;
+                $succesEdit = false;
+            } else if (!filter_var($inputEmailEdited, FILTER_VALIDATE_EMAIL)) {
+                $adminEmailError = 2;
+                $succesEdit = false;
+            }
+        }
+        if($inputNewPass != NULL) {
+            if(ltrim($inputNewPass, ' ') == '') {
+                $adminPassError = 1;
+                $succesEdit = false;
+            } else if(preg_replace("/[^A-Za-z0-9 ]/", '', $inputNewPass) != $inputNewPass) {
+                $adminPassError = 2;
+                $succesEdit = false;
+            } else {
+                if($inputNewPassRepeat == NULL || ltrim($inputNewPassRepeat, ' ') == '') {
+                    $adminPassRepeatError = 1;
+                    $succesEdit = false;
+                } else if ($inputNewPass !== $inputNewPassRepeat) {
+                    $adminPassRepeatError = 2;
+                    $succesEdit = false;
+                }
+            }
+        }
+        
+        if($succesEdit) {
+            $sql = "UPDATE admin SET ";
+            if($inputNameEdited !== NULL && $inputNameEdited !== '') {
+                $sql .= "voornaam='" . $voornaam . "', achternaam='" . $achternaam . "' ";
+            }
+            if($inputEmailEdited !== NULL && $inputEmailEdited !== '') {
+                if($inputNameEdited !== NULL) {
+                    $sql .= ",";
+                }
+                $sql .= "emailadres='" . $inputEmailEdited . "' ";
+            }
+            if($inputNewPass !== NULL && $inputNewPass !== '') {
+                if($inputNameEdited !== NULL || $inputEmailEdited !== NULL) {
+                    $sql .= ",";
+                }
+                $sql .= "wachtwoord='" . $inputNewPass . "' ";
+            }
+            $sql .= "WHERE adminID =" . $inputAdminEditID;
+            
+            if(!$link->query($sql)) {
+                trigger_error("Fout bij wijzingen admin data : " . $sql);
+            }
+        }
     }
 }
 
@@ -111,6 +193,27 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         }
         $newAdminForm .= "<div class='flexRowSpace'><a role='button' id='buttonRegister' onclick='submit()'>Registreer</a><a role='button' id='buttonAnnuleer' onclick='cancelComposingMessage()'>Annuleer</a></div>";
         
+        $editAdminForm = "<form action='#' id='adminForm' method='post'></form>";
+        $editAdminForm .= "<div style='width: 100%;'>";
+        $editAdminForm .= "<div class='flexRowSpace'>";
+        $editAdminForm .= "<input type='text' id='adminFormName' form='adminForm' name='adminNameEdited' placeholder='Voornaam Achternaam' />";
+        $editAdminForm .= "<input type='text' id='adminFormEmail' form='adminForm' name='adminEmailEdited' placeholder='Emailadres' /></div>";
+        if(!$succesEdit) {
+            $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminNameErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
+            $editAdminForm .= "<h4 id='adminEmailErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
+        }
+        $editAdminForm .= "<div class='flexRowSpace'><input type='password' id='adminFormPass' form='adminForm' name='adminNewPassword' placeholder='Nieuw wachtwoord'>";
+        $editAdminForm .= "<input type='password' id='adminFormPassRepeat' form='adminForm' name='adminRepeatPassword' placeholder='Herhaal wachtwoord'/></div>";
+        if(!$succesEdit) {
+            $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
+            $editAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
+        }
+        $editAdminForm .= "<input type='hidden' name='adminEditedID' id='adminEditedID' value='' form='adminForm' />";
+        $editAdminForm .= "<div class='flexRowSpace'><a role='button' id='buttonBewerk' onclick='submit()'>Opslaan</a>";
+        $editAdminForm .= "<a role='button' id='buttonDeactiveer'>Deactiveer</a>";
+        $editAdminForm .= "<a role='button' id='buttonAnnuleer' onclick='cancelComposingMessage()'>Annuleer</a></div></div>";
+
+        echo "var editAdminForm = \"" . $editAdminForm . "\";\n";
         echo "var newAdminForm = \"" . $newAdminForm . "\";\n";
         if(!$succesNew) {
             echo "originalHTML =\"" . $newAdminPageElement . "\";\n";
@@ -127,7 +230,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         echo "<div id='admin" . $admin["adminID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["adminID"] . "'>";
         echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["adminID"] . "'>";
         echo $admin["emailadres"] . "</h4>";
-        echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["adminID"] . ")' /></div>";
+        if($admin["adminID"] != 1) {echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["adminID"] . ")' /></div>";}
         echo "</div>";
     }
     echo "<div id='newAdminElement' class='pageElement'>";
@@ -142,10 +245,22 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     <?php printFooter(); ?>
     
     <?php
-    if(!$succesNew) {
-        echo "<script type='text/javascript'>
+    if(!$succesNew || !$succesEdit) {
+        if(!$succesNew) {
+            echo "<script type='text/javascript'>
             document.getElementById('adminFormName').value = '" . $inputName . "';
             document.getElementById('adminFormEmail').value = '" . $inputEmail . "';";
+        }
+        
+        if(!$succesEdit) {
+            echo "<script type='text/javascript'>";
+            echo "originalHTML = document.getElementById('admin" . $inputAdminEditID . "').innerHTML;";
+            echo "document.getElementById('admin" . $inputAdminEditID . "').innerHTML = editAdminForm;";
+            echo "document.getElementById('adminEditedID').value = " . $inputAdminEditID . ";";
+            echo "document.getElementById('adminFormName').value = '" . $inputNameEdited . "';";
+            echo "document.getElementById('adminFormEmail').value = '" . $inputEmailEdited . "';";
+        }
+        
         if($adminNameError > 0) {
             echo "document.getElementById('adminFormName').className = 'error';document.getElementById('adminNameErrorMessage').innerHTML =";
             
@@ -188,6 +303,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             }
         }
         echo "</script>";}
+    
     ?>
     </body>
 </html>

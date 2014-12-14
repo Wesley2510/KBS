@@ -28,6 +28,9 @@ function createNewAdmin() {
 }
 
 function editAdminData(ID) {
+    if(ID === 1) {
+        return;
+    }
     if (document.getElementById("adminForm") !== null) {
         cancelComposingMessage();
     }
@@ -37,27 +40,13 @@ function editAdminData(ID) {
     var emailadres = document.getElementById("email" + ID).innerHTML;
     
     originalHTML = pageElement.innerHTML;
-    var temp = "<form action='#' id='adminForm' method='post'></form>";
-    temp += "<div style='width: 100%;'>";
-    if(ID !== 1) { 
-        temp += "<div class='flexRowSpace'>";
-        temp += "<input type='text' class='textbox' id='adminNameText' form='adminForm' name='adminNameEdited' />";
-        temp += "<input type='text' class='textbox' id='adminEmailText' form='adminForm' name='adminEmailEdited' placeholder='Emailadres' /></div>"; 
-    }
-    temp += "<div class='flexRowSpace'><input type='text' class='textbox' id='adminNewPasswordText' form='adminForm' name='adminNewPassword' placeholder='Nieuw wachtwoord'>";
-    temp += "<input type='text' class='textbox' id='adminRepeatPasswordText' form='adminForm' name='adminRepeatPassword' placeholder='Herhaal wachtwoord'/></div>";
-    temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Opslaan</a>";
-    temp += "<input type='hidden' name='adminEditedID' value='" + ID + "' form='adminForm' />";
-    if(ID !== 1) { temp += "<a role='button' id='buttonVerwijder'>Deactiveer</a>"; }
-    temp += "<a role='button' id='buttonAnnuleer'>Annuleer</a></div></div>";
-    pageElement.innerHTML = temp;
+    pageElement.innerHTML = editAdminForm;
+    document.getElementById('adminEditedID').value = ID;
     
-    if(ID !== 1) { 
-        document.getElementById("adminNameText").value = adminNaam; 
-        document.getElementById("adminEmailText").value = emailadres;
-    }
+    document.getElementById("adminFormName").value = adminNaam; 
+    document.getElementById("adminFormEmail").value = emailadres;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
-    if(ID !== 1) { document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(ID, adminNaam); } ) }
+    document.getElementById("buttonDeactiveer").addEventListener("click", function() { deleteWarning(ID, adminNaam); } );
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
 }
 
