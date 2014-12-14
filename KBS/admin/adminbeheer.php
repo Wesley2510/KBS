@@ -146,44 +146,46 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             document.getElementById('adminFormEmail').value = '" . $inputEmail . "';
             
             if(" . $adminNameError . " > 0) {
-                document.getElementById('adminFormName').className = 'error';
+                document.getElementById('adminFormName').className = 'error';document.getElementById('adminNameErrorMessage').innerHTML =";
                 
-                if(" . $adminNameError . " == 1) {
-                    document.getElementById('adminNameErrorMessage').innerHTML = 'Vul A.U.B. een naam in';
-                } else if (" . $adminNameError . " == 2) {
-                    document.getElementById('adminNameErrorMessage').innerHTML = 'Vul A.U.B. voor- en achternaam in';
-                } else if (" . $adminNameError . " == 3) {
-                    document.getElementById('adminNameErrorMessage').innerHTML = 'Vul A.U.B. een geldige naam in';
-                }
-            }
+        if($adminNameError == 1) {
+            echo "'Vul A.U.B. een naam in';";
+        } else if ($adminNameError == 2) {
+            echo "'Vul A.U.B. voor- en achternaam in';";
+        } else if (" . $adminNameError . " == 3) {
+            echo "'Vul A.U.B. een geldige naam in';";
+        }
+        
+        echo "}
             if(" . $adminEmailError . " > 0) {
-                document.getElementById('adminFormEmail').className = 'error';
+                document.getElementById('adminFormEmail').className = 'error';document.getElementById('adminEmailErrorMessage').innerHTML =";
                 
-                if(" . $adminEmailError . " == 1) {
-                    document.getElementById('adminEmailErrorMessage').innerHTML = 'Vul A.U.B. een emailadres in';
-                } else if (" . $adminEmailError . " == 2) {
-                    document.getElementById('adminEmailErrorMessage').innerHTML = 'Vul A.U.B. een geldig emailadres in';
-                }
-            }
+        if($adminEmailError == 1) {
+            echo "'Vul A.U.B. een emailadres in';";
+        } else if ($adminEmailError == 2) {
+            echo "'Vul A.U.B. een geldig emailadres in';";
+        } 
+        
+        echo "}
             if(" . $adminPassError . " > 0) {
-                document.getElementById('adminFormPass').className = 'error';
+                document.getElementById('adminFormPass').className = 'error';document.getElementById('adminPassErrorMessage').innerHTML =";
                 
-                if(" . $adminPassError . " == 1) {
-                    document.getElementById('adminPassErrorMessage').innerHTML = 'Vul A.U.B. een wachtwoord in';
-                } else if (" . $adminPassError . " == 2) {
-                    document.getElementById('adminPassErrorMessage').innerHTML = 'Alphanumerieke tekens (a-Z, 0-9)';
-                }
-            }
+        if($adminPassError == 1) {
+            echo "'Vul A.U.B. een wachtwoord in';";
+        } else if ($adminPassError == 2) {
+            echo "'Alphanumerieke tekens (a-Z, 0-9)';";
+        } 
+        
+        echo "}
             if(" . $adminPassRepeatError . " > 0 || " . $adminPassError . " > 0) {
-                document.getElementById('adminFormPassRepeat').className = 'error';
+                document.getElementById('adminFormPassRepeat').className = 'error';document.getElementById('adminPassRepeatErrorMessage').innerHTML =";
                 
-                if(" . $adminPassRepeatError . " == 1) {
-                    document.getElementById('adminPassRepeatErrorMessage').innerHTML = 'Herhaal A.U.B. het wachtwoord';
-                } else if (" . $adminPassRepeatError . " == 2) {
-                    document.getElementById('adminPassRepeatErrorMessage').innerHTML = 'Wachtwoorden komen niet overeen';
-                }
-            }
-    </script>";}
+        if($adminPassRepeatError == 1) {
+            echo "'Herhaal A.U.B. het wachtwoord';";
+        } else if ($adminPassRepeatError == 2) {
+            echo "'Wachtwoorden komen niet overeen';";
+        }
+        echo "}</script>";}
     ?>
     </body>
 </html>
