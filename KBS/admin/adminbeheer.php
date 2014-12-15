@@ -86,7 +86,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                     . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "', 1)";
             if(!$link->query($sql)) {
                 trigger_error("Fout bij toevoegen administrator :" . $sql . $link->error());
-            }
+            } 
             
             header('Location: #');
         }
@@ -163,6 +163,11 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             
             if(!$link->query($sql)) {
                 trigger_error("Fout bij wijzingen admin data : " . $sql);
+            } else {
+                if($_SESSION["userID"] == $inputAdminEditID) {
+                    $_SESSION["voornaam"] = $voornaam;
+                    $_SESSION["achternaam"] = $achternaam;
+                }
             }
         }
     }

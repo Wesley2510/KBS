@@ -137,6 +137,6 @@ INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (9,'<h1 sty
 
 
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `admin`)
-VALUES("nana", "Ba", "Naan", "admin", 1);
+VALUES("password", "admin", "", "admin", 1);
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
 VALUES("nana", "Ba", "Naan", "banaan@smeagol.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 1);

@@ -15,28 +15,34 @@ if ( $GLOBALS["link"]->connect_error) {
 }
 
 function printHeader() {
-   echo "<nav id='headerbar'><div><h1>TextBug</h1></div>";
-            
-    //Haal alle text columns uit tabel Menuitem
-    $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
-    if($menuitems === false) {
-        trigger_error("Error:" . $GLOBALS["link"]->error, E_USER_ERROR);
-        echo "<div class='menuItem'><a><h2>Probleem bij laden</h2></a></div>";
-    } else {
-        $list = array();
+    if(!isset($_SESSION["headerBarHTML"])) {
+        $HTML = "<nav id='headerbar'><div><h1>TextBug</h1></div>";
 
-        while($row = $menuitems->fetch_assoc()) {
-            //Plaats de menuitems op de juiste positie in de array $list
-            $list[$row["positie"]] = $row["naam"];
-        }
-        $list[0] = NULL;
+         //Haal alle text columns uit tabel Menuitem
+         $menuitems = $GLOBALS["link"]->query("SELECT naam, positie FROM pagina;");
+         if($menuitems === false) {
+             trigger_error("Error:" . $GLOBALS["link"]->error, E_USER_ERROR);
+             $HTML .= "<div class='menuItem'><a><h2>Probleem bij laden</h2></a></div>";
+         } else {
+             $list = array();
 
-        for($i = 1; $i < count($list); $i++) {
-            echo "<div class='menuItem'><a href='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
-        }
+             while($row = $menuitems->fetch_assoc()) {
+                 //Plaats de menuitems op de juiste positie in de array $list
+                 $list[$row["positie"]] = $row["naam"];
+             }
+             $list[0] = NULL;
+
+             for($i = 1; $i < count($list); $i++) {
+                 $HTML .= "<div class='menuItem'><a href='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
+             }
+         }
+
+         $HTML .= "<div style='flex:1;'></div><div class='menuItem'>";
+         trigger_error("lol");
+         $_SESSION["headerBarHTML"] = $HTML;
     }
-
-    echo "<div style='flex:1;'></div><div class='menuItem'>";
+    
+    echo $_SESSION["headerBarHTML"];
     if(!isset($_SESSION["loggedin"])) {
         echo "<a href='/login.php'><h2>Login</h2></a></div></nav>";
     } else {
@@ -49,6 +55,7 @@ function printFooter() {
 }
 
 function printStyles() {
+    echo "<meta name=viewport content='width=device-width, initial-scale=1'> ";
     echo "<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>\n\t\t";
     echo "<link rel='stylesheet' type='text/css' href='/styles/stylesheet.css' />\n\t\t";
 }

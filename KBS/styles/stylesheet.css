@@ -230,19 +230,19 @@ a[role*="button"]:active {
 
 .iconEdit {
     float: right;
-    margin: 0.25rem;
     
-    min-width: 2rem;
-    min-height: 2rem;
+    min-width: 44px;
+    min-height: 44px;
 }
 .iconEdit:hover {
     cursor: pointer;
 }
 .iconDown {
-    margin: 0.25rem;
-    
     width: 2rem;
     height: 2rem;
+    
+    min-width: 44px;
+    min-height: 44px;
 }
 .iconDown:hover {
     cursor: pointer;

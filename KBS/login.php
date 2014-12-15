@@ -59,6 +59,7 @@ if($inputEmail !== NULL) {
             } else {
                 $row = $link->query("SELECT * FROM klant WHERE klantID =" . $klantID)->fetch_assoc();
                 $_SESSION["loggedin"] = true;
+                $_SESSION["userID"] = $row["klantID"];
                 $_SESSION["admin"] = $row["admin"];
                 $_SESSION["voornaam"] = $row["voornaam"];
                 $_SESSION["achternaam"] = $row["achternaam"];
