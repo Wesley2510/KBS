@@ -35,7 +35,7 @@ if($inputEmail !== NULL) {
     if(ltrim($inputEmail, ' ') == '') {
         $errorEmail = 1;
         $succes = false;
-    } else if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL)) {
+    } else if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL) && strtolower($inputEmail) != 'admin') {
         $errorEmail = 3;
         $succes = false;
     }
@@ -87,7 +87,7 @@ if($inputEmail !== NULL) {
         ?>
         <form class="pageElement" action='#' id='loginForm' method="post">
             <div style="display:flex;flex-direction:column;align-items:center;">
-                <h3>Gebruikersnaam</h3>
+                <h3>Emailadres</h3>
                 <input type="text" name="username" <?php if($errorEmail > 0) {echo "class='error'";} if($inputEmail !== NULL) {echo "value='" . $inputEmail . "'";} ?> />
                 <?php 
                     if($errorEmail == 1) {
@@ -110,7 +110,6 @@ if($inputEmail !== NULL) {
                     } 
                 ?>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
-                <a href="vergeten.php?type=gebruikersnaam" style="font-size:0.5rem;">Gebruikersnaam vergeten</a><br/>
                 <a href="vergeten.php?type=wachtwoord" style="font-size:0.5rem;">Wachtwoord vergeten</a>
             </div>
             <input type="submit" style="display:none;">

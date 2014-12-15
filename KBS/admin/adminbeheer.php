@@ -62,6 +62,9 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         } else if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL)) {
             $adminEmailError = 2;
             $succesNew = false;
+        } else if ($link->query("SELECT COUNT(klantID) FROM klant WHERE emailadres=" . $inputEmail) > 0) {
+            $adminEmailError = 3;
+            $succesNew = false;
         }
         if($inputPass == NULL || ltrim($inputPass, ' ') == '') {
             $adminPassError = 1;
@@ -280,6 +283,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 echo "'Vul A.U.B. een emailadres in';";
             } else if ($adminEmailError == 2) {
                 echo "'Vul A.U.B. een geldig emailadres in';";
+            } else if ($adminEmailError == 3) {
+                echo "'Dit emailadres is al in gebruik';";
             } 
         }
         
