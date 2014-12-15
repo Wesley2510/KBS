@@ -15,7 +15,7 @@ if ( $GLOBALS["link"]->connect_error) {
 }
 
 function printHeader() {
-    if(!isset($_SESSION["headerBarHTML"])) {
+    if(!isset($_SESSION["headerBarHTML"]) || $_SESSION["headerBarEdited"] == true) {
         $HTML = "<nav id='headerbar'><div><h1>TextBug</h1></div>";
 
          //Haal alle text columns uit tabel Menuitem
@@ -38,8 +38,8 @@ function printHeader() {
          }
 
          $HTML .= "<div style='flex:1;'></div><div class='menuItem'>";
-         trigger_error("lol");
          $_SESSION["headerBarHTML"] = $HTML;
+         $_SESSION["headerBarEdited"] = false;
     }
     
     echo $_SESSION["headerBarHTML"];

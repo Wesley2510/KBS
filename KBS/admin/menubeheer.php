@@ -22,6 +22,7 @@ if($rowDown != NULL && is_numeric($rowDown)) {
 
         $link->query("UPDATE pagina SET positie =" . $rowDown . " WHERE positie =" . ($rowDown + 1));
         $link->query("UPDATE pagina SET positie =" . ($rowDown + 1) . " WHERE paginaID =" . $tempID);
+        $_SESSION["headerBarEdited"] = true;
         header( 'Location: #' ) ;
     }
 }
@@ -33,6 +34,7 @@ if($menuItemEditedPos != NULL && is_numeric($menuItemEditedPos)) {
     if(!$link->query("UPDATE pagina SET naam ='" . $menuItemEdited . "' WHERE positie =" . $menuItemEditedPos)){
         trigger_error("Fout bij bewerken naam pagina: " . $link->error, E_USER_ERROR);
     }
+    $_SESSION["headerBarEdited"] = true;
     header( 'Location: #' ) ;
 }
 
@@ -68,6 +70,7 @@ if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
         }
     }
     
+    $_SESSION["headerBarEdited"] = true;
     header( 'Location: #' ) ;
 }
 
@@ -85,6 +88,8 @@ if($newMenuItemName != NULL) {
             }
         }
     }
+    
+    $_SESSION["headerBarEdited"] = true;
     header('Location: #');
 }
 ?>

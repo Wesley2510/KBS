@@ -30,13 +30,16 @@ if ($inputP === NULL) {
     $rows = $link->query("SELECT paginaID FROM pagina WHERE naam = '" . $inputP . "';");
     if ($rows === false) {
         trigger_error("Error: " . $link->error, E_USER_ERROR);
-        echo "";
     } else {
         $row = $rows->fetch_assoc();
         $pID = $row["paginaID"];
 
         //Als er in de query geen id gevonden is bestaat de pagina niet, dus wordt er naar 404 doorverwezen
         if ($pID === NULL) {
+            //Het menu zou bewerkt kunnen zijn in een andere sessie, waardoor de
+            //HTML nog niet geupdatet is
+            $_SESSION["headerBarEdited"] = true;
+            
             header("Location: 404.php");
             die();
         }
