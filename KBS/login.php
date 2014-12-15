@@ -26,17 +26,17 @@ if(isset($_SESSION["loggedin"])) {
     die();
 }
 
-$inputUsername = filter_input(INPUT_POST, "username", FILTER_SANITIZE_ENCODED);
+$inputEmail = filter_input(INPUT_POST, "username");
 $inputPassword = filter_input(INPUT_POST, "password");
-$errorUsername = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = forbidden symbols
+$errorEmail = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = forbidden symbols
 $errorPassword = 0; //0 = No error, 1 = empty password, 2 = spaces occurring, 3 = wrong password
-if($inputUsername !== NULL) {
+if($inputEmail !== NULL) {
     $succes = true;
-    if(ltrim($inputUsername, ' ') == '') {
-        $errorUsername = 1;
+    if(ltrim($inputEmail, ' ') == '') {
+        $errorEmail = 1;
         $succes = false;
-    } else if (preg_replace("/[^A-Za-z0-9 ]/", '', $inputUsername) != $inputUsername) {
-        $errorUsername = 3;
+    } else if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL)) {
+        $errorEmail = 3;
         $succes = false;
     }
 
@@ -49,55 +49,23 @@ if($inputUsername !== NULL) {
     }
 
     if($succes) {
-        //Admin login
-        if($inputUsername == "admin" || substr_count($inputUsername, ' ') > 0){
-            $firstSpacePos = strpos($inputUsername, ' ');
-            if($inputUsername == "admin") {
-                $voornaam = "admin";
-                $achternaam = "";
+        $klantID = $link->query("SELECT klantID FROM klant WHERE emailadres = '" . strtolower($inputEmail) . "'")->fetch_assoc()["klantID"];
+        if($klantID == false) {
+            $errorEmail = 2;
+        } else {
+            $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klantID)->fetch_assoc()["wachtwoord"];
+            if($password != $inputPassword) {
+                $errorPassword = 3;
             } else {
-                $voornaam = substr($inputUsername, 0, $firstSpacePos);
-                $achternaam = substr($inputUsername, $firstSpacePos + 1);
-            }
-            
-            $adminID = $link->query("SELECT adminID FROM admin WHERE LOWER(voornaam) = '" . strtolower($voornaam) . "' AND LOWER(achternaam) = '" . strtolower($achternaam) . "'")->fetch_assoc()["adminID"];
-            if($adminID == false) {
-                $errorUsername = 2;
-            } else {
-                $password = $link->query("SELECT wachtwoord FROM admin WHERE adminID =" . $adminID)->fetch_assoc()["wachtwoord"];
-                if($password != $inputPassword) {
-                    $errorPassword = 3;
-                } else {
-                    $row = $link->query("SELECT voornaam, achternaam FROM admin WHERE adminID =" . $adminID)->fetch_assoc();
-                    $_SESSION["loggedin"] = true;
-                    $_SESSION["admin"] = true;
-                    $_SESSION["voornaam"] = $row["voornaam"];
-                    $_SESSION["achternaam"] = $row["achternaam"];
+                $row = $link->query("SELECT * FROM klant WHERE klantID =" . $klantID)->fetch_assoc();
+                $_SESSION["loggedin"] = true;
+                $_SESSION["admin"] = $row["admin"];
+                $_SESSION["voornaam"] = $row["voornaam"];
+                $_SESSION["achternaam"] = $row["achternaam"];
 
-                    session_write_close();
+                session_write_close();
 
-                    header('Location: /admin/');
-                }
-            }
-        } else { //Klant login
-            $klantID = $link->query("SELECT klantID FROM klant WHERE username = '" . strtolower($inputUsername) . "'")->fetch_assoc()["klantID"];
-            if($klantID == false) {
-                $errorUsername = 2;
-            } else {
-                $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klantID)->fetch_assoc()["wachtwoord"];
-                if($password != $inputPassword) {
-                    $errorPassword = 3;
-                } else {
-                    $row = $link->query("SELECT voornaam, achternaam FROM klant WHERE klantID =" . $klantID)->fetch_assoc();
-                    $_SESSION["loggedin"] = true;
-                    $_SESSION["admin"] = false;
-                    $_SESSION["voornaam"] = $row["voornaam"];
-                    $_SESSION["achternaam"] = $row["achternaam"];
-
-                    session_write_close();
-
-                    header('Location: /admin/');
-                }
+                header('Location: /admin/');
             }
         }
     }
@@ -120,13 +88,13 @@ if($inputUsername !== NULL) {
         <form class="pageElement" action='#' id='loginForm' method="post">
             <div style="display:flex;flex-direction:column;align-items:center;">
                 <h3>Gebruikersnaam</h3>
-                <input type="text" name="username" <?php if($errorUsername > 0) {echo "class='error'";} if($inputUsername !== NULL) {echo "value='" . $inputUsername . "'";} ?> />
+                <input type="text" name="username" <?php if($errorEmail > 0) {echo "class='error'";} if($inputEmail !== NULL) {echo "value='" . $inputEmail . "'";} ?> />
                 <?php 
-                    if($errorUsername == 1) {
+                    if($errorEmail == 1) {
                         echo "<h4 class='error'>Vul A.U.B. een gebruikersnaam in</h4>"; 
-                    } else if($errorUsername == 2) {
+                    } else if($errorEmail == 2) {
                         echo "<h4 class='error'>Deze gebruiker bestaat niet</h4>"; 
-                    } else if ($errorUsername == 3) {
+                    } else if ($errorEmail == 3) {
                         echo "<h4 class='error'>Verboden tekens in gebruikersnaam</h4>";
                     }
                 ?>

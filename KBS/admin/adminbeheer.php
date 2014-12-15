@@ -79,8 +79,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         }
         
         if($succesNew) {
-            $sql = "INSERT INTO admin (voornaam, achternaam, emailadres, wachtwoord) "
-                    . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "')";
+            $sql = "INSERT INTO klant (voornaam, achternaam, emailadres, wachtwoord, admin) "
+                    . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "', 1)";
             if(!$link->query($sql)) {
                 trigger_error("Fout bij toevoegen administrator" . $sql);
             }
@@ -140,7 +140,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         }
         
         if($succesEdit) {
-            $sql = "UPDATE admin SET ";
+            $sql = "UPDATE klant SET ";
             if($inputNameEdited !== NULL && $inputNameEdited !== '') {
                 $sql .= "voornaam='" . $voornaam . "', achternaam='" . $achternaam . "' ";
             }
@@ -156,7 +156,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 }
                 $sql .= "wachtwoord='" . $inputNewPass . "' ";
             }
-            $sql .= "WHERE adminID =" . $inputAdminEditID;
+            $sql .= "WHERE klantID =" . $inputAdminEditID;
             
             if(!$link->query($sql)) {
                 trigger_error("Fout bij wijzingen admin data : " . $sql);
@@ -225,12 +225,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     <?php printHeader(); ?>
     
     <?php 
-    $admins = $link->query("SELECT adminID, voornaam, achternaam, emailadres FROM admin");
+    $admins = $link->query("SELECT klantID, voornaam, achternaam, emailadres FROM klant WHERE admin = 1");
     while($admin = $admins->fetch_assoc()) {
-        echo "<div id='admin" . $admin["adminID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["adminID"] . "'>";
-        echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["adminID"] . "'>";
+        echo "<div id='admin" . $admin["klantID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["klantID"] . "'>";
+        echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["klantID"] . "' style='text-align:right;padding-right:2rem;flex:1;'>";
         echo $admin["emailadres"] . "</h4>";
-        if($admin["adminID"] != 1) {echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["adminID"] . ")' /></div>";}
+        if($admin["klantID"] != 1) {echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["klantID"] . ")' /></div>";}
         echo "</div>";
     }
     echo "<div id='newAdminElement' class='pageElement'>";

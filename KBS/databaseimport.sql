@@ -17,34 +17,19 @@ DROP TABLE IF EXISTS `Textbug`.`bericht` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `klantID` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(20) NOT NULL ,
   `wachtwoord` VARCHAR(45) NOT NULL ,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
-  `emailadres` VARCHAR(45) NOT NULL ,
-  `postcode` VARCHAR(7) NOT NULL ,
-  `huisnummer` INT NOT NULL ,
+  `emailadres` VARCHAR(45) NOT NULL UNIQUE,
+  `postcode` VARCHAR(7) NULL ,
+  `huisnummer` INT NULL ,
   `telefoon` VARCHAR(11) NULL ,
   `mobiel` VARCHAR(11) NULL ,
-  `woonplaats` VARCHAR(45) NOT NULL ,
-  `adres` VARCHAR(45) NOT NULL ,
+  `woonplaats` VARCHAR(45) NULL ,
+  `adres` VARCHAR(45) NULL ,
+  `admin` TINYINT(1),
   PRIMARY KEY (`klantID`) )
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Textbug`.`admin`
--- -----------------------------------------------------
-
-CREATE  TABLE IF NOT EXISTS `Textbug`.`admin` (
-  `adminID` INT NOT NULL AUTO_INCREMENT,
-  `voornaam` VARCHAR(45) NOT NULL ,
-  `achternaam` VARCHAR(45) NOT NULL ,
-  `emailadres` VARCHAR(45) NULL ,
-  `wachtwoord` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`adminID`) )
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `Textbug`.`notitie`
@@ -151,10 +136,5 @@ INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (9,'<h1 sty
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/xXwXOf2.jpg" alt="Guyz" width="631" height="631" /></p>','2014-12-12 17:38:44',1);
 
 
-INSERT INTO `Textbug`.`klant` (`username`, `wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`)
-VALUES("banaan", "nana", "Ba", "Naan", "banaan@smeagol.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1");
-
-INSERT INTO `Textbug`.`admin` (`voornaam`, `achternaam`, `wachtwoord`)
-VALUES("admin", "", "lol");
-INSERT INTO `Textbug`.`admin` (`voornaam`, `achternaam`, `emailadres`, `wachtwoord`)
-VALUES("Lewis", "Clement", "lol@gmail.com", "wassup");
+INSERT INTO `Textbug`.`klant` (`username`, `wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
+VALUES("banaan", "nana", "Ba", "Naan", "banaan@smeagol.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 1);
