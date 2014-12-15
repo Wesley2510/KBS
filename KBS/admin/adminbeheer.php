@@ -20,7 +20,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     $inputPass = filter_input(INPUT_POST, "pass");
     $inputPassRepeat = filter_input(INPUT_POST, "passrepeat");
     $adminNameError = 0; //1 = no input, 2 = no firstname/surname, 3 = invalid name
-    $adminEmailError = 0; //1 = no input, 2 = not a valid adress
+    $adminEmailError = 0; //1 = no input, 2 = not a valid adress, 3 = al geregistreerd
     $adminPassError = 0; //1 = no input, 2 = not a valid password
     $adminPassRepeatError = 0; //1 = no input, 2 = not same as pass
     $succesNew = true; 
@@ -82,7 +82,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             $sql = "INSERT INTO klant (voornaam, achternaam, emailadres, wachtwoord, admin) "
                     . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "', 1)";
             if(!$link->query($sql)) {
-                trigger_error("Fout bij toevoegen administrator" . $sql);
+                trigger_error("Fout bij toevoegen administrator :" . $sql . $link->error());
             }
             
             header('Location: #');

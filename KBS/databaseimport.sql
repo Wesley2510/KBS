@@ -136,5 +136,5 @@ INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (9,'<h1 sty
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/xXwXOf2.jpg" alt="Guyz" width="631" height="631" /></p>','2014-12-12 17:38:44',1);
 
 
-INSERT INTO `Textbug`.`klant` (`username`, `wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
-VALUES("banaan", "nana", "Ba", "Naan", "banaan@smeagol.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 1);
+INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
+VALUES("nana", "Ba", "Naan", "banaan@smeagol.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 1);
