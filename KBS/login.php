@@ -111,7 +111,7 @@ if($inputEmail !== NULL) {
                     } 
                 ?>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
-                <a href="vergeten.php?type=wachtwoord" style="font-size:0.5rem;">Wachtwoord vergeten</a>
+                <a href="wachtwoordreset.php" style="font-size:0.5rem;">Wachtwoord vergeten</a>
             </div>
             <input type="submit" style="display:none;">
         </form>

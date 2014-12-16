@@ -67,3 +67,12 @@ function printScripts() {
         echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
     }
 }
+
+function checkPass($pass) {
+    if ($pass == NULL || ltrim($pass, ' ') == '') {
+        return 1;
+    } else if (preg_replace("/[^A-Za-z0-9 ]/", '', $pass) != $pass) {
+        return 2;
+    }
+    return 0;
+}

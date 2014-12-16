@@ -28,7 +28,7 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `mobiel` VARCHAR(11) NULL ,
   `woonplaats` VARCHAR(45) NULL ,
   `adres` VARCHAR(45) NULL ,
-  `admin` TINYINT(1),
+  `admin` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`klantID`) )
 ENGINE = InnoDB;
 
@@ -40,11 +40,12 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`resetcode` (
   `resetID` INT NOT NULL AUTO_INCREMENT,
   `user` INT NOT NULL ,
   `datumreset` DATETIME NULL ,
+  `code` VARCHAR(20) NOT NULL ,
   PRIMARY KEY (`resetID`),
   INDEX `fk_reset_User1_idx` (`user` ASC) ,
   CONSTRAINT `fk_Reset_User1`
     FOREIGN KEY (`user` )
-    REFERENCES `Textbug`.`klant` (`userID` )
+    REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
