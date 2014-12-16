@@ -6,6 +6,7 @@ CREATE SCHEMA IF NOT EXISTS `Textbug` DEFAULT CHARACTER SET utf8 COLLATE utf8_ge
 USE `Textbug` ;
 
 DROP TABLE IF EXISTS `Textbug`.`klant` ;
+DROP TABLE IF EXISTS `Textbug`.`resetcode` ;
 DROP TABLE IF EXISTS `Textbug`.`admin` ;
 DROP TABLE IF EXISTS `Textbug`.`factuur` ;
 DROP TABLE IF EXISTS `Textbug`.`notitie` ;
@@ -29,6 +30,23 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `adres` VARCHAR(45) NULL ,
   `admin` TINYINT(1),
   PRIMARY KEY (`klantID`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Textbug`.`resetcode`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Textbug`.`resetcode` (
+  `resetID` INT NOT NULL AUTO_INCREMENT,
+  `user` INT NOT NULL ,
+  `datumreset` DATETIME NULL ,
+  PRIMARY KEY (`resetID`),
+  INDEX `fk_reset_User1_idx` (`user` ASC) ,
+  CONSTRAINT `fk_Reset_User1`
+    FOREIGN KEY (`user` )
+    REFERENCES `Textbug`.`klant` (`userID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
