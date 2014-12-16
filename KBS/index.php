@@ -59,8 +59,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     if ($inputBericht != NULL) {
         //Controleer of input niet alleen uit spaties bestaat
         if (!(ltrim($inputBericht, ' ') === '')) {
-            $day = date("Y-m-d H:i:s", getdate()[0]);
-            if (!$link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $day . "'," . $pID . ");")) {
+            $dateTime = date("Y-m-d H:i:s", getdate()[0]);
+            if (!$link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $dateTime . "'," . $pID . ");")) {
                 trigger_error("Fout bij toevoegen nieuw bericht: " . $link->error, E_USER_ERROR);
             }
         }
