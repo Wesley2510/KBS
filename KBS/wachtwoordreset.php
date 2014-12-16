@@ -103,6 +103,10 @@ if ($inputResetEmail !== NULL) {
         echo "<div class='pageElement' style='display:flex;flex-direction:column;align-items:center;'>";
         echo "<h4>Aanvraag succesvol verzonden.</h4>";
         echo "<h4>U zal binnen 5 minuten een email ontvangen.</h4>";
+        //Voor development
+        $code = $link->query("SELECT code FROM resetcode WHERE datumreset IS NULL AND user = (SELECT klantID FROM klant WHERE emailadres='" . $inputResetEmail . "');")->fetch_assoc()["code"];
+        echo "<a href='/wachtwoordreset.php?e=" . $inputResetEmail . "&c=" . $code . "'>Resetlink (Voor development)</a>";
+        
         echo "<a role='button' href='/'>Naar hoofdpagina</a>";
     } else if ($inputCode !== NULL && $inputEmailCode !== NULL) {
         echo "<div class='pageElement' style='display:flex;flex-direction:column;align-items:center;'>";
@@ -150,7 +154,7 @@ if ($inputResetEmail !== NULL) {
         echo "<div class='pageElement' style='display:flex;flex-direction:column;align-items:center;'>";
         echo "<form id='resetForm' action='#' method='post'></form>";
         echo "<h3>Vraag een nieuw wachtwoord op</h3>";
-        echo "<input type='text' name='resetEmail' placeholder='Emailadres' form='resetForm'";
+        echo "<input type='text' name='resetEmail' placeholder='Emailadres' form='resetForm' value='" . $inputResetEmail . "' ";
         if (!$succes) {
             echo "class='error'";
         }
