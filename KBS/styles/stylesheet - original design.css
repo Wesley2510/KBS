@@ -52,8 +52,7 @@ Index:
 }
 
 body{
-    /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAANUlEQVQYlWNgYGAwZkAFxjjEEOD/////sbFJB2i6UaxGljPGogjdncYkKSTaatIBoeAhKsABVqkkqfNXhpUAAAAASUVORK5CYII=) repeat-x;*/
-    background: #E5E5E5;
+    background-color: #E5E5E5;
     margin: 0px;
     overflow-x: hidden;
 }
@@ -69,7 +68,7 @@ body{
     min-padding-left: 0.8rem;
     
     background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 0.06rem 0.24rem 0.12rem rgba(0,0,0,0.2);
+    box-shadow: 0 0.06rem 0.24rem 0.12rem black;
 }
 
 #headerbar h1 {
@@ -140,14 +139,14 @@ a[role*="button"] {
     -ms-user-select: none;
     user-select: none;
     
+    border: 0.15rem solid black;
     margin: 0.24rem;
     width: 10rem;
     height: 1.6rem;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding: 0.1rem;
     
-    box-shadow: 0rem 0rem 0.2rem 0rem rgba(0,0,0,1);
+    
     background-color: lightgrey;
 }
 a[role*="button"]:hover {
@@ -159,14 +158,6 @@ a[role*="button"]:active {
     background-color: grey;
 }
 
-a.icon {
-    flex-grow:1;
-    width: 100%;
-    text-align:right;
-}
-a.icon:active {
-    background-color: rgba(0,0,0,0);
-}
 #buttonVerwijder {
     background-color: lightcoral;
 }
@@ -177,6 +168,7 @@ a.icon:active {
 }
 
 .pageElement {
+    box-shadow: 0.12rem 0.12rem 0.4rem #888888;
     margin-left: auto;
     margin-right: auto;
     overflow:hidden;
@@ -189,7 +181,6 @@ a.icon:active {
     padding-right: 0.48rem;
     
     font-family: "Lucida Console", Monaco, monospace;
-    box-shadow: 0 0.06rem 0.24rem 0.12rem rgba(0,0,0,0.1);
 }
 
 /* Maakt de margin-top in .pageElement ongedaan.
@@ -201,10 +192,8 @@ a.icon:active {
 }
 
 .pageElement .datum {
-    margin-left: 0.48rem;
-    flex-grow:1;
-    text-align: left;
-    width:100%;
+    font-size: 0.6rem;
+    margin-left: 0.25rem;
 }
 
 .pageElement .content {
@@ -220,29 +209,6 @@ a.icon:active {
 .pageElement img {
     max-width: 100%;
     height: auto;
-}
-
-.titleBar {
-    background-color: #f6f6f6;
-    
-    box-shadow: 0 0.06rem 0.24rem 0.1rem rgba(0,0,0,0.1);
-    margin: -0.24rem;
-    margin-right: -0.48rem;
-    
-    min-height: 50px;
-}
-
-.title {
-    margin: 0px;
-    flex-grow:1;
-    width:100%;
-}
-#berichtFormTitle {
-    text-align:center;
-    font-size:2rem;
-    height: 2.2rem;
-    font-family: "Lucida Console",Monaco,monospace;
-    font-weight: 700;
 }
 
 .contentEditor {
@@ -263,22 +229,24 @@ a.icon:active {
     text-align: center;
 }
 
-img.icon, div.icon{
+.iconEdit {
+    float: right;
+    
+    min-width: 44px;
+    min-height: 44px;
+}
+.iconEdit:hover {
+    cursor: pointer;
+}
+.iconDown {
     width: 2rem;
     height: 2rem;
     
     min-width: 44px;
     min-height: 44px;
 }
-img.icon:hover {
+.iconDown:hover {
     cursor: pointer;
-}
-.iconEdit {
-    float: right;
-}
-#Layer_1 {
-    flood-color: red;
-    fill: red;
 }
 
 .warningText {

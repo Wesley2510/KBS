@@ -29,8 +29,10 @@ window.onscroll = function () {
         currentlyVisibleElement.style.display = "block";
         if(currentElementSelect % 2 == 1) {
             currentlyVisibleElement.style.left = 15 - currentlyVisibleElement.offsetWidth / 2 + "px";
+            currentlyVisibleElement.style.right = "";
         } else {
-            currentlyVisibleElement.style.left = window.innerWidth - 15 - currentlyVisibleElement.offsetWidth / 2 + "px";
+            currentlyVisibleElement.style.left = "";
+            currentlyVisibleElement.style.right = 15 - currentlyVisibleElement.offsetWidth / 2 + "px";
         }
     }
     

@@ -56,11 +56,12 @@ if (!is_numeric($inputB)) {
 if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     //Code voor toevoegen bericht
     $inputBericht = filter_input(INPUT_POST, "bericht", FILTER_SANITIZE_ENCODED);
+    $inputTitel = filter_input(INPUT_POST, "titel", FILTER_SANITIZE_ENCODED);
     if ($inputBericht != NULL) {
         //Controleer of input niet alleen uit spaties bestaat
         if (!(ltrim($inputBericht, ' ') === '')) {
             $dateTime = date("Y-m-d H:i:s", getdate()[0]);
-            if (!$link->query("INSERT INTO bericht (inhoud, datum, pagina) VALUES ('" . $inputBericht . "','" . $dateTime . "'," . $pID . ");")) {
+            if (!$link->query("INSERT INTO bericht (inhoud, titel, datum, pagina) VALUES ('" . $inputBericht . "','" . $inputTitel . "','" . $dateTime . "'," . $pID . ");")) {
                 trigger_error("Fout bij toevoegen nieuw bericht: " . $link->error, E_USER_ERROR);
             }
         }
@@ -70,11 +71,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     //Code voor bewerken bericht
     $inputBerichtEditID = filter_input(INPUT_POST, "berichtEditedID");
     if ($inputBerichtEditID != NULL && is_numeric($inputBerichtEditID)) {
+        $inputTitelEdit = filter_input(INPUT_POST, "titelEdited", FILTER_SANITIZE_ENCODED);
         $inputBerichtEdit = filter_input(INPUT_POST, "berichtEdited", FILTER_SANITIZE_ENCODED);
 
         //Controleer of input niet alleen uit spaties bestaat
         if (!(ltrim($inputBerichtEdit, ' ') === '')) {
-            if (!$link->query("UPDATE bericht SET inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID)) {
+            if (!$link->query("UPDATE bericht SET titel='" . $inputTitelEdit . "', inhoud='" . $inputBerichtEdit . "' WHERE berichtID=" . $inputBerichtEditID)) {
                 trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
             }
         }
@@ -107,7 +109,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     <body>
 
         <?php printHeader(); ?>
-
         <?php
         $sql = "SELECT COUNT(berichtID) AS aantal FROM bericht WHERE pagina =" . $pID;
         $aantalBerichten = $link->query($sql)->fetch_assoc();
@@ -125,7 +126,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
 
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
-        $sql = "SELECT berichtID, inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB * 5) . ", 5;";
+        $sql = "SELECT berichtID, titel, inhoud, datum FROM bericht WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB * 5) . ", 5;";
 
         $berichten = $link->query($sql);
         if ($berichten === false) {
@@ -134,10 +135,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             $berichtNum = 0;
             while ($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
-                echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'>";
+                echo "\n\t<div id='bericht" . $row["berichtID"] . "' class='pageElement'><div class='titleBar flexRowSpace'>";
                 echo "\n\t\t<span class='datum'>" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
-                if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
-                echo "<br/>\n\t\t<span class='content'>" . urldecode($row["inhoud"]) . "</span>";
+                echo "\n\t\t<h1 class='title'>" . urldecode($row["titel"]) . "</h1>";
+                if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a class='icon' onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='icon iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
+                else {echo "<a class='icon'></a>";}
+                echo "<br/>\n\t\t</div><span class='content'>" . urldecode($row["inhoud"]) . "</span>";
                 echo "\n\t</div>";
             }
 

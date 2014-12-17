@@ -232,7 +232,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         echo "<div id='admin" . $admin["klantID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["klantID"] . "'>";
         echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["klantID"] . "' style='text-align:right;padding-right:2rem;flex:1;'>";
         echo $admin["emailadres"] . "</h4>";
-        if($admin["klantID"] != 1) {echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["klantID"] . ")' /></div>";}
+        if($admin["klantID"] != 1) {echo "<img class='icon iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["klantID"] . ")' /></div>";}
         echo "</div>";
     }
     echo "<div id='newAdminElement' class='pageElement'>";

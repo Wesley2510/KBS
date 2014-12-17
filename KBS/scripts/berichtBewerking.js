@@ -24,10 +24,16 @@ function composeMessage() {
     //Vindt de pageElement welke de parent van de parent van de plaats button is
     var pageElement = document.getElementById("buttonPlaats").parentNode.parentNode;
     
+    var date = new Date();
+    var datestring = date.getDate();
+    datestring += "-" + (date.getMonth() + 1);
+    datestring += "-" + date.getFullYear();
+    
     //Sla huidige html op in originalHTML
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
-    temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
+    temp += "<div class='titleBar flexRowSpace'><span class='datum' id='berichtFormDate'>" + datestring + "</span><input type='text' form='berichtForm' name='titel' style='text-align:center;font-size:2rem;' placeholder='Titel' /><a class='icon'></a></div><br/>";
+    temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea><br/>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonPlaats'>Plaats bericht</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     pageElement.innerHTML = temp;
     
@@ -45,23 +51,28 @@ function editMessage(berichtNum, ID) {
     }
     
     var pageElement = document.getElementById("bericht" + ID);
+    var pageElementTitle = pageElement.getElementsByClassName("title")[0].innerHTML;
+    var pageElementDate = pageElement.getElementsByClassName("datum")[0].innerHTML;
     var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
     
     //Sla huidige html op in originalHTML
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
-    temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
-    temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<div class='titleBar flexRowSpace'><span class='datum' id='berichtFormDate'></span><input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' /><a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
+    temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea><br/>";
+    temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
     
     initEditor(pageElementContent);
     
     //Voegt event listeners toe aan de anchors
+    document.getElementById("berichtFormTitle").value = pageElementTitle;
+    document.getElementById("berichtFormDate").innerHTML = pageElementDate;
     document.getElementById("berichtFormText").value = pageElementContent;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
     document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
-    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+    document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
 }
 
 function deleteWarning(berichtNum, ID) {
@@ -85,11 +96,12 @@ function initEditor(content) {
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks fullscreen",
-            "insertdatetime media table contextmenu paste responsivefilemanager"
+            "insertdatetime media table contextmenu paste responsivefilemanager",
+            "textcolor colorpicker"
         ],
         content_css: "/styles/stylesheet.css",
         body_class: "pageElement contentEditor",
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image responsivefilemanager",
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | link image responsivefilemanager",
         external_filemanager_path:"/filemanager/",
         filemanager_title: "Bestanden" ,
         external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
