@@ -32,7 +32,14 @@ function composeMessage() {
     //Sla huidige html op in originalHTML
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
-    temp += "<div class='titleBar flexRowSpace'><span class='datum' id='berichtFormDate'>" + datestring + "</span><input type='text' form='berichtForm' name='titel' style='text-align:center;font-size:2rem;' placeholder='Titel' /><a class='icon'></a></div><br/>";
+    temp += "<div class='titleBar flexRowSpace'>";
+    
+    temp += "<div class='switch'>";
+    temp += "<input type='checkbox' id='switchDateVisible' name='dateVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
+    temp += "<label id='switchDateVisibleLabel' for='switchDateVisible' text='" + datestring + " zichtbaar'></label>";
+    temp += "</div>";
+    
+    temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titel' placeholder='Titel' /><a class='icon'></a></div><br/>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea><br/>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonPlaats'>Plaats bericht</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     pageElement.innerHTML = temp;
@@ -42,6 +49,17 @@ function composeMessage() {
     //Voegt event listeners toe aan de anchors
     document.getElementById("buttonPlaats").addEventListener("click", submit);
     document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+    
+    var switchDateVisibleLabel = document.getElementById("switchDateVisibleLabel");
+    var switchDateVisible = document.getElementById("switchDateVisible");
+    var changeText = function() {
+        if(!switchDateVisible.checked) {
+            switchDateVisibleLabel.setAttribute("text", datestring + " niet zichtbaar");
+        } else {
+            switchDateVisibleLabel.setAttribute("text", datestring + " zichtbaar");
+        }
+    }
+    switchDateVisible.addEventListener("click", changeText);
 }
 
 function editMessage(berichtNum, ID) {
@@ -52,13 +70,24 @@ function editMessage(berichtNum, ID) {
     
     var pageElement = document.getElementById("bericht" + ID);
     var pageElementTitle = pageElement.getElementsByClassName("title")[0].innerHTML;
-    var pageElementDate = pageElement.getElementsByClassName("datum")[0].innerHTML;
+    var pageElementDateElement = pageElement.getElementsByClassName("datum")[0];
+    var pageElementDate = pageElementDateElement.innerHTML;
+    var pageElementDateVisible = pageElementDateElement.style.visibility !== "hidden";
     var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
     
     //Sla huidige html op in originalHTML
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='berichtForm' method='post'></form>";
-    temp += "<div class='titleBar flexRowSpace'><span class='datum' id='berichtFormDate'></span><input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' /><a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
+    temp += "<div class='titleBar flexRowSpace'>";
+    
+    temp += "<div class='switch'>";
+    temp += "<input type='checkbox' id='switchDateVisible' name='dateVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' />";
+    temp += "<label id='switchDateVisibleLabel' for='switchDateVisible' text='Datum'></label>";
+    temp += "</div>";
+    
+    temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
+    
+    temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea><br/>";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
@@ -68,11 +97,29 @@ function editMessage(berichtNum, ID) {
     
     //Voegt event listeners toe aan de anchors
     document.getElementById("berichtFormTitle").value = pageElementTitle;
-    document.getElementById("berichtFormDate").innerHTML = pageElementDate;
     document.getElementById("berichtFormText").value = pageElementContent;
     document.getElementById("buttonBewerk").addEventListener("click", submit);
     document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
     document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
+    
+    var switchDateVisibleLabel = document.getElementById("switchDateVisibleLabel");
+    var switchDateVisible = document.getElementById("switchDateVisible");
+    if(pageElementDateVisible) {
+        switchDateVisibleLabel.setAttribute("text", pageElementDate + " zichtbaar");
+        switchDateVisible.checked = true;
+    } else {
+        switchDateVisibleLabel.setAttribute("text", pageElementDate + " niet zichtbaar");
+        switchDateVisible.checked = false;
+    }
+    
+    var changeText = function() {
+        if(!switchDateVisible.checked) {
+            switchDateVisibleLabel.setAttribute("text", pageElementDate + " niet zichtbaar");
+        } else {
+            switchDateVisibleLabel.setAttribute("text", pageElementDate + " zichtbaar");
+        }
+    }
+    switchDateVisible.addEventListener("click", changeText);
 }
 
 function deleteWarning(berichtNum, ID) {

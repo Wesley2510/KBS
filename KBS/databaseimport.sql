@@ -67,9 +67,9 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`notitie` (
     REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_notitie_Admin1`
+  CONSTRAINT `fk_notitie_Klant2`
     FOREIGN KEY (`plaatser` )
-    REFERENCES `Textbug`.`admin` (`adminID` )
+    REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -114,15 +114,23 @@ ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`bericht` (
   `berichtID` INT NOT NULL AUTO_INCREMENT,
+  `plaatser` INT NOT NULL,
   `titel` VARCHAR(100) NULL,
   `inhoud` TEXT NOT NULL ,
   `datum` DATETIME NULL ,
   `pagina` TINYINT(4) NOT NULL ,
+  `datumzichtbaar` TINYINT(1) DEFAULT 1 ,
+  `plaatserzichtbaar` TINYINT(1) DEFAULT 1 ,
   PRIMARY KEY (`berichtID`) ,
   INDEX `fk_Bericht_Pagina1` (`pagina` ASC) ,
   CONSTRAINT `fk_Bericht_Pagina1`
     FOREIGN KEY (`pagina` )
     REFERENCES `Textbug`.`pagina` (`paginaID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bericht_Klant1`
+    FOREIGN KEY (`plaatser` )
+    REFERENCES `Textbug`.`klant` (`klantID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -145,16 +153,6 @@ INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Contact', 2);
 INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Info', 3);
 
 -- Berichten
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (1,'Test1','2014-11-23 12:30:00',1);
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (2,'Test2','2014-11-23 13:00:00',1);
-INSERT INTO `bericht` (`berichtID`,`titel`,`inhoud`,`datum`,`pagina`) VALUES (3, 'Contactinformatie','%3Cp%20style%3D%22text-align%3A%20center%3B%22%3EDit%20is%20ons%20contactformulier%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20center%3B%22%3E%26nbsp%3B%3C%2Fp%3E%0D%0A%3Ctable%20style%3D%22height%3A%20206px%3B%20margin-left%3A%20auto%3B%20margin-right%3A%20auto%3B%22%20width%3D%22245%22%3E%0D%0A%3Ctbody%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3EAdres%3C%2Ftd%3E%0D%0A%3Ctd%3EStraatje%201%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3C%2Ftbody%3E%0D%0A%3C%2Ftable%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3E%26nbsp%3Bfdgdfgdfgdfgdfghgjghjghj%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Efghhfgfghfhfghhhfdgdfgdfgfdg%20dfg%20df%20gdf%20gdfg%20df%20gdfg%20dfgdfgfg%20fgfdgdfgdfgdf%20df%20dgf%20gg%20df%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Efdg%20dfg%20dfg%20dfg%20dfg%20dfg%20dfg%20dgfg%20dfg%20dtyert%26nbsp%3B%20utr%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20center%3B%22%3E%3Cimg%20style%3D%22float%3A%20left%3B%22%20src%3D%22filemanager%2Fdata%2Fuploads%2Fphp-cheat-sheet-v2.png%22%20alt%3D%22php-cheat-sheet-v2%22%20%2F%3E%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Ey%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Etry%20rty%26nbsp%3B%20rtyrtytry%20ryty%20rty%20rty%20rty%20rty%20rty%20rty%20rty%20rt%20y%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Etyry%20rty%20rtyrty%20rdy%20rt%26nbsp%3B%20b%20n%20nghchjghjhgjgh%3C%2Fp%3E','2014-11-23 00:00:00',2);
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (4,'%3Cp%3EDit%20is%20info%3C%2Fp%3E','2014-11-23 00:00:00',3);
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (5,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/FeHf0fx.jpg" alt="onzin" /></p>','2014-11-25 13:30:00',1);
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (6,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/kfQy1OT.jpg" alt="onzin" /></p>','2014-11-25 13:40:00',1);
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (7,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/bnqPpl5.jpg" alt="onzin" /></p>','2014-11-25 13:50:00',1);
-INSERT INTO `bericht` (`berichtID`,`inhoud`,`datum`,`pagina`) VALUES (8,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/aLZzedG.jpg" alt="onzin" /></p>','2014-11-25 13:55:00',1);
-INSERT INTO `bericht` (`berichtID`,`titel`, `inhoud`,`datum`,`pagina`) VALUES (9,'HI%20THERE%21%21%21%21','%3Cp%3E%3Cimg%20style%3D%22display%3A%20block%3B%20margin-left%3A%20auto%3B%20margin-right%3A%20auto%3B%22%20src%3D%22http%3A%2F%2Fi.imgur.com%2FxXwXOf2.jpg%22%20alt%3D%22Guyz%22%20width%3D%22631%22%20height%3D%22631%22%20%2F%3E%3C%2Fp%3E','2014-12-12 17:38:44',1);
-
 
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `admin`)
 VALUES("password", "admin", "", "admin", 1);
@@ -164,3 +162,14 @@ INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadr
 VALUES("wachtwoord", "Test", "User", "test@user.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 0);
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
 VALUES("wachtwoord", "Test", "User2", "test@user2.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 0);
+
+
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (1, 1,'Test1','2014-11-23 12:30:00',1);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (2, 1,'Test2','2014-11-23 13:00:00',1);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`titel`,`inhoud`,`datum`,`pagina`) VALUES (3, 1, 'Contactinformatie','%3Cp%20style%3D%22text-align%3A%20center%3B%22%3EDit%20is%20ons%20contactformulier%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20center%3B%22%3E%26nbsp%3B%3C%2Fp%3E%0D%0A%3Ctable%20style%3D%22height%3A%20206px%3B%20margin-left%3A%20auto%3B%20margin-right%3A%20auto%3B%22%20width%3D%22245%22%3E%0D%0A%3Ctbody%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3EAdres%3C%2Ftd%3E%0D%0A%3Ctd%3EStraatje%201%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3Ctr%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3Ctd%3E%26nbsp%3B%3C%2Ftd%3E%0D%0A%3C%2Ftr%3E%0D%0A%3C%2Ftbody%3E%0D%0A%3C%2Ftable%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3E%26nbsp%3Bfdgdfgdfgdfgdfghgjghjghj%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Efghhfgfghfhfghhhfdgdfgdfgfdg%20dfg%20df%20gdf%20gdfg%20df%20gdfg%20dfgdfgfg%20fgfdgdfgdfgdf%20df%20dgf%20gg%20df%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Efdg%20dfg%20dfg%20dfg%20dfg%20dfg%20dfg%20dgfg%20dfg%20dtyert%26nbsp%3B%20utr%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20center%3B%22%3E%3Cimg%20style%3D%22float%3A%20left%3B%22%20src%3D%22filemanager%2Fdata%2Fuploads%2Fphp-cheat-sheet-v2.png%22%20alt%3D%22php-cheat-sheet-v2%22%20%2F%3E%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Ey%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Etry%20rty%26nbsp%3B%20rtyrtytry%20ryty%20rty%20rty%20rty%20rty%20rty%20rty%20rty%20rt%20y%3C%2Fp%3E%0D%0A%3Cp%20style%3D%22text-align%3A%20left%3B%22%3Etyry%20rty%20rtyrty%20rdy%20rt%26nbsp%3B%20b%20n%20nghchjghjhgjgh%3C%2Fp%3E','2014-11-23 00:00:00',2);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (4, 1,'%3Cp%3EDit%20is%20info%3C%2Fp%3E','2014-11-23 00:00:00',3);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (5, 1,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/FeHf0fx.jpg" alt="onzin" /></p>','2014-11-25 13:30:00',1);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (6, 1,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/kfQy1OT.jpg" alt="onzin" /></p>','2014-11-25 13:40:00',1);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (7, 1,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/bnqPpl5.jpg" alt="onzin" /></p>','2014-11-25 13:50:00',1);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (8, 1,'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://i.imgur.com/aLZzedG.jpg" alt="onzin" /></p>','2014-11-25 13:55:00',1);
+INSERT INTO `bericht` (`berichtID`,`plaatser`,`titel`, `inhoud`,`datum`,`pagina`) VALUES (9, 1,'HI%20THERE%21%21%21%21','%3Cp%3E%3Cimg%20style%3D%22display%3A%20block%3B%20margin-left%3A%20auto%3B%20margin-right%3A%20auto%3B%22%20src%3D%22http%3A%2F%2Fi.imgur.com%2FxXwXOf2.jpg%22%20alt%3D%22Guyz%22%20width%3D%22631%22%20height%3D%22631%22%20%2F%3E%3C%2Fp%3E','2014-12-12 17:38:44',1);
