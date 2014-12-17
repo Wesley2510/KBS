@@ -54,6 +54,7 @@ Index:
 body{
     background-color: #E5E5E5;
     margin: 0px;
+    overflow-x: hidden;
 }
 
 #headerbar {
@@ -284,6 +285,13 @@ input.error:focus {
     text-align: center;
     font-size: 0.5rem;
     padding: 1rem;
+}
+
+.backgroundText {
+    display: none;
+    position:absolute; 
+    top: 100px;
+    z-index:-1;
 }
  
 @media screen and (max-width: 35rem) {

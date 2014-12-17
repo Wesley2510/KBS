@@ -100,7 +100,9 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             echo "<script type='text/javascript' src='/tinymce/tinymce.min.js'></script>";
             echo "<script src='/scripts/berichtBewerking.js' type='text/javascript' charset='utf-8'></script>";
-        } ?>
+        }
+        printScripts();
+        ?>
     </head>
     <body>
 
