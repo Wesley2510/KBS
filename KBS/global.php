@@ -49,7 +49,7 @@ function printHeader() {
         echo "<a href='/admin/'><h2>" . $_SESSION["voornaam"] . " " . $_SESSION["achternaam"] . "</h2></a></div></nav>";
     }
     
-    echo "<div id='backgroundDiv' style='position:absolute; overflow:hidden;'>";
+    echo "<div id='backgroundDiv' style='position:absolute; overflow:hidden;z-index:-1;'>";
     echo "<img class='backgroundText' src='/backgroundtext1.png' alt='' />";
     //echo "<img class='backgroundText' src='/SOMEOTHERPICTURES.png' alt='' />";
     echo "</div>";
