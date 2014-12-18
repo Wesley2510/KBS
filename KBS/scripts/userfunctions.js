@@ -45,3 +45,22 @@ window.onscroll = function () {
         currentlyVisibleElement.style.opacity = opacity;
     }
 };
+
+function getDocHeight() {
+    var D = document;
+    return Math.max(
+        D.body.scrollHeight,
+        D.body.offsetHeight, D.documentElement.offsetHeight,
+        D.body.clientHeight, D.documentElement.clientHeight
+    );
+}
+
+window.onresize = function () {
+    document.getElementById("backgroundDiv").style.width = window.innerWidth + "px";
+    document.getElementById("backgroundDiv").style.height = getDocHeight() + "px";
+};
+
+window.onload = function () {
+    document.getElementById("backgroundDiv").style.width = window.innerWidth + "px";
+    document.getElementById("backgroundDiv").style.height = getDocHeight() + "px";
+};

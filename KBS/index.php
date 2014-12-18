@@ -114,7 +114,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             echo "<script type='text/javascript' src='/tinymce/tinymce.min.js'></script>";
             echo "<script src='/scripts/berichtBewerking.js' type='text/javascript' charset='utf-8'></script>";
         }
-        printScripts();
         ?>
     </head>
     <body>
@@ -205,6 +204,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         window.scrollTo(0, getPosition(document.getElementById(\"bericht\"+" . $berichtFocus . ")) - convertRem(4.4));</script>";
         }
         ?>
-
+        <?php printScripts(); ?>
     </body>
 </html>
