@@ -70,23 +70,24 @@ include_once("global.php");
 
         //voegt het factuur toe aan de database
         function submit() {
+            trigger_error($factuurFormService);
 
-
-            $inputFactuurEditID = filter_input(INPUT_POST, "factuurEditedID");
+    $inputFactuurEditID = filter_input(INPUT_POST, "factuurEditedID");
             if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
                 $factuurFormService = filter_input(INPUT_POST, "factuurFormService", FILTER_SANITIZE_ENCODED);
                 $factuurFormBedrag = filter_input(INPUT_POST, "factuurFormBedrag", FILTER_SANITIZE_ENCODED);
                 $radioB = filter_input(INPUT_POST, "radioB", FILTER_SANITIZE_ENCODED);
+        
 
-                //Controleer of input niet alleen uit spaties bestaat
+        //Controleer of input niet alleen uit spaties bestaat
                 if (!(ltrim($factuurFormService, ' ') === '')) {
 
                     if (!$link->query("UPDATE factuur SET service='" . $factuurFormService . "', prijs= " . $factuurFormBedrag . " WHERE factuurID=" . $inputFactuurEditID)) {
                         trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
                     }
                 }
-                header("factuur . php");
-            }
+                header("Location: factuur . php");
+    }
 
 
 //            $link = $GLOBALS["link"];
@@ -105,14 +106,13 @@ include_once("global.php");
         }
 
         //MOET VERWIJDERD WORDEN!
-        $klantID = 1;
-        //de facturen worden hier opgehaald uit de database, zodat ze mooi op de pagina weer gegeven kunnen worden
-        $link = $GLOBALS["link"];
+        $klantID = 3;
+//de facturen worden hier opgehaald uit de database, zodat ze mooi op de pagina weer gegeven kunnen worden
         $query = "SELECT factuurID, service, prijs, betaald, voornaam, achternaam,woonplaats,huisnummer,postcode,adres "
                 . "FROM factuur JOIN klant ON klantID = klant "
                 . "WHERE klantID = " . $klantID . " ORDER BY factuurID DESC";
-        $result = mysqli_query($link, $query);
-        $databaserij = mysqli_fetch_assoc($result);
+        $result = $link->query($query );
+        $databaserij = $result->fetch_assoc();
 
 //        echo "<table>";
 //        while ($databaserij) {
@@ -127,11 +127,11 @@ include_once("global.php");
         $factuurNummer = 0;
         while ($databaserij) {
 
-            echo "\n\t<div id = 'factuur" . $databaserij["factuurID"] . "' class = 'pageElement'>";
-            echo "<a onclick = factuurBewerken(" . $databaserij["factuurID"] . ");
-            > <img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a>";
-            echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij["achternaam"] . "</span>";
-            echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij["huisnummer"] . "</span>";
+            echo "\n\t<div id ='factuur" . $databaserij["factuurID"] . "' class = 'pageElement'>";
+            echo "<a onclick ='factuurBewerken(" . $databaserij["factuurID"] . ");'";
+            echo "> <img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a>";
+        echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij["achternaam"] . "</span>";
+    echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij["huisnummer"] . "</span>";
             echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["postcode"] . " " . $databaserij["woonplaats"] . "</span></br>";
             echo "<br/>\n\t\t<span id='factuurService" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["service"] . "</span>";
             echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["prijs"] . "</span>";

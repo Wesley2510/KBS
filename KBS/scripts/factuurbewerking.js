@@ -38,7 +38,7 @@ function factuurBewerken(factuurID){
     temp += "<input type='textbox' id='factuurFormService' form='factuurForm' name='factuurServiceEdited'>";
     temp += "<input type='number' id='factuurFormBedrag' form='factuurForm' name='factuurBedragEdited'>";
     temp += "<input id='radioB' type='radio' name='betaald' value='betaald'>betaald";
-    temp += "<input id='radioB' type='radio' name='nietbetaald' value='niet betaald'>niet betaald";
+    temp += "<input id='radioNB' type='radio' name='nietbetaald' value='niet betaald'>niet betaald";
     temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk factuur</a><a role='button' id='buttonVerwijder'>Verwijder</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
     temp += "<input type='hidden' name='factuurtEditedID' value='" + factuurID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
