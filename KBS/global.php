@@ -48,6 +48,9 @@ function printHeader() {
     } else {
         echo "<a href='/admin/'><h2>" . $_SESSION["voornaam"] . " " . $_SESSION["achternaam"] . "</h2></a></div></nav>";
     }
+    
+    echo "<img class='backgroundText' src='/backgroundtext1.png' alt='' />";
+    //echo "<img class='backgroundText' src='/SOMEOTHERPICTURES.png' alt='' />";
 }
 
 function printFooter() {
@@ -66,4 +69,13 @@ function printScripts() {
     if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         echo "<script src='/scripts/adminfunctions.js' type='text/javascript' charset='utf-8'></script>\n";
     }
+}
+
+function checkPass($pass) {
+    if ($pass == NULL || ltrim($pass, ' ') == '') {
+        return 1;
+    } else if (preg_replace("/[^A-Za-z0-9 ]/", '', $pass) != $pass) {
+        return 2;
+    }
+    return 0;
 }

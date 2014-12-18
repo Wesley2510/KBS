@@ -66,11 +66,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             $adminEmailError = 3;
             $succesNew = false;
         }
-        if($inputPass == NULL || ltrim($inputPass, ' ') == '') {
-            $adminPassError = 1;
-            $succesNew = false;
-        } else if(preg_replace("/[^A-Za-z0-9 ]/", '', $inputPass) != $inputPass) {
-            $adminPassError = 2;
+        $adminPassError = checkPass($inputPass);
+        if ($adminPassError > 0) {
             $succesNew = false;
         }
         if($inputPassRepeat == NULL || ltrim($inputPassRepeat, ' ') == '') {
@@ -124,14 +121,9 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 $succesEdit = false;
             }
         }
-        if($inputNewPass != NULL) {
-            if(ltrim($inputNewPass, ' ') == '') {
-                $adminPassError = 1;
-                $succesEdit = false;
-            } else if(preg_replace("/[^A-Za-z0-9 ]/", '', $inputNewPass) != $inputNewPass) {
-                $adminPassError = 2;
-                $succesEdit = false;
-            } else {
+        if ($inputNewPass != NULL) {
+            $adminPassError = checkPass($inputNewPass);
+            if ($adminPassError == 0) {
                 if($inputNewPassRepeat == NULL || ltrim($inputNewPassRepeat, ' ') == '') {
                     $adminPassRepeatError = 1;
                     $succesEdit = false;
@@ -139,6 +131,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                     $adminPassRepeatError = 2;
                     $succesEdit = false;
                 }
+            } else {
+                $succesEdit = false;
             }
         }
         
@@ -238,7 +232,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         echo "<div id='admin" . $admin["klantID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["klantID"] . "'>";
         echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["klantID"] . "' style='text-align:right;padding-right:2rem;flex:1;'>";
         echo $admin["emailadres"] . "</h4>";
-        if($admin["klantID"] != 1) {echo "<img class='iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["klantID"] . ")' /></div>";}
+        if($admin["klantID"] != 1) {echo "<img class='icon iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["klantID"] . ")' /></div>";}
         echo "</div>";
     }
     echo "<div id='newAdminElement' class='pageElement'>";
