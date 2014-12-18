@@ -12,6 +12,7 @@ include_once("global.php");
         <?php
         printStyles();
         printScripts();
+        echo "<script src='/scripts/factuurbewerking.js' type='text/javascript' charset='utf-8'></script>";
         ?>
     </head>
     <body>
@@ -25,28 +26,24 @@ include_once("global.php");
         <form class="pageElement" action="factuur.php">
             Geleverde service:<br>
             <input type="hidden" name="klantID" value="<?php $_GET["klantID"] ?>">
-            <input class="textbox" type="text" name="service"<?php
+            <input id="serviceFactuur" class="textbox" type="text" name="service"<?php
             if (isset($_GET["service"]) && !empty($_GET["service"]) && is_string($_GET["service"])) {
                 print("value=\"" . $_GET["service"] . "\"");
             }
             ?>><br>
             Bedrag:<br>
-            <input class="textbox" type="number" name="bedrag" <?php
+            <input id="bedragFactuur" class="textbox" type="number" name="bedrag" <?php
             if (isset($_GET["bedrag"]) && !empty($_GET["bedrag"]) && is_numeric($_GET["bedrag"])) {
                 print("value=\"" . $_GET["bedrag"] . "\"");
             }
             ?>><br>
             Betaald:
-            <input type="radio" name="betaald"
-            <?php if (isset($betaald) && $betaald == "1") echo "checked"; ?>
-                   value="betaald">betaald
-            <input type="radio" name="betaald" checked
-            <?php if (isset($betaald) && $betaald == "0") echo "checked"; ?>
-                   value="niet betaald">Niet betaald
+            <input  type="radio" name="betaald" value="betaald">betaald
+            <input  type="radio" checked name="betaald" value="niet betaald">Niet betaald
             </br>
 
             <input class="button" type="submit" name="submit" value="Voeg toe" >
-            <input class="button" type="button" name ="cancel" value="annuleren">
+            <input Class="button" type="button" name ="cancel" value="annuleren">
 
         </form>
 
@@ -74,29 +71,37 @@ include_once("global.php");
         //voegt het factuur toe aan de database
         function submit() {
 
-            $link = $GLOBALS["link"];
-            $betaald = 0;
-            if ($_GET["betaald"] == "betaald") {
-                $betaald = 1;
-            } else {
-                $betaald = 0;
+
+            $inputFactuurEditID = filter_input(INPUT_POST, "factuurEditedID");
+            if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
+                $factuurFormService = filter_input(INPUT_POST, "factuurFormService", FILTER_SANITIZE_ENCODED);
+                $factuurFormBedrag = filter_input(INPUT_POST, "factuurFormBedrag", FILTER_SANITIZE_ENCODED);
+                $radioB = filter_input(INPUT_POST, "radioB", FILTER_SANITIZE_ENCODED);
+
+                //Controleer of input niet alleen uit spaties bestaat
+                if (!(ltrim($factuurFormService, ' ') === '')) {
+
+                    if (!$link->query("UPDATE factuur SET service='" . $factuurFormService . "', prijs= " . $factuurFormBedrag . " WHERE factuurID=" . $inputFactuurEditID)) {
+                        trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
+                    }
+                }
+                header("factuur . php");
             }
 
-            $stmt = "INSERT INTO factuur(klant, service, prijs, betaald, papierenfactuur) VALUES (1,'" . $_GET["service"] . "'," . $_GET["bedrag"] . "," . $betaald . ", '')";
-            if ($link->query($stmt) === FALSE) {
-                echo "Error: " . $stmt . "<br>" . $link->error;
-            }
-            return mysql_query($stmt);
-        }
 
-        //Het factuur wordt hier aangepast.
-        function edit(
-        $factuurID) {
-
-        }
-
-        function sorter() {
-
+//            $link = $GLOBALS["link"];
+//            $betaald = 0;
+//            if ($_GET["betaald"] == "betaald") {
+//                $betaald = 1;
+//            } else {
+//                $betaald = 0;
+//            }
+//
+//            $stmt = "INSERT INTO factuur(klant, service, prijs, betaald, papierenfactuur) VALUES (1,'" . $_GET["service"] . "'," . $_GET["bedrag"] . "," . $betaald . ", '')";
+//            if ($link->query($stmt) === FALSE) {
+//                echo "Error: " . $stmt . "<br>" . $link->error;
+//            }
+//            return mysql_query($stmt);
         }
 
         //MOET VERWIJDERD WORDEN!
@@ -122,19 +127,20 @@ include_once("global.php");
         $factuurNummer = 0;
         while ($databaserij) {
 
-            echo "\n\t<div id = 'bericht" . $databaserij["factuurID"] . "' class = 'pageElement'>";
-            echo "<a onclick = edit(" . $databaserij["factuurID"] . ");
+            echo "\n\t<div id = 'factuur" . $databaserij["factuurID"] . "' class = 'pageElement'>";
+            echo "<a onclick = factuurBewerken(" . $databaserij["factuurID"] . ");
             > <img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a>";
-            echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij["achternaam"] . "</span>";
-            echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["adres"] . " " . $databaserij["huisnummer"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij["achternaam"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij["huisnummer"] . "</span>";
             echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["postcode"] . " " . $databaserij["woonplaats"] . "</span></br>";
-            echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["service"] . "</span>";
-            echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["prijs"] . " Euro </span>";
+            echo "<br/>\n\t\t<span id='factuurService" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["service"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["prijs"] . "</span>";
+
 
             if ($databaserij["betaald"] == 1) {
-                echo "<br/>\n\t\t<span class = 'content'>Betaald</span>";
+                echo "<br/>\n\t\t<span id='radioB" . $databaserij["factuurID"] . "' class = 'content'>Betaald</span>";
             } else {
-                echo "<br/>\n\t\t<span class = 'content'>Niet betaald</span>";
+                echo "<br/>\n\t\t<span id='radioB" . $databaserij["factuurID"] . "' class = 'content'>Niet betaald</span>";
             }
 
             echo "\n\t</div>";
