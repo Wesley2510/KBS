@@ -260,7 +260,7 @@ a.icon:active {
     
     float: bottom;
     
-    box-shadow: inset 0 0.06rem 0.48rem -0.1rem rgba(0,0,0,0.1);
+    box-shadow: inset 0 0.06rem 0.48rem -0.1rem rgba(0,0,0,0.15);
 }
 .poster {
     
@@ -334,9 +334,11 @@ input.error:focus {
 
 div.mce-tinymce {
     margin: -0.48rem;
-    margin-right: -0.48rem;
     flex-grow:1;
     width:auto;
+    border: none;
+}
+div.mce-toolbar {
     border: none;
 }
 

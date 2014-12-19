@@ -40,8 +40,8 @@ function composeMessage() {
     temp += "</div>";
     
     temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
-    temp += "<a class='icon' id='iconAnnuleer'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
-    temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea><br/>";
+    temp += "<a class='icon' id='iconAnnuleer'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
+    temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
     temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconPlaats'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
     
     temp += "<div class='switch'>";
@@ -121,7 +121,7 @@ function editMessage(berichtNum, ID) {
     temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
     
     temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
-    temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea><br/>";
+    temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
     temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconBewerk'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
     
     temp += "<div class='switch'>";
