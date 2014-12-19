@@ -39,27 +39,49 @@ function composeMessage() {
     temp += "<label id='switchDateVisibleLabel' for='switchDateVisible' text='" + datestring + " zichtbaar'></label>";
     temp += "</div>";
     
-    temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titel' placeholder='Titel' /><a class='icon'></a></div><br/>";
+    temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
+    temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea><br/>";
-    temp += "<div class='flexRowSpace'><a role='button' id='buttonPlaats'>Plaats bericht</a><a role='button' id='buttonAnnuleer'>Annuleer</a></div>";
+    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;'><a role='button' id='buttonPlaats'>Plaats bericht</a></div>";
+    
+    temp += "<div class='switch'>";
+    temp += "<input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
+    temp += "<label id='switchPosterVisibleLabel' for='switchPosterVisible'></label>";
+    temp += "</div>";
+    
+    
+    temp += "<span style='width:20%;'></div></div>";
     pageElement.innerHTML = temp;
     
     initEditor();
     
     //Voegt event listeners toe aan de anchors
+    var posterText = "Geplaatst door " + loggedinVoornaam + " " + loggedinAchternaam;
+    document.getElementById("switchPosterVisibleLabel").setAttribute("text", posterText + " (zichtbaar)");
     document.getElementById("buttonPlaats").addEventListener("click", submit);
-    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+    document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
     
     var switchDateVisibleLabel = document.getElementById("switchDateVisibleLabel");
     var switchDateVisible = document.getElementById("switchDateVisible");
     var changeText = function() {
         if(!switchDateVisible.checked) {
-            switchDateVisibleLabel.setAttribute("text", datestring + " niet zichtbaar");
+            switchDateVisibleLabel.setAttribute("text", datestring + " (niet zichtbaar)");
         } else {
-            switchDateVisibleLabel.setAttribute("text", datestring + " zichtbaar");
+            switchDateVisibleLabel.setAttribute("text", datestring + " (zichtbaar)");
         }
     }
     switchDateVisible.addEventListener("click", changeText);
+    
+    var switchPosterVisibleLabel = document.getElementById("switchPosterVisibleLabel");
+    var switchPosterVisible = document.getElementById("switchPosterVisible");
+    changeText = function() {
+        if(!switchPosterVisible.checked) {
+            switchPosterVisibleLabel.setAttribute("text", posterText + " (niet zichtbaar)");
+        } else {
+            switchPosterVisibleLabel.setAttribute("text", posterText + " (zichtbaar)");
+        }
+    }
+    switchPosterVisible.addEventListener("click", changeText);
 }
 
 function editMessage(berichtNum, ID) {
@@ -147,7 +169,7 @@ function editMessage(berichtNum, ID) {
         switchPosterVisible.checked = false;
     }
     
-    var changeText = function() {
+    changeText = function() {
         if(!switchPosterVisible.checked) {
             switchPosterVisibleLabel.setAttribute("text", pageElementPoster + " (niet zichtbaar)");
         } else {

@@ -161,7 +161,7 @@ a[role*="button"]:active {
 
 a.icon {
     flex-grow:1;
-    width: 100%;
+    width: 20%;
     text-align:right;
 }
 a.icon:active {
@@ -204,7 +204,7 @@ a.icon:active {
     margin-left: 0.48rem;
     flex-grow:1;
     text-align: left;
-    width:100%;
+    width:20%;
 }
 
 .pageElement .content {
@@ -228,8 +228,11 @@ a.icon:active {
     box-shadow: 0 0.06rem 0.24rem 0.1rem rgba(0,0,0,0.1);
     margin: -0.24rem;
     margin-right: -0.48rem;
+    margin-bottom: 0.24rem;
     
     min-height: 50px;
+    
+    overflow: hidden;
 }
 
 .title {
@@ -254,6 +257,8 @@ a.icon:active {
     height: 3rem;
     flex-grow:1;
     width:auto;
+    
+    float: bottom;
     
     box-shadow: inset 0 0.06rem 0.48rem -0.1rem rgba(0,0,0,0.1);
 }
@@ -399,10 +404,9 @@ input.cmn-toggle-yes-no:checked + label:after {
 div.switch {
     display:block;
     flex-grow:1;
-    width: 100%;
+    width: 20%;
     min-width: 1rem;
     margin:0.24rem;
-    
 }
 
 #switchPosterVisible.cmn-toggle-yes-no + label:before,

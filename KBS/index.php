@@ -62,12 +62,16 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         if (!(ltrim($inputBericht, ' ') === '')) {
             $dateTime = date("Y-m-d H:i:s", getdate()[0]);
             $inputDateVisible = isset($_POST["dateVisible"]);
+            $inputPosterVisible = isset($_POST["posterVisible"]);
         
             if($inputDateVisible) {
                 $inputDateVisible = 1;
             } else { $inputDateVisible = 0; }
+            if($inputPosterVisible) {
+                $inputPosterVisible = 1;
+            } else { $inputPosterVisible = 0; }
             
-            if (!$link->query("INSERT INTO bericht (plaatser, inhoud, titel, datum, pagina, datumzichtbaar) VALUES (" . $_SESSION["userID"] . ",'" . $inputBericht . "','" . $inputTitel . "','" . $dateTime . "'," . $pID . "," . $inputDateVisible . ");")) {
+            if (!$link->query("INSERT INTO bericht (plaatser, inhoud, titel, datum, pagina, datumzichtbaar, plaatserzichtbaar) VALUES (" . $_SESSION["userID"] . ",'" . $inputBericht . "','" . $inputTitel . "','" . $dateTime . "'," . $pID . "," . $inputDateVisible . "," . $inputPosterVisible . ");")) {
                 trigger_error("Fout bij toevoegen nieuw bericht: " . $link->error, E_USER_ERROR);
             }
         }
@@ -118,6 +122,11 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             echo "<script type='text/javascript' src='/tinymce/tinymce.min.js'></script>";
             echo "<script src='/scripts/berichtBewerking.js' type='text/javascript' charset='utf-8'></script>";
         }
+        
+        echo "<script type='text/javascript'>";
+        echo "var loggedinVoornaam = '" . $_SESSION["voornaam"] . "';";
+        echo "var loggedinAchternaam = '" . $_SESSION["achternaam"] . "';";
+        echo "</script>";
         ?>
     </head>
     <body>
@@ -135,7 +144,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             if ($aantalBerichten["aantal"] === "1") {
                 $unit = "bericht";
             }
-            echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' role='button' onclick='composeMessage();'>Nieuw bericht</a><span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
+            echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' role='button' onclick='composeMessage();'>Nieuw bericht</a>";
+            echo "<span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
         }
 
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
@@ -149,7 +159,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             $berichtNum = 0;
             while ($row = $berichten->fetch_assoc()) {
                 //Plaats alle berichten in een <div> container met class pageElement
-                echo "<div id='bericht" . $row["berichtID"] . "' class='pageElement'><div class='titleBar flexRowSpace'>";
+                echo "<div id='bericht" . $row["berichtID"] . "' class='pageElement' style='display:flex;flex-direction:column;'><div class='titleBar flexRowSpace'>";
                 echo "<span class='datum' ";
                 if(!$row["datumzichtbaar"]) {
                     echo "style='visibility:hidden;'";
