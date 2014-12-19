@@ -164,6 +164,9 @@ a.icon {
     width: 20%;
     text-align:right;
 }
+a.icon:hover {
+    cursor: default;
+}
 a.icon:active {
     background-color: rgba(0,0,0,0);
 }
@@ -249,18 +252,28 @@ a.icon:active {
 }
 
 .posterFooter {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    z-index: 1;
+    
     margin: -0.24rem;
     margin-right: -0.48rem;
     margin-top: 0.48rem;
     
     min-height: 50px;
-    height: 3rem;
+    max-height: 2rem; //Voor animatie
     flex-grow:1;
     width:auto;
     
     float: bottom;
-    
     box-shadow: inset 0 0.06rem 0.48rem -0.1rem rgba(0,0,0,0.15);
+    
+    transition-duration: 1s;
+    transition-property: max-height;
+    
+    cursor: pointer;
 }
 .poster {
     
@@ -436,6 +449,7 @@ div.switch {
     .pageElement {
         width: calc(100% - 0.24rem);
         margin-right: 0.15rem;
+        z-index: 1;
     }
     
     .flexAdjust {

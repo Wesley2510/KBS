@@ -56,7 +56,11 @@ function printHeader() {
 }
 
 function printFooter() {
-    echo "<div id='footer'><div>Icons made by Stephen Hutchings from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a> is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a><br/>Gemaakt in opdracht van Hogeschool Windesheim</div></div>";
+    echo "<div id='footer'>";
+    if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
+        echo "<div>Icons made by Stephen Hutchings and Freepik from <a href='http://www.flaticon.com' title='Flaticon'>www.flaticon.com</a> is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0'>CC BY 3.0</a></div>";
+    }
+    echo "Gemaakt in opdracht van Hogeschool Windesheim</div>";
 }
 
 function printStyles() {

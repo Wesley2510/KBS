@@ -172,7 +172,10 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 else {echo "<a class='icon'></a>";}
                 echo "<br/></div><div class='content'>" . urldecode($row["inhoud"]) . "</div>";
                 if($row["plaatserzichtbaar"]) {
-                    echo "<div class='posterFooter flexRowSpace'><span></span><span class='poster'>Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span><span></span></div>";
+                    echo "<div class='posterFooter'  onclick='expand(this)'>";
+                    echo "<div style='float:bottom;margin-bottom:2rem;z-index:0;align-self:center;width:60%;'>Test Admin werkt bij Textbug sinds 1921.<img id='irc_mi' style='margin-top: 205px;' src='http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg' alt='' width='150' height='150' />";
+                    echo "<div>Blablabla bla blabla bla bla blabla blablabla. Blablablabla bla.</div></div>";
+                    echo "<div class='flexRowSpace' style='float:bottom;width:100%;margin-bottom:1rem;'><span></span><span class='poster'>Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span><span></span></div></div>";
                 } else {
                     echo "<div class='poster' style='visibility:hidden;'>Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</div>";
                 }

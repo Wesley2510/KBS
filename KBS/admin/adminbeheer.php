@@ -178,7 +178,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         <script src='/scripts/adminbeheer.js' type='text/javascript' charset='utf-8'></script>
         <script type='text/javascript'>
         <?php
-        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/></a><a href='adminbeheer.php?actief=0'>Inactieve administrators</a></div>";
+        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/>"; 
+        $newAdminPageElement .= "</a><a class='icon' href='adminbeheer.php?actief=0'><img class='icon' src='/imgs/delete51.svg' alt=''/></a></div>";
         
         $newAdminForm = "<form action='#' id='adminForm' method='post'></form>";
         $newAdminForm .= "<div class='flexRowSpace'><input class='' type='text' id='adminFormName' form='adminForm' name='name' placeholder='Naam' />";

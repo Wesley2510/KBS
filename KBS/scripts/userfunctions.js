@@ -64,3 +64,15 @@ window.onload = function () {
     document.getElementById("backgroundDiv").style.width = window.innerWidth + "px";
     document.getElementById("backgroundDiv").style.height = getDocHeight() + "px";
 };
+
+
+var posterFooters = document.getElementsByClassName("posterFooter");
+function expand(element) {
+    if(element.getAttribute("open") == "true") {
+        element.setAttribute("open", false);
+        element.style.maxHeight = 3 + "rem";
+    } else {
+        element.setAttribute("open", true);
+        element.style.maxHeight = "20rem";
+    }
+}
