@@ -22,7 +22,7 @@ function composeMessage() {
     }
     
     //Vindt de pageElement welke de parent van de parent van de plaats button is
-    var pageElement = document.getElementById("buttonPlaats").parentNode.parentNode;
+    var pageElement = document.getElementById("iconPlaats").parentNode.parentNode;
     
     var date = new Date();
     var datestring = date.getDate();
@@ -35,18 +35,18 @@ function composeMessage() {
     temp += "<div class='titleBar flexRowSpace'>";
     
     temp += "<div class='switch'>";
-    temp += "<input type='checkbox' id='switchDateVisible' name='dateVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
-    temp += "<label id='switchDateVisibleLabel' for='switchDateVisible' text='" + datestring + " zichtbaar'></label>";
+    temp += "   <input type='checkbox' id='switchDateVisible' name='dateVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
+    temp += "   <label id='switchDateVisibleLabel' for='switchDateVisible' text='" + datestring + " zichtbaar'></label>";
     temp += "</div>";
     
     temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
-    temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
+    temp += "<a class='icon' id='iconAnnuleer'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea><br/>";
-    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;'><a role='button' id='buttonPlaats'>Plaats bericht</a></div>";
+    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconPlaats'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
     
     temp += "<div class='switch'>";
-    temp += "<input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
-    temp += "<label id='switchPosterVisibleLabel' for='switchPosterVisible'></label>";
+    temp += "   <input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
+    temp += "   <label id='switchPosterVisibleLabel' for='switchPosterVisible'></label>";
     temp += "</div>";
     
     
@@ -58,7 +58,7 @@ function composeMessage() {
     //Voegt event listeners toe aan de anchors
     var posterText = "Geplaatst door " + loggedinVoornaam + " " + loggedinAchternaam;
     document.getElementById("switchPosterVisibleLabel").setAttribute("text", posterText + " (zichtbaar)");
-    document.getElementById("buttonPlaats").addEventListener("click", submit);
+    document.getElementById("iconPlaats").addEventListener("click", submit);
     document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
     
     var switchDateVisibleLabel = document.getElementById("switchDateVisibleLabel");
@@ -91,7 +91,12 @@ function editMessage(berichtNum, ID) {
     }
     
     var pageElement = document.getElementById("bericht" + ID);
-    var pageElementTitle = pageElement.getElementsByClassName("title")[0].innerHTML;
+    var pageElementTitle;
+    if(pageElement.getElementsByClassName("title")[0] !== undefined) {
+        pageElementTitle = pageElement.getElementsByClassName("title")[0].innerHTML;
+    } else {
+        pageElementTitle = "";
+    }
     
     var pageElementDateElement = pageElement.getElementsByClassName("datum")[0];
     var pageElementDate = pageElementDateElement.innerHTML;
@@ -115,16 +120,16 @@ function editMessage(berichtNum, ID) {
     
     temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
     
-    temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
+    temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea><br/>";
-    temp += "<div class='posterFooter flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a>";
+    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconBewerk'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
     
     temp += "<div class='switch'>";
     temp += "<input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' />";
     temp += "<label id='switchPosterVisibleLabel' for='switchPosterVisible'></label>";
     temp += "</div>";
     
-    temp += "<a role='button' id='buttonVerwijder'>Verwijder</a></div>";
+    temp += "<div style='width:20%;text-align:right;'><a class='icon' id='iconVerwijder'><img class='icon' src='/imgs/delete104.svg' alt=''/></a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
     
@@ -133,8 +138,8 @@ function editMessage(berichtNum, ID) {
     //Voegt event listeners toe aan de anchors
     document.getElementById("berichtFormTitle").value = pageElementTitle;
     document.getElementById("berichtFormText").value = pageElementContent;
-    document.getElementById("buttonBewerk").addEventListener("click", submit);
-    document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
+    document.getElementById("iconBewerk").addEventListener("click", submit);
+    document.getElementById("iconVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
     document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
     
     //Code voor datum switch
@@ -197,6 +202,7 @@ function initEditor(content) {
         selector: "textarea",
         mode: "exact",
         language : 'nl',
+        skin : 'textbug',
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks fullscreen",

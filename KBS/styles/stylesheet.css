@@ -290,16 +290,14 @@ img.icon, div.icon{
     
     min-width: 44px;
     min-height: 44px;
+    
+    margin-top: 0.2rem;
 }
 img.icon:hover {
     cursor: pointer;
 }
 .iconEdit {
     float: right;
-}
-#Layer_1 {
-    flood-color: red;
-    fill: red;
 }
 
 .warningText {
@@ -332,6 +330,14 @@ input.error:hover, input.error:focus {
 input.error:focus {
     border: 0.15rem solid black;
     box-shadow: inset 0px 0px 10px -5px rgba(0,0,0,0.75);
+}
+
+div.mce-tinymce {
+    margin: -0.48rem;
+    margin-right: -0.48rem;
+    flex-grow:1;
+    width:auto;
+    border: none;
 }
 
 #footer {

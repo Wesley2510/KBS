@@ -144,7 +144,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             if ($aantalBerichten["aantal"] === "1") {
                 $unit = "bericht";
             }
-            echo "<div class='pageElement'><div class='flexRowSpace'><a id='buttonPlaats' role='button' onclick='composeMessage();'>Nieuw bericht</a>";
+            echo "<div class='pageElement'><div class='flexRowSpace'><a id='iconPlaats' class='icon' style='text-align:left;' onclick='composeMessage()'><img class='icon' src='/imgs/square181.svg' alt=''/></a>";
             echo "<span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
         }
 
@@ -165,10 +165,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                     echo "style='visibility:hidden;'";
                 }
                 echo ">" . date("d-m-Y", strtotime($row["datum"])) . "</span>";
-                echo "<h1 class='title'>" . urldecode($row["titel"]) . "</h1>";
+                if(strlen($row["titel"]) > 0) {
+                    echo "<h1 class='title'>" . urldecode($row["titel"]) . "</h1>";
+                }
                 if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a class='icon' onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='icon iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
                 else {echo "<a class='icon'></a>";}
-                echo "<br/></div><span class='content'>" . urldecode($row["inhoud"]) . "</span>";
+                echo "<br/></div><div class='content'>" . urldecode($row["inhoud"]) . "</div>";
                 if($row["plaatserzichtbaar"]) {
                     echo "<div class='posterFooter flexRowSpace'><span></span><span class='poster'>Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span><span></span></div>";
                 } else {
