@@ -102,7 +102,7 @@ function editMessage(berichtNum, ID) {
     var pageElementDate = pageElementDateElement.innerHTML;
     var pageElementDateVisible = pageElementDateElement.style.visibility !== "hidden";
     
-    var pageElementPosterElement = pageElement.getElementsByClassName("poster")[0];
+    var pageElementPosterElement = pageElement.getElementsByClassName("posterName")[0];
     var pageElementPoster = pageElementPosterElement.innerHTML;
     var pageElementPosterVisible = pageElementPosterElement.style.visibility !== "hidden";
     
