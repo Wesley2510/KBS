@@ -28,12 +28,14 @@ function editMenuItem(itemNum, berichtCount) {
     
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a role='button' id='buttonBewerk'>Opslaan</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='menuItemEdited'><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' /><a role='button' id='buttonVerwijder'>Verwijder</a>";
+    temp += "<a class='icon' id='iconBewerk' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/></a>";
+    temp += "<input type='text' class='textbox' id='titleEdit' form='menuForm' name='menuItemEdited' placeholder='Paginanaam' /><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' />";
+    temp += "<a class='icon' id='iconVerwijder' style='text-align:right;'><img src='/imgs/delete104.svg' alt='' class='icon'/></a>";
     pageElement.innerHTML = temp;
     
-    document.getElementById("menuFormText").value = menuItemText;
-    document.getElementById("buttonBewerk").addEventListener("click", submit);
-    document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteMenuItem(itemNum, berichtCount);});
+    document.getElementById("titleEdit").value = menuItemText;
+    document.getElementById("iconBewerk").addEventListener("click", submit);
+    document.getElementById("iconVerwijder").addEventListener("click", function() { deleteMenuItem(itemNum, berichtCount);});
 }
 
 function deleteMenuItem(itemNum, berichtCount) {
@@ -73,9 +75,11 @@ function createNewMenuItem() {
     var pageElement = document.getElementById("newPageElement");
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a role='button' id='buttonMaak'>Maak</a><input type='text' class='textbox' id='menuFormText' form='menuForm' name='newMenuItemName' /><a id='buttonAnnuleer' role='button'>Annuleer</a>";
+    temp += "<a class='icon' id='iconMaak' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/></a>";
+    temp += "<input type='text' class='textbox' id='titleEdit' form='menuForm' name='newMenuItemName' placeholder='Paginanaam' />";
+    temp += "<a class='icon' id='iconAnnuleer' style='text-align:right;'><img src='/imgs/delete85.svg' alt='' class='icon'/></a>";
     pageElement.innerHTML = temp;
     
-    document.getElementById("buttonMaak").addEventListener("click", function() { if(document.getElementById("menuFormText").value === "") {cancelComposingMessage();} else {submit();} });
-    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+    document.getElementById("iconMaak").addEventListener("click", function() { if(document.getElementById("titleEdit").value === "") {cancelComposingMessage();} else {submit();} });
+    document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
 }

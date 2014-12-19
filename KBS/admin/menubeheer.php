@@ -140,7 +140,7 @@ if($newMenuItemName != NULL) {
             }
         }
         ?>
-        <div id="newPageElement" class="pageElement flexRowSpace"><a role="button" onclick="createNewMenuItem()">Nieuwe pagina</a></div>
+        <div id="newPageElement" class="pageElement flexRowSpace"><a id='iconPlaats' class='icon' style='text-align:left;' onclick='createNewMenuItem()'><img class='icon' src='/imgs/square181.svg' alt=''/></a></div>
         
         <?php printFooter() ?>
         

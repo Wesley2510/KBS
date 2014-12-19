@@ -240,7 +240,7 @@ a.icon:active {
     flex-grow:1;
     width:100%;
 }
-#berichtFormTitle {
+#titleEdit {
     text-align:center;
     font-size:2rem;
     height: 2.2rem;
@@ -439,7 +439,7 @@ div.switch {
     }
     
     .flexAdjust {
-        flex: 0.8;
+        width: 70%;
     }
     
     .menuItem {
@@ -511,7 +511,7 @@ div.switch {
     }
     
     .flexAdjust {
-        flex: 0.7;
+        width: 60%;
     }
 }
 
@@ -521,6 +521,6 @@ div.switch {
     }
     
     .flexAdjust {
-        flex: 0.6;
+        width: 50%;
     }
 }

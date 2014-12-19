@@ -39,7 +39,7 @@ function composeMessage() {
     temp += "   <label id='switchDateVisibleLabel' for='switchDateVisible' text='" + datestring + " zichtbaar'></label>";
     temp += "</div>";
     
-    temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
+    temp += "<input id='titleEdit' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
     temp += "<a class='icon' id='iconAnnuleer'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
     temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconPlaats'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
@@ -118,7 +118,7 @@ function editMessage(berichtNum, ID) {
     temp += "<label id='switchDateVisibleLabel' for='switchDateVisible'></label>";
     temp += "</div>";
     
-    temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
+    temp += "<input id='titleEdit' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
     
     temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
@@ -136,7 +136,7 @@ function editMessage(berichtNum, ID) {
     initEditor(pageElementContent);
     
     //Voegt event listeners toe aan de anchors
-    document.getElementById("berichtFormTitle").value = pageElementTitle;
+    document.getElementById("titleEdit").value = pageElementTitle;
     document.getElementById("berichtFormText").value = pageElementContent;
     document.getElementById("iconBewerk").addEventListener("click", submit);
     document.getElementById("iconVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
