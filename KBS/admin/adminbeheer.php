@@ -178,42 +178,35 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         <script src='/scripts/adminbeheer.js' type='text/javascript' charset='utf-8'></script>
         <script type='text/javascript'>
         <?php
-        $newAdminPageElement = "<div class='flexRowSpace'><a role='button' id='buttonNewAdmin' onclick='createNewAdmin()'>Nieuwe administrator</a><a href='adminbeheer.php?actief=0'>Inactieve administrators</a></div>";
+        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/></a><a href='adminbeheer.php?actief=0'>Inactieve administrators</a></div>";
         
         $newAdminForm = "<form action='#' id='adminForm' method='post'></form>";
         $newAdminForm .= "<div class='flexRowSpace'><input class='' type='text' id='adminFormName' form='adminForm' name='name' placeholder='Naam' />";
         $newAdminForm .= "<input type='text' id='adminFormEmail' form='adminForm' name='email' placeholder='Emailadres' /></div>";
-        if(!$succesNew) {
-            $newAdminForm .= "<div class='flexRowSpace'><h4 id='adminNameErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
-            $newAdminForm .= "<h4 id='adminEmailErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
-        }
+        $newAdminForm .= "<div class='flexRowSpace'><h4 id='adminNameErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
+        $newAdminForm .= "<h4 id='adminEmailErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
         $newAdminForm .= "<div class='flexRowSpace'><input type='password' id='adminFormPass' form='adminForm' name='pass' placeholder='Wachtwoord' />";
         $newAdminForm .= "<input type='password' id='adminFormPassRepeat' form='adminForm' name='passrepeat' placeholder='Herhaal wachtwoord' /></div>";
-        if(!$succesNew) {
-            $newAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
-            $newAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
-        }
-        $newAdminForm .= "<div class='flexRowSpace'><a role='button' id='buttonRegister' onclick='submit()'>Registreer</a><a role='button' id='buttonAnnuleer' onclick='cancelComposingMessage()'>Annuleer</a></div>";
+        $newAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
+        $newAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
+        $newAdminForm .= "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='iconRegister' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
+        $newAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
         
         $editAdminForm = "<form action='#' id='adminForm' method='post'></form>";
         $editAdminForm .= "<div style='width: 100%;'>";
         $editAdminForm .= "<div class='flexRowSpace'>";
         $editAdminForm .= "<input type='text' id='adminFormName' form='adminForm' name='adminNameEdited' placeholder='Voornaam Achternaam' />";
         $editAdminForm .= "<input type='text' id='adminFormEmail' form='adminForm' name='adminEmailEdited' placeholder='Emailadres' /></div>";
-        if(!$succesEdit) {
-            $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminNameErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
-            $editAdminForm .= "<h4 id='adminEmailErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
-        }
+        $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminNameErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
+        $editAdminForm .= "<h4 id='adminEmailErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
         $editAdminForm .= "<div class='flexRowSpace'><input type='password' id='adminFormPass' form='adminForm' name='adminNewPassword' placeholder='Nieuw wachtwoord'>";
         $editAdminForm .= "<input type='password' id='adminFormPassRepeat' form='adminForm' name='adminRepeatPassword' placeholder='Herhaal wachtwoord'/></div>";
-        if(!$succesEdit) {
-            $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
-            $editAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
-        }
+        $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
+        $editAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
         $editAdminForm .= "<input type='hidden' name='adminEditedID' id='adminEditedID' value='' form='adminForm' />";
-        $editAdminForm .= "<div class='flexRowSpace'><a role='button' id='buttonBewerk' onclick='submit()'>Opslaan</a>";
-        $editAdminForm .= "<a role='button' id='buttonDeactiveer'>Deactiveer</a>";
-        $editAdminForm .= "<a role='button' id='buttonAnnuleer' onclick='cancelComposingMessage()'>Annuleer</a></div></div>";
+        $editAdminForm .= "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
+        $editAdminForm .= "<a class='icon' style='text-align:center;' id='iconDeactiveer'><img class='icon' src='/imgs/delete52.svg' alt=''/></a>";
+        $editAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div></div>";
 
         echo "var editAdminForm = \"" . $editAdminForm . "\";\n";
         echo "var newAdminForm = \"" . $newAdminForm . "\";\n";
