@@ -70,9 +70,15 @@ function editMessage(berichtNum, ID) {
     
     var pageElement = document.getElementById("bericht" + ID);
     var pageElementTitle = pageElement.getElementsByClassName("title")[0].innerHTML;
+    
     var pageElementDateElement = pageElement.getElementsByClassName("datum")[0];
     var pageElementDate = pageElementDateElement.innerHTML;
     var pageElementDateVisible = pageElementDateElement.style.visibility !== "hidden";
+    
+    var pageElementPosterElement = pageElement.getElementsByClassName("poster")[0];
+    var pageElementPoster = pageElementPosterElement.innerHTML;
+    var pageElementPosterVisible = pageElementPosterElement.style.visibility !== "hidden";
+    
     var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
     
     //Sla huidige html op in originalHTML
@@ -82,14 +88,21 @@ function editMessage(berichtNum, ID) {
     
     temp += "<div class='switch'>";
     temp += "<input type='checkbox' id='switchDateVisible' name='dateVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' />";
-    temp += "<label id='switchDateVisibleLabel' for='switchDateVisible' text='Datum'></label>";
+    temp += "<label id='switchDateVisibleLabel' for='switchDateVisible'></label>";
     temp += "</div>";
     
     temp += "<input id='berichtFormTitle' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
     
     temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div><br/>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea><br/>";
-    temp += "<div class='flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a><a role='button' id='buttonVerwijder'>Verwijder</a></div>";
+    temp += "<div class='posterFooter flexRowSpace'><a role='button' id='buttonBewerk'>Bewerk bericht</a>";
+    
+    temp += "<div class='switch'>";
+    temp += "<input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' />";
+    temp += "<label id='switchPosterVisibleLabel' for='switchPosterVisible'></label>";
+    temp += "</div>";
+    
+    temp += "<a role='button' id='buttonVerwijder'>Verwijder</a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
     
@@ -102,24 +115,46 @@ function editMessage(berichtNum, ID) {
     document.getElementById("buttonVerwijder").addEventListener("click", function() { deleteWarning(berichtNum, ID);});
     document.getElementById("iconAnnuleer").addEventListener("click", cancelComposingMessage);
     
+    //Code voor datum switch
     var switchDateVisibleLabel = document.getElementById("switchDateVisibleLabel");
     var switchDateVisible = document.getElementById("switchDateVisible");
     if(pageElementDateVisible) {
-        switchDateVisibleLabel.setAttribute("text", pageElementDate + " zichtbaar");
+        switchDateVisibleLabel.setAttribute("text", pageElementDate + " (zichtbaar)");
         switchDateVisible.checked = true;
     } else {
-        switchDateVisibleLabel.setAttribute("text", pageElementDate + " niet zichtbaar");
+        switchDateVisibleLabel.setAttribute("text", pageElementDate + " (niet zichtbaar)");
         switchDateVisible.checked = false;
     }
     
     var changeText = function() {
         if(!switchDateVisible.checked) {
-            switchDateVisibleLabel.setAttribute("text", pageElementDate + " niet zichtbaar");
+            switchDateVisibleLabel.setAttribute("text", pageElementDate + " (niet zichtbaar)");
         } else {
-            switchDateVisibleLabel.setAttribute("text", pageElementDate + " zichtbaar");
+            switchDateVisibleLabel.setAttribute("text", pageElementDate + " (zichtbaar)");
         }
     }
     switchDateVisible.addEventListener("click", changeText);
+    
+    
+    //Code voor plaatser switch
+    var switchPosterVisibleLabel = document.getElementById("switchPosterVisibleLabel");
+    var switchPosterVisible = document.getElementById("switchPosterVisible");
+    if(pageElementPosterVisible) {
+        switchPosterVisibleLabel.setAttribute("text", pageElementPoster + " (zichtbaar)");
+        switchPosterVisible.checked = true;
+    } else {
+        switchPosterVisibleLabel.setAttribute("text", pageElementPoster + " (niet zichtbaar)");
+        switchPosterVisible.checked = false;
+    }
+    
+    var changeText = function() {
+        if(!switchPosterVisible.checked) {
+            switchPosterVisibleLabel.setAttribute("text", pageElementPoster + " (niet zichtbaar)");
+        } else {
+            switchPosterVisibleLabel.setAttribute("text", pageElementPoster + " (zichtbaar)");
+        }
+    }
+    switchPosterVisible.addEventListener("click", changeText);
 }
 
 function deleteWarning(berichtNum, ID) {
