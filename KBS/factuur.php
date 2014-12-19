@@ -6,22 +6,29 @@ Wesley Oosterveen
 include_once("global.php");
 
 //voegt het factuur toe aan de database
-//trigger_error($factuurFormService);
-$inputFactuurEditID = filter_input(INPUT_POST, "factuurEditedID");
+
+$inputFactuurEditID = filter_input(INPUT_POST, "factuurEditedName");
+
 if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
-    $factuurFormService = filter_input(INPUT_POST, "factuurFormService", FILTER_SANITIZE_ENCODED);
-    $factuurFormBedrag = filter_input(INPUT_POST, "factuurFormBedrag", FILTER_SANITIZE_ENCODED);
-    $radioB = filter_input(INPUT_POST, "radioB", FILTER_SANITIZE_ENCODED);
 
+    $factuurFormService = filter_input(INPUT_POST, "factuurServiceEdited", FILTER_SANITIZE_ENCODED);
+    $factuurFormBedrag = filter_input(INPUT_POST, "factuurBedragEdited", FILTER_SANITIZE_ENCODED);
+    $radioB = filter_input(INPUT_POST, "betaald", FILTER_SANITIZE_ENCODED);
 
+    $betaald;
+    if ($radioB === "betaald") {
+        $betaald = 1;
+    } else {
+        $betaald = 0;
+    }
 
     //Controleer of input niet alleen uit spaties bestaat
     if (!(ltrim($factuurFormService, ' ') === '')) {
 
-        if (!$link->query("UPDATE factuur SET service='" . $factuurFormService . "', prijs= " . $factuurFormBedrag . " WHERE factuurID=" . $inputFactuurEditID)) {
+        if (!$link->query("UPDATE factuur SET service = '" . $factuurFormService . "', prijs = " . $factuurFormBedrag . ", betaald = " . $betaald . " WHERE factuurID = " . $inputFactuurEditID)) {
             trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
         }
-        header("Location: factuur . php");
+        header("Location: factuur.php");
     }
 }
 ?>
@@ -32,7 +39,7 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
         <?php
         printStyles();
         printScripts();
-        echo "<script src='/scripts/factuurbewerking.js' type='text/javascript' charset='utf-8'></script>";
+        echo "<script src = '/scripts/factuurbewerking.js' type = 'text/javascript' charset = 'utf-8'></script>";
         ?>
     </head>
     <body>
@@ -107,7 +114,8 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
 
         //    MOET VERWIJDERD WORDEN!
         $klantID = 1;
-        //de facturen worden hier opgehaald uit de database, zodat ze mooi op de pagina weer gegeven kunnen worden
+        //$klantID = $_POST["klantID"];
+        //de facturen worden hier opgehaald uit de database, zodat ze moo   i op de pagina weer gegeven kunnen worden
         $query = "SELECT factuurID, service, prijs, betaald, voornaam, achternaam,woonplaats,huisnummer,postcode,adres "
                 . "FROM factuur JOIN klant ON klantID = klant "
                 . "WHERE klantID = " . $klantID . " ORDER BY factuurID DESC";
@@ -124,7 +132,7 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
             echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij["achternaam"] . "</span>";
             echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij["huisnummer"] . "</span>";
             echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["postcode"] . " " . $databaserij["woonplaats"] . "</span></br>";
-            echo "<br/>\n\t\t<span id='factuurService" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["service"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurService" . $databaserij["factuurID"] . "' class = 'content'>" . urldecode($databaserij["service"]) . "</span>";
             echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["prijs"] . "</span>";
 
 
