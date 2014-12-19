@@ -67,12 +67,22 @@ window.onload = function () {
 
 
 var posterFooters = document.getElementsByClassName("posterFooter");
+var maxHeight = 0;
 function expand(element) {
     if(element.getAttribute("open") == "true") {
         element.setAttribute("open", false);
-        element.style.maxHeight = 3 + "rem";
+        element.style.maxHeight = "3rem";
     } else {
         element.setAttribute("open", true);
-        element.style.maxHeight = "20rem";
+        element.style.maxHeight = maxHeight;
     }
 }
+
+//Workaround for webkit/blink based browsers
+for(index = 0; index < posterFooters.length; index++) {
+    var currentPoster = posterFooters[index].getElementsByClassName("posterContent")[0];
+    posterFooters[index].getElementsByClassName("poster")[0].style.minHeight = currentPoster.offsetHeight + "px";
+    maxHeight = Math.max(maxHeight, currentPoster.offsetHeight);
+}
+var globalFontSize = window.getComputedStyle(document.getElementById("headerbar")).fontSize;
+maxHeight = maxHeight + (4 * parseInt(globalFontSize)) + "px";

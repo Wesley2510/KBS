@@ -255,13 +255,15 @@ a.icon:active {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: center;
     overflow: hidden;
-    z-index: 1;
     
     margin: -0.24rem;
     margin-right: -0.48rem;
     margin-top: 0.48rem;
     
+    
+    height: auto;
     min-height: 50px;
     max-height: 2rem; //Voor animatie
     flex-grow:1;
@@ -276,7 +278,15 @@ a.icon:active {
     cursor: pointer;
 }
 .poster {
-    
+    vertical-align:bottom;
+    margin-bottom:2rem;
+    margin-top:1rem;
+    width:60%;
+    bottom: 0;
+}
+.posterName {
+    display: block;
+    min-height:2rem;
 }
 
 .contentEditor {
