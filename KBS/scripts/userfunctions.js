@@ -82,6 +82,7 @@ function expand(element) {
 for(index = 0; index < posterFooters.length; index++) {
     var currentPoster = posterFooters[index].getElementsByClassName("posterContent")[0];
     posterFooters[index].getElementsByClassName("poster")[0].style.minHeight = currentPoster.offsetHeight + "px";
+    currentPoster.style.top = -currentPoster.offsetHeight + "px";
     maxHeight = Math.max(maxHeight, currentPoster.offsetHeight);
 }
 var globalFontSize = window.getComputedStyle(document.getElementById("headerbar")).fontSize;

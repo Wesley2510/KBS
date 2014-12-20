@@ -111,6 +111,10 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         header('Location: ?p=' . $inputP . '&b=0');
     }
 }
+
+
+$browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER['HTTP_USER_AGENT']);
+trigger_error($browserIE);
 ?>
 
 <html>
@@ -172,10 +176,23 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 else {echo "<a class='icon'></a>";}
                 echo "<br/></div><div class='content'>" . urldecode($row["inhoud"]) . "</div>";
                 if($row["plaatserzichtbaar"]) {
-                    echo "<div class='posterFooter'  onclick='expand(this)'>";
-                    echo "<div class='poster'><div class='posterContent'><p><br/>Test Admin werkt bij Textbug sinds 1921.</p><img src='http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg' alt='' style='width:150px;height:150px;' />";
-                    echo "<div>Blablabla bla blabla bla bla blabla blablabla. Blablablabla bla.</div></div></div>";
-                    echo "<span class='posterName'>Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span></div></div>";
+                    $IEClass = "";
+                    if($browserIE) {
+                        $IEClass = "ie";
+                    }
+                    echo "<div class='posterFooter " . $IEClass . "'  onclick='expand(this)'>";
+                    $tempPoster = "<div class='poster " . $IEClass . "'><div class='posterContent'><p><br/>Test Admin werkt bij Textbug sinds 1921.</p><img src='http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg' alt='' style='width:150px;height:150px;' />";
+                    $tempPoster .= "<div>Blablabla bla blabla bla bla blabla blablabla. Blablablabla bla.</div></div></div>";
+                    $tempPosterName = "<span class='posterName'>";
+                    $tempPosterName .= "Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span>";
+                    if($browserIE) {
+                        echo $tempPosterName;
+                        echo $tempPoster;
+                    } else {
+                        echo $tempPoster;
+                        echo $tempPosterName;
+                    }
+                    echo "</div>";
                 }
                 echo "</div>";
             }
