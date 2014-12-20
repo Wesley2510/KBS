@@ -19,12 +19,15 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     $inputEmail = filter_input(INPUT_POST, "email");
     $inputPass = filter_input(INPUT_POST, "pass");
     $inputPassRepeat = filter_input(INPUT_POST, "passrepeat");
+    $inputAdminActive = filter_input(INPUT_POST, "adminActive");
     $adminNameError = 0; //1 = no input, 2 = no firstname/surname, 3 = invalid name
     $adminEmailError = 0; //1 = no input, 2 = not a valid adress, 3 = al geregistreerd
     $adminPassError = 0; //1 = no input, 2 = not a valid password
     $adminPassRepeatError = 0; //1 = no input, 2 = not same as pass
     $succesNew = true; 
     $trimmedName = NULL;
+    
+    $inputDeactivate = filter_input(INPUT_POST, "adminDeactivate");
     
     $inputNameEdited = filter_input(INPUT_POST, "adminNameEdited");
     $inputEmailEdited = filter_input(INPUT_POST, "adminEmailEdited");
@@ -56,16 +59,18 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
                 $achternaam = substr($trimmedName, strpos($trimmedName, ' ') + 1);
             }
         }
+        
         if($inputEmail == NULL || ltrim($inputEmail, ' ') == '') {
             $adminEmailError = 1;
             $succesNew = false;
         } else if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL)) {
             $adminEmailError = 2;
             $succesNew = false;
-        } else if ($link->query("SELECT COUNT(klantID) FROM klant WHERE emailadres=" . $inputEmail) > 0) {
+        } else if ($link->query("SELECT COUNT(klantID) AS count FROM klant WHERE emailadres='" . $inputEmail . "';")->fetch_assoc()["count"] !== "0") {
             $adminEmailError = 3;
             $succesNew = false;
         }
+        
         $adminPassError = checkPass($inputPass);
         if ($adminPassError > 0) {
             $succesNew = false;
@@ -78,14 +83,21 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             $succesNew = false;
         }
         
+        if($inputAdminActive != 0) { $inputAdminActive = 1; }
+        
         if($succesNew) {
-            $sql = "INSERT INTO klant (voornaam, achternaam, emailadres, wachtwoord, admin) "
-                    . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "', 1)";
+            $sql = "INSERT INTO klant (voornaam, achternaam, emailadres, wachtwoord, admin, actief) "
+                    . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "', 1," . $inputAdminActive . ")";
             if(!$link->query($sql)) {
-                trigger_error("Fout bij toevoegen administrator :" . $sql . $link->error());
+                trigger_error("Fout bij toevoegen administrator :" . $sql . $link->error);
             } 
             
             header('Location: #');
+        }
+    } else if ($inputDeactivate !== NULL && $inputDeactivate !== "" && $inputAdminEditID !== NULL) {
+        if($inputDeactivate > 1) { $inputDeactivate = 1; }
+        if(!$link->query("UPDATE klant SET actief=" . $inputDeactivate . " WHERE klantID=" . $inputAdminEditID)) {
+            trigger_error("Fout bij deactieveren/actieveren admin: " . $link->error);
         }
     } else if(($inputNameEdited != NULL || $inputEmailEdited != NULL || $inputNewPass != NULL) && $inputAdminEditID !== NULL && is_numeric($inputAdminEditID)) {
         if($inputNameEdited != NULL) {
@@ -165,6 +177,10 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
             }
         }
     }
+    
+    
+    $inputActief = filter_input(INPUT_GET, "actief");
+    if($inputActief !== "0") { $inputActief = 1; }
 }
 
 ?>
@@ -178,8 +194,11 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         <script src='/scripts/adminbeheer.js' type='text/javascript' charset='utf-8'></script>
         <script type='text/javascript'>
         <?php
-        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/>"; 
-        $newAdminPageElement .= "</a><a class='icon' href='adminbeheer.php?actief=0'><img class='icon' src='/imgs/delete51.svg' alt=''/></a></div>";
+        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/></a>"; 
+        if($inputActief) {
+            $newAdminPageElement .= "<a class='icon' href='adminbeheer.php?actief=0'><img class='icon' src='/imgs/delete51.svg' alt=''/></a>";
+        } else { $newAdminPageElement .= "<a class='icon' href='adminbeheer.php?actief=1'><img class='icon' src='/imgs/grouped.svg' alt=''/></a>"; }
+        $newAdminPageElement .= "</div>";
         
         $newAdminForm = "<form action='#' id='adminForm' method='post'></form>";
         $newAdminForm .= "<div class='flexRowSpace'><input class='' type='text' id='adminFormName' form='adminForm' name='name' placeholder='Naam' />";
@@ -190,6 +209,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         $newAdminForm .= "<input type='password' id='adminFormPassRepeat' form='adminForm' name='passrepeat' placeholder='Herhaal wachtwoord' /></div>";
         $newAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
         $newAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
+        $newAdminForm .= "<input type='hidden' name='adminActive' id='adminActiveID' value='' form='adminForm' />";
         $newAdminForm .= "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='iconRegister' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
         $newAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
         
@@ -205,12 +225,23 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         $editAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
         $editAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
         $editAdminForm .= "<input type='hidden' name='adminEditedID' id='adminEditedID' value='' form='adminForm' />";
-        $editAdminForm .= "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
-        $editAdminForm .= "<a class='icon' style='text-align:center;' id='iconDeactiveer'><img class='icon' src='/imgs/delete52.svg' alt=''/></a>";
+        $editAdminForm .= "<input type='hidden' name='adminDeactivate' id='adminDeactivateID' value='' form='adminForm' />";
+        $editAdminForm .= "<div class='flexRowSpace'>";
+        if($inputActief) {
+            $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
+        } else { $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>"; }//If delete function to be implemented: $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconDelete' onclick=''><img class='icon' src='/imgs/delete104.svg' alt=''/></a>"; }
+        $editAdminForm .= "<a class='icon' style='text-align:center;' id='iconDeactiveer' onclick='deactivateAdmin()'><img class='icon' src='";
+        if($inputActief) {
+            $editAdminForm .=  "/imgs/delete52.svg";
+        } else {
+            $editAdminForm .=  "/imgs/verified13.svg";
+        }
+        $editAdminForm .= "' alt=''/></a>";
         $editAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div></div>";
-
+        
         echo "var editAdminForm = \"" . $editAdminForm . "\";\n";
         echo "var newAdminForm = \"" . $newAdminForm . "\";\n";
+        echo "var activeAdmins = \"" . $inputActief . "\";\n";
         if(!$succesNew) {
             echo "originalHTML =\"" . $newAdminPageElement . "\";\n";
         }
@@ -218,10 +249,17 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         </script>
     </head>
     <body>
-    <?php printHeader(); ?>
+    <?php printHeader(); 
+    
+    if($inputActief) {
+        echo "<h1 class='pageElement' style='text-align:center;'>Actieve administrators</h1>";
+    } else { echo "<h1 class='pageElement' style='text-align:center;'>Inactieve administrators</h1>"; }
+    ?>
+    
+        
     
     <?php 
-    $admins = $link->query("SELECT klantID, voornaam, achternaam, emailadres FROM klant WHERE admin = 1");
+    $admins = $link->query("SELECT klantID, voornaam, achternaam, emailadres FROM klant WHERE admin = 1 AND actief =" . $inputActief);
     while($admin = $admins->fetch_assoc()) {
         echo "<div id='admin" . $admin["klantID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["klantID"] . "'>";
         echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["klantID"] . "' style='text-align:right;padding-right:2rem;flex:1;'>";

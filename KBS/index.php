@@ -114,7 +114,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
 
 
 $browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER['HTTP_USER_AGENT']);
-trigger_error($browserIE);
 ?>
 
 <html>

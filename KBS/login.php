@@ -28,7 +28,7 @@ if(isset($_SESSION["loggedin"])) {
 
 $inputEmail = filter_input(INPUT_POST, "username");
 $inputPassword = filter_input(INPUT_POST, "password");
-$errorEmail = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = forbidden symbols
+$errorEmail = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = forbidden symbols, 4 = deactivated account
 $errorPassword = 0; //0 = No error, 1 = empty password, 2 = spaces occurring, 3 = wrong password
 if($inputEmail !== NULL) {
     $succes = true;
@@ -49,15 +49,17 @@ if($inputEmail !== NULL) {
     }
 
     if($succes) {
-        $klantID = $link->query("SELECT klantID FROM klant WHERE emailadres = '" . strtolower($inputEmail) . "'")->fetch_assoc()["klantID"];
-        if($klantID == false) {
+        $klant = $link->query("SELECT klantID, actief FROM klant WHERE emailadres = '" . strtolower($inputEmail) . "'")->fetch_assoc();
+        if($klant["klantID"] == false) {
             $errorEmail = 2;
+        } else if($klant["actief"] == false) {
+            $errorEmail = 4;
         } else {
-            $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klantID)->fetch_assoc()["wachtwoord"];
+            $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klant["klantID"])->fetch_assoc()["wachtwoord"];
             if($password != $inputPassword) {
                 $errorPassword = 3;
             } else {
-                $row = $link->query("SELECT * FROM klant WHERE klantID =" . $klantID)->fetch_assoc();
+                $row = $link->query("SELECT * FROM klant WHERE klantID =" . $klant["klantID"])->fetch_assoc();
                 $_SESSION["loggedin"] = true;
                 $_SESSION["userID"] = $row["klantID"];
                 $_SESSION["admin"] = $row["admin"];
@@ -97,6 +99,8 @@ if($inputEmail !== NULL) {
                         echo "<h4 class='error'>Deze gebruiker bestaat niet</h4>"; 
                     } else if ($errorEmail == 3) {
                         echo "<h4 class='error'>Verboden tekens in gebruikersnaam</h4>";
+                    } else if ($errorEmail == 4) {
+                        echo "<h4 class='error'>Dit account is gedeactiveerd</h4>";
                     }
                 ?>
                 <h3>Wachtwoord</h3>

@@ -13,6 +13,17 @@ function cancelComposingMessage() {
     }
 }
 
+function deactivateAdmin() {
+    if(document.getElementById("adminDeactivateID") !== undefined) {
+        if(activeAdmins == 1) {
+            document.getElementById("adminDeactivateID").value = 0;
+        } else {
+            document.getElementById("adminDeactivateID").value = 1;
+        }
+        submit();
+    }
+}
+
 function createNewAdmin() {
     //Als er een berichtForm op de pagina is wordt er iets bewerkt, en moet dat dus gestopt worden.
     if (document.getElementById("adminForm") !== null) {
@@ -25,6 +36,8 @@ function createNewAdmin() {
     //Sla huidige html op in originalHTML
     originalHTML = pageElement.innerHTML;
     pageElement.innerHTML = newAdminForm;
+    
+    document.getElementById("adminActiveID").value = parseInt(activeAdmins);
 }
 
 function editAdminData(ID) {
@@ -45,9 +58,7 @@ function editAdminData(ID) {
     
     document.getElementById("adminFormName").value = adminNaam; 
     document.getElementById("adminFormEmail").value = emailadres;
-    document.getElementById("buttonBewerk").addEventListener("click", submit);
-    document.getElementById("buttonDeactiveer").addEventListener("click", function() { deleteWarning(ID, adminNaam); } );
-    document.getElementById("buttonAnnuleer").addEventListener("click", cancelComposingMessage);
+    document.getElementById("iconBewerk").addEventListener("click", submit);
 }
 
 function deleteWarning(ID, name) {

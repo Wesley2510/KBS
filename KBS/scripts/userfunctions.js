@@ -85,5 +85,5 @@ for(index = 0; index < posterFooters.length; index++) {
     currentPoster.style.top = -currentPoster.offsetHeight + "px";
     maxHeight = Math.max(maxHeight, currentPoster.offsetHeight);
 }
-var globalFontSize = window.getComputedStyle(document.getElementById("headerbar")).fontSize;
-maxHeight = maxHeight + (4 * parseInt(globalFontSize)) + "px";
+var globalFontSize = parseInt(window.getComputedStyle(document.getElementById("headerbar")).fontSize);
+maxHeight = maxHeight + (4 * globalFontSize) + "px";

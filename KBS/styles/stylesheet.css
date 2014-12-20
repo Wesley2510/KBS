@@ -170,6 +170,10 @@ a.icon:hover {
 a.icon:active {
     background-color: rgba(0,0,0,0);
 }
+a.icon:focus {
+    outline:0;
+}
+
 #buttonVerwijder {
     background-color: lightcoral;
 }
@@ -262,6 +266,7 @@ a.icon:active {
     margin-right: -0.48rem;
     margin-top: 0.48rem;
     
+    background-color: #FBFBFB;
     
     height: auto;
     min-height: 50px;
@@ -284,9 +289,9 @@ a.icon:active {
 }
 .poster {
     vertical-align:bottom;
-    margin-bottom:2rem;
+    margin-bottom:1rem;
     margin-top:1rem;
-    width:60%;
+    max-width:60%;
     bottom: 0;
 }
 .posterName {
@@ -535,6 +540,10 @@ div.switch {
     #headerbar:hover .menuItem {
         display: flex;
         width: 12rem;
+    }
+    
+    .poster {
+        max-width:90%;
     }
 }
 

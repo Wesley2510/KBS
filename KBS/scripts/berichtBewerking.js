@@ -102,9 +102,11 @@ function editMessage(berichtNum, ID) {
     var pageElementDate = pageElementDateElement.innerHTML;
     var pageElementDateVisible = pageElementDateElement.style.visibility !== "hidden";
     
-    var pageElementPosterElement = pageElement.getElementsByClassName("posterName")[0];
-    var pageElementPoster = pageElementPosterElement.innerHTML;
-    var pageElementPosterVisible = pageElementPosterElement.style.visibility !== "hidden";
+    var pageElementPosterVisible = true;
+    if(pageElement.getElementsByClassName("posterName")[0] == undefined) {
+        pageElementPosterVisible = false;
+    }
+    var pageElementPoster = loggedinVoornaam + " " + loggedinAchternaam;
     
     var pageElementContent = pageElement.getElementsByClassName("content")[0].innerHTML;
     
@@ -203,6 +205,7 @@ function initEditor(content) {
         mode: "exact",
         language : 'nl',
         skin : 'textbug',
+        height: window.innerHeight - 20*globalFontSize,
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks fullscreen",
