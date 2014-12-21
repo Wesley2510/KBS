@@ -130,7 +130,7 @@ $browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER
         ?>
     </head>
     <body>
-
+        
         <?php printHeader(); ?>
         <?php
         $sql = "SELECT COUNT(berichtID) AS aantal FROM bericht WHERE pagina =" . $pID;

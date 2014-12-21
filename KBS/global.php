@@ -33,7 +33,7 @@ function printHeader() {
              $list[0] = NULL;
 
              for($i = 1; $i < count($list); $i++) {
-                 $HTML .= "<div class='menuItem'><a href='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
+                 $HTML .= "<div id='menu" . $i . "' class='menuItem'><a href='/index.php?p=" . $list[$i] . "' ><h2>" . $list[$i] . "</h2></a></div>";
              }
          }
 

@@ -14,8 +14,59 @@ function cancelComposingMessage() {
     }
 }
 
-function moveMenuItem(position) {
-    document.forms["moveDownForm" + position].submit();
+function moveMenuItem(element) {
+    var xmlhttp = new XMLHttpRequest();
+    var position = parseInt(element.getAttribute("pos"));
+    
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            if(xmlhttp.responseText == "true") {
+                var element1 = element;
+                var element2 = document.getElementById("menuItem" + (position + 1));
+                var moveIcon1 = document.getElementById("moveDown" + position);
+                var moveIcon2 = document.getElementById("moveDown" + (position + 1));
+                
+                var rect1 = element1.getBoundingClientRect();
+                var rect2 = element2.getBoundingClientRect();
+                
+                
+                element1.style.transition = "top 0.4s";
+                element2.style.transition = "top 0.4s";
+                
+                element1.style.top = parseFloat(element1.style.top) + rect2.top - rect1.top + "px";
+                element1.setAttribute("pos", position + 1);
+                element1.setAttribute("id", "menuItem" + (position + 1));
+                moveIcon1.setAttribute("id", "moveDown" + (position + 1))
+                
+                element2.style.top = parseFloat(element2.style.top) + rect1.top - rect2.top + "px";
+                element2.setAttribute("pos", position);
+                element2.setAttribute("id", "menuItem" + position);
+                moveIcon2.setAttribute("id", "moveDown" + position);
+                
+                if(moveIcon2.style.visibility == "hidden") {
+                    moveIcon2.style.visibility = "visible";
+                    moveIcon1.style.visibility = "hidden";
+                }
+                
+                
+                var menu1 = document.getElementById("menu" + position);
+                var menu2 = document.getElementById("menu" + (position+1));
+                
+                var menuRect1 = menu1.getBoundingClientRect();
+                var menuRect2 = menu2.getBoundingClientRect();
+                
+                menu1.style.left = parseFloat(menu1.style.left) + menuRect2.left - menuRect1.left + "px";
+                menu1.setAttribute("id", "menu" + (position + 1));
+                
+                menu2.style.left = parseFloat(menu2.style.left) + menuRect1.left - menuRect2.left + "px";
+                menu2.setAttribute("id", "menu" + position);
+            }
+        }
+    }
+    
+    xmlhttp.open("POST", "/admin/menubeheer.php", true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("rowDown=" + position);
 }
 
 function editMenuItem(itemNum, berichtCount) {

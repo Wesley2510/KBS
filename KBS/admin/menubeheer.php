@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <?php 
 include_once '../global.php';
 
@@ -17,13 +15,18 @@ if($rowDown != NULL && is_numeric($rowDown)) {
     $result = $link->query("SELECT paginaID FROM pagina WHERE positie =" . $rowDown);
     if(!$result) {
         trigger_error("Fout bij wijzigen positie pagina: " . $link->error, E_USER_ERROR);
+        
+        echo "false";
+        die();
     } else {
         $tempID = $result->fetch_assoc()["paginaID"];
 
         $link->query("UPDATE pagina SET positie =" . $rowDown . " WHERE positie =" . ($rowDown + 1));
         $link->query("UPDATE pagina SET positie =" . ($rowDown + 1) . " WHERE paginaID =" . $tempID);
         $_SESSION["headerBarEdited"] = true;
-        header( 'Location: #' ) ;
+        
+        echo "true";
+        die();
     }
 }
 
@@ -94,6 +97,7 @@ if($newMenuItemName != NULL) {
 }
 ?>
 
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -103,8 +107,8 @@ if($newMenuItemName != NULL) {
         <script src='/scripts/menubeheer.js' type='text/javascript' charset='utf-8'></script>
     </head>
     <body>
-        
-        <?php printHeader() ?>
+        <div style='height:0px;top:0px;visibility:hidden;'>body</div>
+        <?php printHeader() ?><div></div>
         
         <h1 class='pageElement' style='text-align:center;'>Menubeheer</h1>
         
@@ -132,10 +136,12 @@ if($newMenuItemName != NULL) {
                     $aantalBerichten = $result->fetch_assoc()["aantal"];
                 }
                 
-                echo "<div id='menuItem" . $i . "' class='pageElement flexRowSpace'>";
-                if($i < $listCount - 1) {
-                    echo "<form id='moveDownForm" . $i . "' action='#' method='post'></form><input form='moveDownForm" . $i . "' type='hidden' name='rowDown' value='" . $i . "' /><a class='icon' style='flex:1;text-align:left;' onclick='moveMenuItem(" . $i . ");'><img src='../imgs/the13.svg' alt='Positie omlaag' class='icon iconDown'/><span class='iconText'>Positie omlaag</span></a>";
-                } else { echo "<div class='icon' style='cursor: default;flex:1;'></div>"; }
+                echo "<div id='menuItem" . $i . "' class='pageElement flexRowSpace' style='top:0px;' pos='" . $i . "'>";
+                $moveIconVisible = "visible";
+                if($i >= $listCount - 1) {
+                    $moveIconVisible = "hidden";
+                }
+                echo "<a id='moveDown" . $i . "' class='icon' style='flex:1;text-align:left;visibility:" . $moveIconVisible . ";' onclick='moveMenuItem(this.parentNode);'><img src='../imgs/the13.svg' alt='Positie omlaag' class='icon iconDown'/><span class='iconText'>Positie omlaag</span></a>";
                 echo "<h2 style='flex:1;text-align:left;' id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
                 echo "<span style='flex:1;text-align:right;'>" . $aantalBerichten . " berichten</span>";
                 echo "<a class='icon' style='flex:1;'  onclick='editMenuItem(" . $i . "," . $aantalBerichten . ")'><span class='iconText'>Bewerk</span><img class='icon' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";

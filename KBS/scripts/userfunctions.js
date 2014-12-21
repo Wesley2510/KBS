@@ -12,7 +12,7 @@ var recoilEffect = 0.3; //0 = none, 1 = strong
 var currentlyVisibleElementID = -1;
 var currentlyVisibleElement;
 
-window.onscroll = function () {
+window.addEventListener("scroll", function () {
     if(window.innerWidth < 800) {
         return;
     }
@@ -44,7 +44,7 @@ window.onscroll = function () {
         currentlyVisibleElement.style.top = scrollY + window.innerHeight * 0.2 + difference * recoilEffect +"px";
         currentlyVisibleElement.style.opacity = opacity;
     }
-};
+});
 
 function getDocHeight() {
     var D = document;
