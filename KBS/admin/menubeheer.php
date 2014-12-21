@@ -142,9 +142,9 @@ if($newMenuItemName != NULL) {
                     $moveIconVisible = "hidden";
                 }
                 echo "<a id='moveDown" . $i . "' class='icon' style='flex:1;text-align:left;visibility:" . $moveIconVisible . ";' onclick='moveMenuItem(this.parentNode);'><img src='../imgs/the13.svg' alt='Positie omlaag' class='icon iconDown'/><span class='iconText'>Positie omlaag</span></a>";
-                echo "<h2 style='flex:1;text-align:left;' id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
+                echo "<h2 style='flex:1;text-align:left;' class='menuItemText'>" . $list[$i] . "</h2>";
                 echo "<span style='flex:1;text-align:right;'>" . $aantalBerichten . " berichten</span>";
-                echo "<a class='icon' style='flex:1;'  onclick='editMenuItem(" . $i . "," . $aantalBerichten . ")'><span class='iconText'>Bewerk</span><img class='icon' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";
+                echo "<a class='icon' style='flex:1;'  onclick='editMenuItem(this.parentNode.getAttribute(\"pos\")," . $aantalBerichten . ")'><span class='iconText'>Bewerk</span><img class='icon' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";
             }
         }
         ?>

@@ -75,7 +75,7 @@ function editMenuItem(itemNum, berichtCount) {
     }
     
     var pageElement = document.getElementById("menuItem" + itemNum);
-    var menuItemText = document.getElementById("menuItemText" + itemNum).innerHTML;
+    var menuItemText = pageElement.getElementsByClassName("menuItemText")[0].innerHTML;
     
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
