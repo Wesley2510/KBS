@@ -55,15 +55,15 @@ function getDocHeight() {
     );
 }
 
-window.onresize = function () {
+window.addEventListener("resize", function () {
     document.getElementById("backgroundDiv").style.width = window.innerWidth + "px";
     document.getElementById("backgroundDiv").style.height = getDocHeight() + "px";
-};
+});
 
-window.onload = function () {
+window.addEventListener("load", function () {
     document.getElementById("backgroundDiv").style.width = window.innerWidth + "px";
     document.getElementById("backgroundDiv").style.height = getDocHeight() + "px";
-};
+});
 
 
 var posterFooters = document.getElementsByClassName("posterFooter");
@@ -74,7 +74,7 @@ function expand(element) {
         element.style.maxHeight = "3rem";
     } else {
         element.setAttribute("open", true);
-        element.style.maxHeight = maxHeight;
+        element.style.maxHeight = maxHeight + "px";
     }
 }
 
@@ -86,4 +86,4 @@ for(index = 0; index < posterFooters.length; index++) {
     maxHeight = Math.max(maxHeight, currentPoster.offsetHeight);
 }
 var globalFontSize = parseInt(window.getComputedStyle(document.getElementById("headerbar")).fontSize);
-maxHeight = maxHeight + (4 * globalFontSize) + "px";
+maxHeight = maxHeight + (4 * globalFontSize);

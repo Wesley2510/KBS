@@ -1,11 +1,29 @@
-var originalHTML;
+var originalHTML = "";
+var originalHeight = 0;
+var animating = false;
+
+var globalFontSize = parseInt(window.getComputedStyle(document.getElementById("headerbar")).fontSize);
+var editorHeight = window.innerHeight - 20*globalFontSize;
 
 //Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
 function cancelComposingMessage() {
     //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
+    if(animating) {return;}
+    
     if(document.forms["berichtForm"] !== undefined) {
-        document.getElementById("berichtForm").parentNode.innerHTML = originalHTML;
+        animating = true;
+        
+        var pageElement = document.forms["berichtForm"].parentNode;
+        pageElement.style.maxHeight = "2.8rem";
+        
+        window.setTimeout(function() {cancelRestore(pageElement)}, 1000);
     }
+}
+function cancelRestore(pageElement) {
+    document.getElementById("berichtForm").parentNode.innerHTML = originalHTML;
+    pageElement.style.maxHeight = originalHeight;
+    
+    animating = false;
 }
 
 function submit() {
@@ -19,10 +37,18 @@ function composeMessage() {
     //Als er een berichtForm op de pagina is wordt er iets bewerkt, en moet dat dus gestopt worden.
     if (document.getElementById("berichtForm") !== null) {
         cancelComposingMessage();
+        
+        animating = true;
+        window.setTimeout(function() {startComposingMessage();}, 1500);
+    } else {
+        if(animating) {return;}
+        
+        animating = true;
+        startComposingMessage();
     }
-    
-    //Vindt de pageElement welke de parent van de parent van de plaats button is
-    var pageElement = document.getElementById("iconPlaats").parentNode.parentNode;
+}
+function startComposingMessage() {
+    var pageElement = document.getElementById("newMessageElement");
     
     var date = new Date();
     var datestring = date.getDate();
@@ -40,7 +66,7 @@ function composeMessage() {
     temp += "</div>";
     
     temp += "<input id='titleEdit' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
-    temp += "<a class='icon' id='iconAnnuleer'><span class='iconText'>Sluit</span><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
+    temp += "<a class='icon' id='iconAnnuleer'><span class='iconText'>Annuleer</span><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
     temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconPlaats'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Plaats</span></a></div>";
     
@@ -51,6 +77,10 @@ function composeMessage() {
     
     
     temp += "<span style='width:20%;'></div></div>";
+    
+    originalHeight = pageElement.style.maxHeight;console.log(parseInt(originalHeight) + editorHeight + "px");
+    pageElement.style.maxHeight = parseInt((parseInt(originalHeight) + 10)*globalFontSize) + editorHeight + "px";
+    
     pageElement.innerHTML = temp;
     
     initEditor();
@@ -82,14 +112,34 @@ function composeMessage() {
         }
     }
     switchPosterVisible.addEventListener("click", changeText);
+    
+    animating = false;
 }
 
 function editMessage(berichtNum, ID) {
+    
     //Als er een berichtForm op de pagina is wordt er iets bewerkt, en moet dat dus gestopt worden.
     if (document.getElementById("berichtForm") !== null) {
         cancelComposingMessage();
+        
+        animating = true;
+        window.setTimeout(function() {editAnimate(berichtNum, ID)}, 1100);
+    } else {
+        if(animating) {return;}
+        
+        animating = true;
+        editAnimate(berichtNum, ID);
     }
+}
+function editAnimate(berichtNum, ID) {
+    var pageElement = document.getElementById("bericht" + ID);
     
+    originalHeight = pageElement.style.maxHeight;
+    pageElement.style.maxHeight = "2.8rem";
+    
+    window.setTimeout(function() {startEditing(berichtNum, ID)}, 1100);
+}
+function startEditing(berichtNum, ID) {
     var pageElement = document.getElementById("bericht" + ID);
     var pageElementTitle;
     if(pageElement.getElementsByClassName("title")[0] !== undefined) {
@@ -122,7 +172,7 @@ function editMessage(berichtNum, ID) {
     
     temp += "<input id='titleEdit' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
     
-    temp += "<a class='icon' id='iconAnnuleer'><span class='iconText'>Sluit</span><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
+    temp += "<a class='icon' id='iconAnnuleer'><span class='iconText'>Annuleer</span><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
     temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconBewerk'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Opslaan</span></a></div>";
     
@@ -136,6 +186,9 @@ function editMessage(berichtNum, ID) {
     pageElement.innerHTML = temp;
     
     initEditor(pageElementContent);
+    
+    //Verkrijg hoogte om hem terug uit te klappen
+    pageElement.style.maxHeight = window.innerHeight + "px";
     
     //Voegt event listeners toe aan de anchors
     document.getElementById("titleEdit").value = pageElementTitle;
@@ -184,6 +237,8 @@ function editMessage(berichtNum, ID) {
         }
     }
     switchPosterVisible.addEventListener("click", changeText);
+    
+    animating = false;
 }
 
 function deleteWarning(berichtNum, ID) {
@@ -205,7 +260,7 @@ function initEditor(content) {
         mode: "exact",
         language : 'nl',
         skin : 'textbug',
-        height: window.innerHeight - 20*globalFontSize,
+        height: editorHeight,
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks fullscreen",
@@ -227,3 +282,30 @@ function initEditor(content) {
         }
     });
 }
+
+
+window.addEventListener("load", function() {
+    var pageElements = document.getElementsByClassName("pageElement");
+    for(index = 0; index < pageElements.length; index++) {
+        var pageElement = pageElements[index];
+        var height = 0;
+        if(pageElement.getElementsByClassName("titleBar")[0] !== undefined) {
+            height += pageElement.getElementsByClassName("titleBar")[0].offsetHeight;
+        }
+        if(pageElement.getElementsByClassName("content")[0] !== undefined) {
+            height += pageElement.getElementsByClassName("content")[0].offsetHeight;
+        }
+        if(pageElement.getElementsByClassName("posterFooter")[0] !== undefined) {
+            height += pageElement.getElementsByClassName("posterFooter")[0].offsetHeight;
+        }
+        
+        if(height == 0) {
+            height = pageElement.offsetHeight + editorHeight;
+        }
+        
+        pageElement.style.maxHeight = height + maxHeight + "px";
+        pageElement.style.transition = "max-height 1s";
+    }
+    
+    document.getElementById("newMessageElement").style.maxHeight = "3rem";
+});

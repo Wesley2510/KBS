@@ -199,6 +199,8 @@ a.icon:focus {
     
     font-family: "Lucida Console", Monaco, monospace;
     box-shadow: 0 0.06rem 0.24rem 0.12rem rgba(0,0,0,0.1);
+    
+    
 }
 
 /* Maakt de margin-top in .pageElement ongedaan.
