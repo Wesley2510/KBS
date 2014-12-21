@@ -35,6 +35,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Textbug`.`admindata`
+-- -----------------------------------------------------
+
+CREATE  TABLE IF NOT EXISTS `Textbug`.`admindata` (
+    `adminID` INT NOT NULL,
+    `adminText` TEXT,
+    PRIMARY KEY (`adminID`),
+    INDEX `fk_admindata_adminID1_idx` (`adminID` ASC) ,
+    CONSTRAINT `fk_admindata_AdminID1`
+      FOREIGN KEY (`adminID` )
+      REFERENCES `Textbug`.`klant` (`klantID` )
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Textbug`.`resetcode`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `Textbug`.`resetcode` (

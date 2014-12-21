@@ -150,7 +150,7 @@ $browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER
 
         //Selecteer alle berichten met bijbehorende datums van de gewenste pagina
         //Subquery: vertaal de text van menuitems in een pagina ID
-        $sql = "SELECT berichtID, voornaam, achternaam, titel, inhoud, datum, plaatserzichtbaar, datumzichtbaar FROM bericht LEFT JOIN klant ON plaatser = klantID WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB * 5) . ", 5;";
+        $sql = "SELECT berichtID, voornaam, achternaam, titel, inhoud, datum, plaatserzichtbaar, datumzichtbaar, adminText FROM bericht LEFT JOIN klant ON plaatser = klantID LEFT JOIN admindata ON plaatser = adminID WHERE pagina =" . $pID . " ORDER BY datum DESC LIMIT " . ($inputB * 5) . ", 5;";
 
         $berichten = $link->query($sql);
         if ($berichten === false) {
@@ -177,8 +177,8 @@ $browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER
                         $IEClass = "ie";
                     }
                     echo "<div class='posterFooter " . $IEClass . "'  onclick='expand(this)'>";
-                    $tempPoster = "<div class='poster " . $IEClass . "'><div class='posterContent'><p><br/>Test Admin werkt bij Textbug sinds 1921.</p><img src='http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg' alt='' style='width:150px;height:150px;' />";
-                    $tempPoster .= "<div>Blablabla bla blabla bla bla blabla blablabla. Blablablabla bla.</div></div></div>";
+                    $tempPoster = "<div class='poster " . $IEClass . "'><div class='posterContent'>" . urldecode($row["adminText"]);
+                    $tempPoster .= "</div></div>";
                     $tempPosterName = "<span class='posterName'>";
                     $tempPosterName .= "Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span>";
                     if($browserIE) {

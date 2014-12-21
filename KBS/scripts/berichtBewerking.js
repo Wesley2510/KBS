@@ -14,7 +14,7 @@ function cancelComposingMessage() {
         animating = true;
         
         var pageElement = document.forms["berichtForm"].parentNode;
-        pageElement.style.maxHeight = "2.8rem";
+        pageElement.style.maxHeight = "3rem";
         
         window.setTimeout(function() {cancelRestore(pageElement)}, 1000);
     }

@@ -301,6 +301,7 @@ a.icon:focus {
 .posterName {
     display: block;
     min-height:2rem;
+    margin-top: 1rem;
 }
 .ie.poster {
     margin-top:2rem;
