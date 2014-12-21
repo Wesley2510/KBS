@@ -52,7 +52,6 @@ Index:
 }
 
 body{
-    /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAANUlEQVQYlWNgYGAwZkAFxjjEEOD/////sbFJB2i6UaxGljPGogjdncYkKSTaatIBoeAhKsABVqkkqfNXhpUAAAAASUVORK5CYII=) repeat-x;*/
     background: #E5E5E5;
     margin: 0px;
     overflow-x: hidden;
@@ -163,9 +162,12 @@ a.icon {
     flex-grow:1;
     width: 20%;
     text-align:right;
+    text-decoration: none;
+    color:black;
+    max-height: 3rem;
 }
 a.icon:hover {
-    cursor: default;
+    cursor: pointer;
 }
 a.icon:active {
     background-color: rgba(0,0,0,0);
@@ -270,7 +272,7 @@ a.icon:focus {
     
     height: auto;
     min-height: 50px;
-    max-height: 2rem; //Voor animatie
+    max-height: 2rem; /* Voor animatie */
     flex-grow:1;
     width:auto;
     
@@ -330,12 +332,22 @@ img.icon, div.icon{
     
     margin-top: 0.2rem;
 }
-img.icon:hover {
-    cursor: pointer;
+.icon > .iconText {
+    visibility: hidden;
+    position:relative;
+    text-align: center;
+    top: -1rem;
+    
+    transition: opacity 0.1s;
 }
-.iconEdit {
-    float: right;
+.icon:hover > .iconText {
+    visibility: visible;
 }
+.icon:active > .iconText {
+    opacity: 0;
+    visibility: visible;
+}
+
 
 .warningText {
     text-align: center;
@@ -393,7 +405,7 @@ div.mce-toolbar {
 }
 
 
-//Switch code
+/* Switch code */
 label.cmn-toggle input[type="checkbox"] {display:none;}
 .cmn-toggle {
   position: absolute;
@@ -476,10 +488,6 @@ div.switch {
         z-index: 1;
     }
     
-    .flexAdjust {
-        width: 70%;
-    }
-    
     .menuItem {
         background-color: white;
         border-right: 0.15rem solid black;
@@ -551,18 +559,10 @@ div.switch {
     .pageElement {
         width: 80%;
     }
-    
-    .flexAdjust {
-        width: 60%;
-    }
 }
 
 @media screen and (min-width: 45rem) {
     .pageElement {
         width: 75%;
-    }
-    
-    .flexAdjust {
-        width: 50%;
     }
 }

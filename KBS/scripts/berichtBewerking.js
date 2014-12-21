@@ -40,9 +40,9 @@ function composeMessage() {
     temp += "</div>";
     
     temp += "<input id='titleEdit' type='text' form='berichtForm' name='titel' placeholder='Titel' />";
-    temp += "<a class='icon' id='iconAnnuleer'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
+    temp += "<a class='icon' id='iconAnnuleer'><span class='iconText'>Sluit</span><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='bericht'></textarea>";
-    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconPlaats'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
+    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconPlaats'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Plaats</span></a></div>";
     
     temp += "<div class='switch'>";
     temp += "   <input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' checked='true' />";
@@ -122,16 +122,16 @@ function editMessage(berichtNum, ID) {
     
     temp += "<input id='titleEdit' type='text' form='berichtForm' name='titelEdited' placeholder='Titel' />";
     
-    temp += "<a class='icon' id='iconAnnuleer'><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
+    temp += "<a class='icon' id='iconAnnuleer'><span class='iconText'>Sluit</span><img class='icon iconDelete' src='/imgs/delete85.svg' alt=''/></a></div>";
     temp += "<textarea id='berichtFormText' form='berichtForm' name='berichtEdited'></textarea>";
-    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconBewerk'><img class='icon' src='/imgs/done.svg' alt=''/></a></div>";
+    temp += "<div class='posterFooter flexRowSpace'><div style='width:20%;text-align:left;margin-left:0.24rem;'><a class='icon' id='iconBewerk'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Opslaan</span></a></div>";
     
     temp += "<div class='switch'>";
     temp += "<input type='checkbox' id='switchPosterVisible' name='posterVisible' class='cmn-toggle cmn-toggle-yes-no' form='berichtForm' />";
     temp += "<label id='switchPosterVisibleLabel' for='switchPosterVisible'></label>";
     temp += "</div>";
     
-    temp += "<div style='width:20%;text-align:right;'><a class='icon' id='iconVerwijder'><img class='icon' src='/imgs/delete104.svg' alt=''/></a></div>";
+    temp += "<div style='width:20%;text-align:right;'><a class='icon' id='iconVerwijder'><span class='iconText'>Verwijder</span><img class='icon' src='/imgs/delete104.svg' alt=''/></a></div>";
     temp += "<input type='hidden' name='berichtEditedID' value='" + ID + "' form='berichtForm'>";
     pageElement.innerHTML = temp;
     

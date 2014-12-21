@@ -28,9 +28,9 @@ function editMenuItem(itemNum, berichtCount) {
     
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a class='icon' id='iconBewerk' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/></a>";
+    temp += "<a class='icon' id='iconBewerk' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/><span class='iconText'>Opslaan</span></a>";
     temp += "<input type='text' class='textbox' id='titleEdit' form='menuForm' name='menuItemEdited' placeholder='Paginanaam' /><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' />";
-    temp += "<a class='icon' id='iconVerwijder' style='text-align:right;'><img src='/imgs/delete104.svg' alt='' class='icon'/></a>";
+    temp += "<a class='icon' id='iconVerwijder' style='text-align:right;'><span class='iconText'>Verwijder</span><img src='/imgs/delete104.svg' alt='' class='icon'/></a>";
     pageElement.innerHTML = temp;
     
     document.getElementById("titleEdit").value = menuItemText;
@@ -75,9 +75,9 @@ function createNewMenuItem() {
     var pageElement = document.getElementById("newPageElement");
     originalHTML = pageElement.innerHTML;
     var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a class='icon' id='iconMaak' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/></a>";
+    temp += "<a class='icon' id='iconMaak' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/><span class='iconText'>Maak</span></a>";
     temp += "<input type='text' class='textbox' id='titleEdit' form='menuForm' name='newMenuItemName' placeholder='Paginanaam' />";
-    temp += "<a class='icon' id='iconAnnuleer' style='text-align:right;'><img src='/imgs/delete85.svg' alt='' class='icon'/></a>";
+    temp += "<a class='icon' id='iconAnnuleer' style='text-align:right;'><span class='iconText'>Annuleer</span><img src='/imgs/delete85.svg' alt='' class='icon'/></a>";
     pageElement.innerHTML = temp;
     
     document.getElementById("iconMaak").addEventListener("click", function() { if(document.getElementById("titleEdit").value === "") {cancelComposingMessage();} else {submit();} });

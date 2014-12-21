@@ -106,6 +106,8 @@ if($newMenuItemName != NULL) {
         
         <?php printHeader() ?>
         
+        <h1 class='pageElement' style='text-align:center;'>Menubeheer</h1>
+        
         <?php 
         $menuitems = $link->query("SELECT paginaID, naam, positie FROM pagina WHERE positie != 0;");
         if($menuitems === false) {
@@ -132,15 +134,15 @@ if($newMenuItemName != NULL) {
                 
                 echo "<div id='menuItem" . $i . "' class='pageElement flexRowSpace'>";
                 if($i < $listCount - 1) {
-                    echo "<form id='moveDownForm" . $i . "' action='#' method='post'><input form='moveDownForm" . $i . "' type='hidden' name='rowDown' value='" . $i . "' /><img src='../imgs/the13.svg' alt='Positie omlaag' class='icon iconDown' onclick='moveMenuItem(" . $i . ");'/></form>";
-                } else { echo "<div class='icon' style='cursor: default;'></div>"; }
-                echo "<div class='flexRowSpace flexAdjust'><h2 id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
-                echo $aantalBerichten . " berichten</div>";
-                echo "<img class='icon iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editMenuItem(" . $i . "," . $aantalBerichten . ")' /></div>";
+                    echo "<form id='moveDownForm" . $i . "' action='#' method='post'></form><input form='moveDownForm" . $i . "' type='hidden' name='rowDown' value='" . $i . "' /><a class='icon' style='flex:1;text-align:left;' onclick='moveMenuItem(" . $i . ");'><img src='../imgs/the13.svg' alt='Positie omlaag' class='icon iconDown'/><span class='iconText'>Positie omlaag</span></a>";
+                } else { echo "<div class='icon' style='cursor: default;flex:1;'></div>"; }
+                echo "<h2 style='flex:1;text-align:left;' id='menuItemText" . $i . "'>" . $list[$i] . "</h2>";
+                echo "<span style='flex:1;text-align:right;'>" . $aantalBerichten . " berichten</span>";
+                echo "<a class='icon' style='flex:1;'  onclick='editMenuItem(" . $i . "," . $aantalBerichten . ")'><span class='iconText'>Bewerk</span><img class='icon' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";
             }
         }
         ?>
-        <div id="newPageElement" class="pageElement flexRowSpace"><a id='iconPlaats' class='icon' style='text-align:left;' onclick='createNewMenuItem()'><img class='icon' src='/imgs/square181.svg' alt=''/></a></div>
+        <div id="newPageElement" class="pageElement flexRowSpace"><a id='iconPlaats' class='icon' style='text-align:left;' onclick='createNewMenuItem()'><img class='icon' src='/imgs/square181.svg' alt=''/><span class='iconText'>Nieuwe pagina</span></a></div>
         
         <?php printFooter() ?>
         

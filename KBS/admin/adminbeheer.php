@@ -194,10 +194,10 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         <script src='/scripts/adminbeheer.js' type='text/javascript' charset='utf-8'></script>
         <script type='text/javascript'>
         <?php
-        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/></a>"; 
+        $newAdminPageElement = "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='buttonNewAdmin' onclick='createNewAdmin()'><img class='icon' src='/imgs/add110.svg' alt=''/><span class='iconText'>Nieuwe administrator</span></a>"; 
         if($inputActief) {
-            $newAdminPageElement .= "<a class='icon' href='adminbeheer.php?actief=0'><img class='icon' src='/imgs/delete51.svg' alt=''/></a>";
-        } else { $newAdminPageElement .= "<a class='icon' href='adminbeheer.php?actief=1'><img class='icon' src='/imgs/grouped.svg' alt=''/></a>"; }
+            $newAdminPageElement .= "<a class='icon' href='adminbeheer.php?actief=0'><span class='iconText'>Inactieve administrators</span><img class='icon' src='/imgs/delete51.svg' alt=''/></a>";
+        } else { $newAdminPageElement .= "<a class='icon' href='adminbeheer.php?actief=1'><span class='iconText'>Actieve administrators</span><img class='icon' src='/imgs/grouped.svg' alt=''/></a>"; }
         $newAdminPageElement .= "</div>";
         
         $newAdminForm = "<form action='#' id='adminForm' method='post'></form>";
@@ -210,8 +210,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         $newAdminForm .= "<div class='flexRowSpace'><h4 id='adminPassErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4>";
         $newAdminForm .= "<h4 id='adminPassRepeatErrorMessage' class='error' style='flex-grow:1;width:100%;'></h4></div>";
         $newAdminForm .= "<input type='hidden' name='adminActive' id='adminActiveID' value='' form='adminForm' />";
-        $newAdminForm .= "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='iconRegister' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
-        $newAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
+        $newAdminForm .= "<div class='flexRowSpace'><a class='icon' style='text-align:left;' id='iconRegister' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Registreer</span></a>";
+        $newAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><span class='iconText'>Annuleer</span><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div>";
         
         $editAdminForm = "<form action='#' id='adminForm' method='post'></form>";
         $editAdminForm .= "<div style='width: 100%;'>";
@@ -228,16 +228,15 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         $editAdminForm .= "<input type='hidden' name='adminDeactivate' id='adminDeactivateID' value='' form='adminForm' />";
         $editAdminForm .= "<div class='flexRowSpace'>";
         if($inputActief) {
-            $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>";
-        } else { $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/></a>"; }//If delete function to be implemented: $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconDelete' onclick=''><img class='icon' src='/imgs/delete104.svg' alt=''/></a>"; }
-        $editAdminForm .= "<a class='icon' style='text-align:center;' id='iconDeactiveer' onclick='deactivateAdmin()'><img class='icon' src='";
+            $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Opslaan</span></a>";
+        } else { $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconBewerk' onclick='submit()'><img class='icon' src='/imgs/done.svg' alt=''/><span class='iconText'>Opslaan</span></a>"; }//If delete function to be implemented: $editAdminForm .= "<a class='icon' style='text-align:left;' id='iconDelete' onclick=''><img class='icon' src='/imgs/delete104.svg' alt=''/></a>"; }
+        $editAdminForm .= "<a class='icon' style='text-align:center;' id='iconDeactiveer' onclick='deactivateAdmin()'>";
         if($inputActief) {
-            $editAdminForm .=  "/imgs/delete52.svg";
+            $editAdminForm .=  "<img class='icon' style='position:relative;left:3.4rem;' alt='' src='/imgs/delete52.svg' /><span class='iconText' style='position:relative;left:3.4rem;'>Deactiveer</span></a>";
         } else {
-            $editAdminForm .=  "/imgs/verified13.svg";
+            $editAdminForm .=  "<img class='icon' style='position:relative;left:3rem;' alt='' src='/imgs/verified13.svg' /><span class='iconText' style='position:relative;left:3rem;'>Activeer</span></a>";
         }
-        $editAdminForm .= "' alt=''/></a>";
-        $editAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div></div>";
+        $editAdminForm .= "<a class='icon' style='text-align:right;' id='iconAnnuleer' onclick='cancelComposingMessage()'><span class='iconText'>Annuleer</span><img class='icon' src='/imgs/delete85.svg' alt=''/></a></div></div>";
         
         echo "var editAdminForm = \"" . $editAdminForm . "\";\n";
         echo "var newAdminForm = \"" . $newAdminForm . "\";\n";
@@ -261,10 +260,10 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
     <?php 
     $admins = $link->query("SELECT klantID, voornaam, achternaam, emailadres FROM klant WHERE admin = 1 AND actief =" . $inputActief);
     while($admin = $admins->fetch_assoc()) {
-        echo "<div id='admin" . $admin["klantID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["klantID"] . "'>";
-        echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["klantID"] . "' style='text-align:right;padding-right:2rem;flex:1;'>";
+        echo "<div id='admin" . $admin["klantID"] . "' class='pageElement flexRowSpace'><h2 id='naam" . $admin["klantID"] . "' style='flex:3;text-align:left;'>";
+        echo $admin["voornaam"] . " " . $admin["achternaam"] . "</h2><h4 id='email" . $admin["klantID"] . "' style='text-align:right;padding-right:2rem;flex:3;'>";
         echo $admin["emailadres"] . "</h4>";
-        if($admin["klantID"] != 1) {echo "<img class='icon iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editAdminData(" . $admin["klantID"] . ")' /></div>";}
+        if($admin["klantID"] != 1) {echo "<a class='icon' style='flex:1;' onclick='editAdminData(" . $admin["klantID"] . ")'><span class='iconText'>Bewerk</span><img class='icon iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";}
         echo "</div>";
     }
     echo "<div id='newAdminElement' class='pageElement'>";

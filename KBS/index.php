@@ -147,7 +147,7 @@ $browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER
             if ($aantalBerichten["aantal"] === "1") {
                 $unit = "bericht";
             }
-            echo "<div class='pageElement'><div class='flexRowSpace'><a id='iconPlaats' class='icon' style='text-align:left;' onclick='composeMessage()'><img class='icon' src='/imgs/square181.svg' alt=''/></a>";
+            echo "<div class='pageElement'><div class='flexRowSpace'><a id='iconPlaats' class='icon' style='text-align:left;' onclick='composeMessage()'><img class='icon' src='/imgs/square181.svg' alt=''/><span class='iconText'>Nieuw bericht</span></a>";
             echo "<span class='textRightAlign'>" . $aantalBerichten["aantal"] . " " . $unit . "</span></div></div>";
         }
 
@@ -171,7 +171,7 @@ $browserIE = ereg('Trident',$_SERVER['HTTP_USER_AGENT']) || ereg('msie',$_SERVER
                 if(strlen($row["titel"]) > 0) {
                     echo "<h1 class='title'>" . urldecode($row["titel"]) . "</h1>";
                 }
-                if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a class='icon' onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><img class='icon iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
+                if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {echo "<a class='icon' onclick='editMessage(" . $berichtNum++ . "," . $row["berichtID"] . ");'><span class='iconText' style='top:1rem;'>Bewerk</span><img class='icon iconEdit' src='imgs/pencil1.svg' alt='icoon-bewerken' /></a>";}
                 else {echo "<a class='icon'></a>";}
                 echo "<br/></div><div class='content'>" . urldecode($row["inhoud"]) . "</div>";
                 if($row["plaatserzichtbaar"]) {
