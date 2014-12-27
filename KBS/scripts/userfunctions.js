@@ -13,12 +13,6 @@ function RemToPx(rem) {
     return remNum * fontSize;
 }
 
-function login() {
-    if(document.forms["loginForm"] !== undefined) {
-        document.forms["loginForm"].submit();
-    }
-}
-
 var elements = document.getElementsByClassName("backgroundText");
 var scrollSize = 800;
 var halfScrollSize = scrollSize / 2;

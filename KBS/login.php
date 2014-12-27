@@ -28,36 +28,72 @@ if(isset($_SESSION["loggedin"])) {
 
 $inputEmail = filter_input(INPUT_POST, "username");
 $inputPassword = filter_input(INPUT_POST, "password");
-$errorEmail = 0; //0 = No error, 1 = empty username, 2 = wrong username, 3 = forbidden symbols, 4 = deactivated account
-$errorPassword = 0; //0 = No error, 1 = empty password, 2 = spaces occurring, 3 = wrong password
+
+$emailErrors = array();
+$emailErrors[1] = "Vul A.U.B. een emailadres in"; 
+$emailErrors[2] = "Deze gebruiker bestaat niet"; 
+$emailErrors[3] = "Dit is geen geldig emailadres";
+$emailErrors[4] = "Dit account is gedeactiveerd";
+
+$passwordErrors = array();
+$passwordErrors[1] = "Vul A.U.B. een wachtwoord in";
+$passwordErrors[2] = "Er mogen geen spaties in de naam voorkomen";
+$passwordErrors[3] = "Incorrect wachtwoord";
+
+$returnData = array();
+
 if($inputEmail !== NULL) {
     $succes = true;
+    
     if(ltrim($inputEmail, ' ') == '') {
-        $errorEmail = 1;
+        $returnData["errorEmail"] = $emailErrors[1];
+        
         $succes = false;
     } else if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL) && strtolower($inputEmail) != 'admin') {
-        $errorEmail = 3;
+        $returnData["errorEmail"] = $emailErrors[3];
+        
         $succes = false;
     }
-
-    if($inputPassword == NULL || ltrim($inputPassword, ' ') == '') {
-        $errorPassword = 1;
-        $succes = false;
-    } else if(strpos($inputPassword, ' ') !== false) {
-        $errorPassword = 2;
-        $succes = false;
+    
+    if(!$succes) {
+        echo json_encode($returnData);
+        die();
     }
 
     if($succes) {
         $klant = $link->query("SELECT klantID, actief FROM klant WHERE emailadres = '" . strtolower($inputEmail) . "'")->fetch_assoc();
         if($klant["klantID"] == false) {
-            $errorEmail = 2;
+            $returnData["errorEmail"] = $emailErrors[2];
+            
+            echo json_encode($returnData);
+            die();
         } else if($klant["actief"] == false) {
-            $errorEmail = 4;
+            $returnData["errorEmail"] = $emailErrors[4];
+            
+            echo json_encode($returnData);
+            die();
         } else {
+            if($inputPassword == NULL || ltrim($inputPassword, ' ') == '') {
+                $returnData["errorPassword"] = $passwordErrors[1];
+
+                $succes = false;
+            } else if(strpos($inputPassword, ' ') !== false) {
+                $returnData["errorPassword"] = $passwordErrors[2];
+
+                $succes = false;
+            }
+
+            if(!$succes) {
+                echo json_encode($returnData);
+                die();
+            }
+            
             $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klant["klantID"])->fetch_assoc()["wachtwoord"];
             if($password != $inputPassword) {
-                $errorPassword = 3;
+                $returnData["errorPassword"] = $passwordErrors[3];
+                
+                echo json_encode($returnData);
+                die();
             } else {
                 $row = $link->query("SELECT * FROM klant WHERE klantID =" . $klant["klantID"])->fetch_assoc();
                 $_SESSION["loggedin"] = true;
@@ -91,36 +127,17 @@ if($inputEmail !== NULL) {
         <form class="pageElement" action='#' id='loginForm' method="post">
             <div style="display:flex;flex-direction:column;align-items:center;">
                 <h3>Emailadres</h3>
-                <input type="text" name="username" <?php if($errorEmail > 0) {echo "class='error'";} if($inputEmail !== NULL) {echo "value='" . $inputEmail . "'";} ?> />
-                <?php 
-                    if($errorEmail == 1) {
-                        echo "<h4 class='error'>Vul A.U.B. een gebruikersnaam in</h4>"; 
-                    } else if($errorEmail == 2) {
-                        echo "<h4 class='error'>Deze gebruiker bestaat niet</h4>"; 
-                    } else if ($errorEmail == 3) {
-                        echo "<h4 class='error'>Verboden tekens in gebruikersnaam</h4>";
-                    } else if ($errorEmail == 4) {
-                        echo "<h4 class='error'>Dit account is gedeactiveerd</h4>";
-                    }
-                ?>
+                <input id="inputUserName" type="text" name="username" <?php if($errorEmail > 0) {echo "class='error'";} if($inputEmail !== NULL) {echo "value='" . $inputEmail . "'";} ?> />
+                <h4 id="nameError" class="error"></h4>
                 <h3>Wachtwoord</h3>
-                <input type="password" name="password" <?php if($errorPassword > 0) {echo "class='error'";} ?>/>
-                <?php 
-                    if($errorPassword == 1) {
-                        echo "<h4 class='error'>Vul A.U.B. uw wachtwoord in</h4>"; 
-                    } else if($errorPassword == 2) {
-                        echo "<h4 class='error'>Er mogen geen spaties in het wachtwoord voorkomen</h4>"; 
-                    } else if($errorPassword == 3) {
-                        echo "<h4 class='error'>Fout wachtwoord</h4>"; 
-                    } 
-                ?>
+                <input id="inputPassword" type="password" name="password" <?php if($errorPassword > 0) {echo "class='error'";} ?>/>
+                <h4 id="passwordError" class="error"></h4>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
                 <a href="wachtwoordreset.php" style="font-size:0.5rem;">Wachtwoord vergeten</a>
             </div>
             <input type="submit" style="display:none;">
         </form>
-    <?php
-    printFooter()
-    ?>
+    <?php printFooter(); ?>
+    <script src='/scripts/login.js' type='text/javascript' charset='utf-8'></script>
 </body>
 </html>
