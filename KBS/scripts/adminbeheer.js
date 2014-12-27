@@ -1,3 +1,5 @@
+"use strict";
+
 var originalHTML;
 
 function submit() {

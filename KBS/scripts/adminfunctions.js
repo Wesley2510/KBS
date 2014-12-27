@@ -1,3 +1,5 @@
+"use strict";
+
 //Hierin wordt de originele inhoud van de pageElement bewaard.
 var originalHTML;
 

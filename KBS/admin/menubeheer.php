@@ -36,9 +36,14 @@ if($menuItemEditedPos != NULL && is_numeric($menuItemEditedPos)) {
     $menuItemEdited = preg_replace("/[^A-Za-z0-9 ]/", '', filter_input(INPUT_POST, "menuItemEdited"));
     if(!$link->query("UPDATE pagina SET naam ='" . $menuItemEdited . "' WHERE positie =" . $menuItemEditedPos)){
         trigger_error("Fout bij bewerken naam pagina: " . $link->error, E_USER_ERROR);
+        
+        echo "false";
+        die();
     }
     $_SESSION["headerBarEdited"] = true;
-    header( 'Location: #' ) ;
+    
+    echo $menuItemEdited;
+    die();
 }
 
 //Code om pagina te verwijderen
@@ -48,15 +53,24 @@ if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
     //Controleer of paginaID gevonden is
     if(!$result) {
         trigger_error("Fout bij ophalen paginaID: " . $link->error, E_USER_ERROR);
+        
+        echo "false";
+        die();
     } else {
         $paginaToDeleteID = $result->fetch_assoc()["paginaID"];
         //Controleer of berichten verwijderd zijn
         if(!$link->query("DELETE FROM bericht WHERE pagina =" . $paginaToDeleteID)){
             trigger_error("Fout bij verwijderen berichten: " . $link->error, E_USER_ERROR);
+            
+            echo "false";
+            die();
         } else {
             //Controleer of pagina verwijderd is
             if(!$link->query("DELETE FROM pagina WHERE paginaID =" . $paginaToDeleteID)) {
                 trigger_error("Fout bij verwijderen pagina: " . $link->error, E_USER_ERROR);
+                
+                echo "false";
+                die();
             } else {
                 $paginasHigherPos = $link->query("SELECT paginaID FROM pagina WHERE positie > " . $paginaToDeletePos . " ORDER BY positie ASC;");
                 $i = 0;
@@ -74,7 +88,8 @@ if($paginaToDeletePos != NULL && is_numeric($paginaToDeletePos)) {
     }
     
     $_SESSION["headerBarEdited"] = true;
-    header( 'Location: #' ) ;
+    echo "true";
+    die();
 }
 
 //Code om menuItem aan te maken
@@ -136,7 +151,7 @@ if($newMenuItemName != NULL) {
                     $aantalBerichten = $result->fetch_assoc()["aantal"];
                 }
                 
-                echo "<div id='menuItem" . $i . "' class='pageElement flexRowSpace' style='top:0px;' pos='" . $i . "'>";
+                echo "<div id='menuItem" . $i . "' class='pageElement flexRowSpace' style='top:0px;' data-pos='" . $i . "'>";
                 $moveIconVisible = "visible";
                 if($i >= $listCount - 1) {
                     $moveIconVisible = "hidden";
@@ -144,7 +159,7 @@ if($newMenuItemName != NULL) {
                 echo "<a id='moveDown" . $i . "' class='icon' style='flex:1;text-align:left;visibility:" . $moveIconVisible . ";' onclick='moveMenuItem(this.parentNode);'><img src='../imgs/the13.svg' alt='Positie omlaag' class='icon iconDown'/><span class='iconText'>Positie omlaag</span></a>";
                 echo "<h2 style='flex:1;text-align:left;' class='menuItemText'>" . $list[$i] . "</h2>";
                 echo "<span style='flex:1;text-align:right;'>" . $aantalBerichten . " berichten</span>";
-                echo "<a class='icon' style='flex:1;'  onclick='editMenuItem(this.parentNode.getAttribute(\"pos\")," . $aantalBerichten . ")'><span class='iconText'>Bewerk</span><img class='icon' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";
+                echo "<a class='icon' style='flex:1;'  onclick='editMenuItem(this.parentNode.getAttribute(\"data-pos\")," . $aantalBerichten . ")'><span class='iconText'>Bewerk</span><img class='icon' src='../imgs/pencil1.svg' alt='icoon-bewerken'/></a></div>";
             }
         }
         ?>
@@ -152,5 +167,6 @@ if($newMenuItemName != NULL) {
         
         <?php printFooter() ?>
         
+        <script src='/scripts/userfunctions.js' type='text/javascript' charset='utf-8'></script>
     </body>
 </html>

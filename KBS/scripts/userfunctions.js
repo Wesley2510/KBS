@@ -1,3 +1,18 @@
+"use strict";
+
+function PxToRem(px) {
+    var fontSize = parseInt(window.getComputedStyle(document.getElementById("headerbar")).fontSize);
+    var pxNum = parseFloat(px);
+    
+    return pxNum / fontSize;
+}
+function RemToPx(rem) {
+    var fontSize = parseInt(window.getComputedStyle(document.getElementById("headerbar")).fontSize);
+    var remNum = parseFloat(rem);
+    
+    return remNum * fontSize;
+}
+
 function login() {
     if(document.forms["loginForm"] !== undefined) {
         document.forms["loginForm"].submit();
@@ -79,7 +94,7 @@ function expand(element) {
 }
 
 //Workaround for webkit/blink based browsers
-for(index = 0; index < posterFooters.length; index++) {
+for(var index = 0; index < posterFooters.length; index++) {
     var currentPoster = posterFooters[index].getElementsByClassName("posterContent")[0];
     posterFooters[index].getElementsByClassName("poster")[0].style.minHeight = currentPoster.offsetHeight + "px";
     currentPoster.style.top = -currentPoster.offsetHeight + "px";

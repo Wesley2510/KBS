@@ -1,3 +1,5 @@
+"use strict";
+
 var originalHTML;
 
 function submit() {
@@ -9,14 +11,14 @@ function submit() {
 //Als er een bewerking geannuleerd moet worden, is de pageElement altijd parent van form "berichtForm".
 function cancelComposingMessage() {
     //Controleer of de juiste form op de pagina is, en stop de originele HTML terug in de parent element
-    if(document.forms["menuForm"] !== undefined) {
-        document.getElementById("menuForm").parentNode.innerHTML = originalHTML;
+    if(document.getElementById("titleEdit") !== undefined) {
+        document.getElementById("titleEdit").parentNode.innerHTML = originalHTML;
     }
 }
 
 function moveMenuItem(element) {
     var xmlhttp = new XMLHttpRequest();
-    var position = parseInt(element.getAttribute("pos"));
+    var position = parseInt(element.getAttribute("data-pos"));
     
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -33,13 +35,13 @@ function moveMenuItem(element) {
                 element1.style.transition = "top 0.4s";
                 element2.style.transition = "top 0.4s";
                 
-                element1.style.top = parseFloat(element1.style.top) + rect2.top - rect1.top + "px";
-                element1.setAttribute("pos", position + 1);
+                element1.style.top = PxToRem(RemToPx(element1.style.top) + rect2.top - rect1.top) + "rem";
+                element1.setAttribute("data-pos", position + 1);
                 element1.setAttribute("id", "menuItem" + (position + 1));
                 moveIcon1.setAttribute("id", "moveDown" + (position + 1))
                 
-                element2.style.top = parseFloat(element2.style.top) + rect1.top - rect2.top + "px";
-                element2.setAttribute("pos", position);
+                element2.style.top = PxToRem(RemToPx(element2.style.top) + rect1.top - rect2.top) + "rem";
+                element2.setAttribute("data-pos", position);
                 element2.setAttribute("id", "menuItem" + position);
                 moveIcon2.setAttribute("id", "moveDown" + position);
                 
@@ -78,30 +80,59 @@ function editMenuItem(itemNum, berichtCount) {
     var menuItemText = pageElement.getElementsByClassName("menuItemText")[0].innerHTML;
     
     originalHTML = pageElement.innerHTML;
-    var temp = "<form action='#' id='menuForm' method='post'></form>";
-    temp += "<a class='icon' id='iconBewerk' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/><span class='iconText'>Opslaan</span></a>";
-    temp += "<input type='text' class='textbox' id='titleEdit' form='menuForm' name='menuItemEdited' placeholder='Paginanaam' /><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' form='menuForm' />";
+    var temp = "<a class='icon' id='iconBewerk' style='text-align:left;'><img src='/imgs/done.svg' alt='' class='icon'/><span class='iconText'>Opslaan</span></a>";
+    temp += "<input type='text' class='textbox' id='titleEdit' name='menuItemEdited' placeholder='Paginanaam' /><input type='hidden' name='menuItemEditedPos' value='" + itemNum + "' />";
     temp += "<a class='icon' id='iconVerwijder' style='text-align:right;'><span class='iconText'>Verwijder</span><img src='/imgs/delete104.svg' alt='' class='icon'/></a>";
     pageElement.innerHTML = temp;
     
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            if(xmlhttp.responseText !== "false") {
+                cancelComposingMessage();
+                
+                document.getElementById("menuItem" + itemNum).getElementsByClassName("menuItemText")[0].innerHTML = xmlhttp.responseText;
+            }
+        }
+    }
+    
+    var sendData = function() {
+        xmlhttp.open("POST", "/admin/menubeheer.php", true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("menuItemEdited=" + document.getElementById("titleEdit").value + "&menuItemEditedPos=" + itemNum);
+    };
+    
     document.getElementById("titleEdit").value = menuItemText;
-    document.getElementById("iconBewerk").addEventListener("click", submit);
+    document.getElementById("titleEdit").addEventListener("keydown", function(event) { if(event.keyCode === 13) sendData(); });
+    document.getElementById("iconBewerk").addEventListener("click", sendData);
     document.getElementById("iconVerwijder").addEventListener("click", function() { deleteMenuItem(itemNum, berichtCount);});
 }
 
 function deleteMenuItem(itemNum, berichtCount) {
-    var pageElement = document.getElementById("menuForm").parentNode;
+    var pageElement = document.getElementById("titleEdit").parentNode;
+    itemNum = parseInt(itemNum);
+    
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            if(xmlhttp.responseText === "true") {
+                window.location.href = "menubeheer.php";
+            }
+        }
+    };
+    
+    var sendData = function() {
+        xmlhttp.open("POST", "/admin/menubeheer.php", true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("paginaToDeletePos=" + itemNum);
+    };
+    
     
     //Als er maar 0 berichten op de pagina staan, submit direct.
     if(berichtCount === 0) {
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", document.URL, true);
-        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        xmlhttp.send("paginaToDeletePos=" + itemNum);
-                
-        pageElement.innerHTML = "<div></div><h2>Wordt verijderd...</h2>";
-        
-        location.reload(); 
+        sendData();
         return;
     }
 
@@ -113,8 +144,10 @@ function deleteMenuItem(itemNum, berichtCount) {
     pageElement.innerHTML = temp;
     
     
+    
+    
 
-    document.getElementById("buttonJa").addEventListener("click", submit);
+    document.getElementById("buttonJa").addEventListener("click", sendData);
     document.getElementById("buttonNee").addEventListener("click", function() { cancelComposingMessage(); editMenuItem(itemNum, berichtCount); } );
 }
 

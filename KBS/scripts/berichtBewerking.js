@@ -1,3 +1,5 @@
+"use strict";
+
 var originalHTML = "";
 var originalHeight = 0;
 var animating = false;
@@ -286,7 +288,7 @@ function initEditor(content) {
 
 window.addEventListener("load", function() {
     var pageElements = document.getElementsByClassName("pageElement");
-    for(index = 0; index < pageElements.length; index++) {
+    for(var index = 0; index < pageElements.length; index++) {
         var pageElement = pageElements[index];
         var height = 0;
         if(pageElement.getElementsByClassName("titleBar")[0] !== undefined) {
