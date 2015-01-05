@@ -5,6 +5,10 @@ function login() {
     
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            if(xmlhttp.responseText == "true") {
+                window.location.replace('/admin/');
+            }
+            
             var response = JSON.parse(xmlhttp.responseText);
             if(response.errorEmail !== undefined) {
                 document.getElementById("nameError").innerHTML = response.errorEmail;

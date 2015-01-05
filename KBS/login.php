@@ -61,7 +61,7 @@ if($inputEmail !== NULL) {
     }
 
     if($succes) {
-        $klant = $link->query("SELECT klantID, actief FROM klant WHERE emailadres = '" . strtolower($inputEmail) . "'")->fetch_assoc();
+        $klant = $link->query("SELECT klantID, actief, wachtwoord FROM klant WHERE emailadres = '" . strtolower($inputEmail) . "'")->fetch_assoc();
         if($klant["klantID"] == false) {
             $returnData["errorEmail"] = $emailErrors[2];
             
@@ -88,8 +88,7 @@ if($inputEmail !== NULL) {
                 die();
             }
             
-            $password = $link->query("SELECT wachtwoord FROM klant WHERE klantID =" . $klant["klantID"])->fetch_assoc()["wachtwoord"];
-            if($password != $inputPassword) {
+            if(!password_verify($inputPassword, $klant["wachtwoord"])) {
                 $returnData["errorPassword"] = $passwordErrors[3];
                 
                 echo json_encode($returnData);
@@ -104,7 +103,8 @@ if($inputEmail !== NULL) {
 
                 session_write_close();
 
-                header('Location: /admin/');
+                echo "true";
+                die();
             }
         }
     }
@@ -127,10 +127,10 @@ if($inputEmail !== NULL) {
         <form class="pageElement" action='#' id='loginForm' method="post">
             <div style="display:flex;flex-direction:column;align-items:center;">
                 <h3>Emailadres</h3>
-                <input id="inputUserName" type="text" name="username" <?php if($errorEmail > 0) {echo "class='error'";} if($inputEmail !== NULL) {echo "value='" . $inputEmail . "'";} ?> />
+                <input id="inputUserName" type="text" name="username" />
                 <h4 id="nameError" class="error"></h4>
                 <h3>Wachtwoord</h3>
-                <input id="inputPassword" type="password" name="password" <?php if($errorPassword > 0) {echo "class='error'";} ?>/>
+                <input id="inputPassword" type="password" name="password" />
                 <h4 id="passwordError" class="error"></h4>
                 <a role="button" onclick="login();" style="margin: 0.5rem;">Login</a>
                 <a href="wachtwoordreset.php" style="font-size:0.5rem;">Wachtwoord vergeten</a>

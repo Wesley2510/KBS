@@ -87,7 +87,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["admin"] == true) {
         
         if($succesNew) {
             $sql = "INSERT INTO klant (voornaam, achternaam, emailadres, wachtwoord, admin, actief) "
-                    . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . $inputPass . "', 1," . $inputAdminActive . ")";
+                    . "VALUES ('" . $voornaam . "','" . $achternaam . "','" . $inputEmail . "','" . password_hash($inputPass, PASSWORD_DEFAULT) . "', 1,1)";
             if(!$link->query($sql)) {
                 trigger_error("Fout bij toevoegen administrator :" . $sql . $link->error);
             } 

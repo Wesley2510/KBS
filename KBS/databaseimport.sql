@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `Textbug`.`bericht` ;
 
 CREATE  TABLE IF NOT EXISTS `Textbug`.`klant` (
   `klantID` INT NOT NULL AUTO_INCREMENT,
-  `wachtwoord` VARCHAR(45) NOT NULL ,
+  `wachtwoord` VARCHAR(255) NOT NULL ,
   `voornaam` VARCHAR(45) NOT NULL ,
   `achternaam` VARCHAR(45) NOT NULL ,
   `emailadres` VARCHAR(45) NOT NULL UNIQUE,
@@ -172,13 +172,13 @@ INSERT INTO `Textbug`.`pagina` (`naam`, `positie`) VALUES ('Info', 3);
 -- Berichten
 
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `admin`)
-VALUES("password", "admin", "", "admin", 1);
+VALUES("$2y$10$MlgXr3mvapN2LKcjq9Sv2utiDBuvCrN2CFfMgbZcD5jKBHTqRdTQm", "admin", "", "admin", 1);
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `admin`)
-VALUES("password", "Test", "Admin", "test@admin.com", 1);
+VALUES("$2y$10$SKnEJ/SUc9Hn7t.tk9v4E.1incx7Bks9pUAovNH8276sh4/YYiT3O", "Test", "Admin", "test@admin.com", 1);
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
-VALUES("wachtwoord", "Test", "User", "test@user.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 0);
+VALUES("$2y$10$2vbysuV3v14Httd9gaq.G.Z.1yBXTgfTWVrPOScC/YJYQxs1VnL5a", "Test", "User", "test@user.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 0);
 INSERT INTO `Textbug`.`klant` (`wachtwoord`, `voornaam`, `achternaam`, `emailadres`, `postcode`, `huisnummer`, `telefoon`, `mobiel`, `woonplaats`, `adres`, `admin`)
-VALUES("wachtwoord", "Test", "User2", "test@user2.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 0);
+VALUES("$2y$10$NSatPCiosXkvMPoOdAfx1.7rrV21/pJHNKAZeftLKddWT5B0k6uMS", "Test", "User2", "test@user2.com", "1234AB", 1, "1234-567890", "0612345678", "Amsterdam", "Rondweg 1", 0);
 
 
 INSERT INTO `bericht` (`berichtID`,`plaatser`,`inhoud`,`datum`,`pagina`) VALUES (1, 1,'Test1','2014-11-23 12:30:00',1);

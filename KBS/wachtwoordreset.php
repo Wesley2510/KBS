@@ -75,7 +75,7 @@ if ($inputResetEmail !== NULL) {
         }
         
         if($succesPass) {
-            if(!$link->query("UPDATE klant SET wachtwoord='" . $inputResetPass . "' WHERE emailadres='" . $inputEmailCode . "';")) {
+            if(!$link->query("UPDATE klant SET wachtwoord='" . password_hash($inputResetPass, PASSWORD_DEFAULT) . "' WHERE emailadres='" . $inputEmailCode . "';")) {
                 trigger_error("Fout bij wijzigen wachtwoord: " . $link->error);
             } else {
                 $dateTime = date("Y-m-d H:i:s", getdate()[0]);
@@ -102,7 +102,7 @@ if ($inputResetEmail !== NULL) {
     if ($emailSent) {
         echo "<div class='pageElement' style='display:flex;flex-direction:column;align-items:center;'>";
         echo "<h4>Aanvraag succesvol verzonden.</h4>";
-        echo "<h4>U zal binnen 5 minuten een email ontvangen.</h4>";
+        echo "<h4>U ontvangt binnen 5 minuten een email.</h4>";
         //Voor development
         $code = $link->query("SELECT code FROM resetcode WHERE datumreset IS NULL AND user = (SELECT klantID FROM klant WHERE emailadres='" . $inputResetEmail . "');")->fetch_assoc()["code"];
         echo "<a href='/wachtwoordreset.php?e=" . $inputResetEmail . "&c=" . $code . "'>Resetlink (Voor development)</a>";
