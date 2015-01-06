@@ -16,6 +16,19 @@ include_once "../global.php";
     <body>
         <?php printHeader(); ?>
 
+
+        <form class="pageElement" id="newClientForm" action="#" method="post">
+            <input type="text" name="voornaam" placeholder="voornaam"/>
+            <input type="text" name="achternaam" placeholder="achternaam"/>
+            <input type="text" name="emailadres" placeholder="emailadres"/>
+            <input type="text" name="postcode" placeholder="postcode"/>
+            <input type="text" name="huisnummer" placeholder="huisnummer"/>
+            <input type="text" name="woonplaats" placeholder="woonplaats"/>
+            <input type="text" name="adres" placeholder="adres"/>
+            <input type="text" name="telefoon" placeholder="telefoon" />
+            <input type="submit" />
+        </form>
+
         <?php
         $klanten = $link->query("SELECT * FROM klant WHERE admin != 1");
         while ($klant = $klanten->fetch_assoc()) {
