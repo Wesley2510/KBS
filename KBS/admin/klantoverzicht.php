@@ -1,9 +1,19 @@
 <!--
-Lewis Clement
+
 -->
 
 <?php
 include_once "../global.php";
+$voornaam = filter_input(INPUT_POST, 'voornaam');
+$achternaam = filter_input(INPUT_POST, 'achternaam');
+$emailadres = filter_input(INPUT_POST, 'emailadres');
+$postcode = filter_input(INPUT_POST, 'postcode');
+$huisnummer = filter_input(INPUT_POST, 'huisnummer');
+$woonplaats = filter_input(INPUT_POST, 'woonplaats');
+$adres = filter_input(INPUT_POST, 'adres');
+$telefoon = filter_input(INPUT_POST, 'telefoon');
+$sql = 'INSERT INTO klant(voornaam, achternaam, emailadres, postcode, huisnummer, woonplaats, adres, telefoon) VALUES' . $voornaam . $achternaam . $emailadres . $postcode . $huisnummer . $woonplaats . $adres . $telefoon;
+$link->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +46,7 @@ include_once "../global.php";
             echo "<img class='icon iconEdit' src='../imgs/pencil1.svg' alt='icoon-bewerken' onclick='editKlant(" . $klant["klantID"] . ")' /></div></div>";
         }
         ?>
-        
+
         <?php printFooter(); ?>
     </body>
 </html>
