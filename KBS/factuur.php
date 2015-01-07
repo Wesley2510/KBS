@@ -6,25 +6,22 @@ Wesley Oosterveen
 include_once("global.php");
 
 //voegt het factuur toe aan de database
-
-$inputFactuurEditID = filter_input(INPUT_POST, "factuurEditedName");
+$inputFactuurEditID = filter_input(INPUT_POST, "factuurtEditedID");
 
 if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
-
     $factuurFormService = filter_input(INPUT_POST, "factuurServiceEdited", FILTER_SANITIZE_ENCODED);
     $factuurFormBedrag = filter_input(INPUT_POST, "factuurBedragEdited", FILTER_SANITIZE_ENCODED);
     $radioB = filter_input(INPUT_POST, "betaald", FILTER_SANITIZE_ENCODED);
-
-    $betaald;
     if ($radioB === "betaald") {
-        $betaald = 1;
-    } else {
         $betaald = 0;
+    } else {
+        $betaald = 1;
     }
+
+
 
     //Controleer of input niet alleen uit spaties bestaat
     if (!(ltrim($factuurFormService, ' ') === '')) {
-
         if (!$link->query("UPDATE factuur SET service = '" . $factuurFormService . "', prijs = " . $factuurFormBedrag . ", betaald = " . $betaald . " WHERE factuurID = " . $inputFactuurEditID)) {
             trigger_error("Fout bij bewerken bericht: " . $link->error, E_USER_ERROR);
         }
@@ -43,43 +40,15 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
         ?>
     </head>
     <body>
-        <?php printHeader(); ?>
+        <?php //printHeader(); ?>
         <!--
         een formulier voor het toevoegen van een factuur aan een klant, van de vorige pagina is het klantID mee
         gekomen, hiermee kan een link tussen het factuur en de klant gelegt worden.
         -->
 
 
-        <form class="pageElement" method="post" action="factuur.php">
-            Geleverde service:<br>
-            <input type="hidden" name="klantID" value="<?php $_POST["klantID"] ?>">
-            <input id="serviceFactuur" class="textbox" type="text" name="service"<?php
-            if (isset($_POST["service"]) && !empty($_POST["service"]) && is_string($_POST["service"])) {
-                print("value=\"" . $_POST["service"] . "\"");
-            }
-            ?>><br>
-            Bedrag:<br>
-            <input id="bedragFactuur" class="textbox" type="number" name="bedrag" <?php
-            if (isset($_POST["bedrag"]) && !empty($_POST["bedrag"]) && is_numeric($_POST["bedrag"])) {
-                print("value=\"" . $_POST["bedrag"] . "\"");
-            }
-            ?>><br>
-            Betaald:
-            <input  type="radio" name="betaald" value="betaald">betaald
-            <input  type="radio" checked name="betaald" value="niet betaald">Niet betaald
-            </br>
-
-            <input class="button" type="submit" name="submit" value="Voeg toe" >
-            <input Class="button" type="button" name ="cancel" value="annuleren">
-
-        </form>
-
-
-
+        <div class="pageElement" id="voegToe"> <a role="button" onclick="factuurToevoegen();" >Test bende</a> </div>
         <?php
-        $sorter = true;
-
-
 //deze funcitie kijkt of er iets in $_POST staat, zodra deze er is ( er is dus info mee gekomen van de vorige pagina
         // dan kijkt die of er op submit of cancel is ingedrukt. Is het submit kijkt die of alle velden zijn ingevuld, zo niet
         // krijgt de gebruiker een melding.
@@ -105,7 +74,7 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
             }
 
 
-            $stmt = "INSERT INTO factuur(klant, service, prijs, betaald, papierenfactuur) VALUES (1,'" . $_POST["service"] . "'," . $_POST["bedrag"] . "," . $betaald . ", '')";
+            $stmt = "INSERT INTO factuur(klant, service, prijs, betaald, papierenfactuur) VALUES (" . $_GET["klantID"] . ",'" . $_POST["service"] . "'," . $_POST["bedrag"] . "," . $betaald . ", '')";
             if ($link->query($stmt) === FALSE) {
                 echo "Error: " . $stmt . "<br>" . $link->error;
             }
@@ -155,5 +124,12 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
         ?>
 
         <?php printFooter(); ?>
-    </body>
-</html>
+
+
+
+
+
+
+
+        < /body>
+        < /html>
