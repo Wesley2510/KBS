@@ -1,16 +1,16 @@
 <?php
 
- require_once('mpdf.php');
+ require_once('mpdf/mpdf.php');
 include_once ('global.php');
 
 
 
 $link = $GLOBALS["link"];
-$query1 = "SELECT voornaam, achternaam, adres, postcode, huisnummer, woonplaats FROM factuur JOIN klant ON klant=klantid WHERE factuurID=1 ";
-//$query2 = "SELECT datum FROM factuur WHERE factuurid=1 ";
-$query3 = "SELECT service, prijs FROM factuur WHERE factuurID=1 ";
+$query1 = "SELECT voornaam, achternaam, adres, postcode, huisnummer, woonplaats FROM factuur JOIN klant ON klant=klantid WHERE factuurID=!!! ";
+$query2 = "SELECT datum FROM factuur WHERE factuurid=!!! ";
+$query3 = "SELECT service, prijs FROM factuur WHERE factuurID=!!! ";
 $klantnaam = mysqli_fetch_assoc(mysqli_query($link, $query1));
-//$datum == mysqli_fetch_assoc(mysqli_query($link, $query2));
+$datum == mysqli_fetch_assoc(mysqli_query($link, $query2));
 $dienst = mysqli_fetch_assoc(mysqli_query($link, $query3));
 
 $mpdf = new mPDF();
@@ -32,7 +32,7 @@ $mpdf->WriteHTML('<head>
 </head>
 <body>
 <div> <h1>Textbug</h1></div>
-<div class="datum">Factuurdatum: "// . $datum["datum"]<br></div>
+<div class="datum">Factuurdatum: ' . $datum["datum"].'<br></div>
 <div class="bedrijfsgegevens">Bedrijfsnaam: Textbug<br>
 Adres: Weetikveellaan 37<br>
 E-mail: admin@textbug.com<br></div>
