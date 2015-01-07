@@ -22,6 +22,7 @@ $link->query($sql);
         <meta charset="UTF-8">
         <title>Textbug - Klanten</title>
         <?php printStyles(); ?>
+        <script type="text/javascript" src="../scripts/klantoverzicht.js"></script>
     </head>
     <body>
         <?php printHeader(); ?>
