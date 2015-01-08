@@ -4,6 +4,15 @@ Wesley Oosterveen
 -->
 <?php
 include_once("global.php");
+
+if (!isset($_SESSION["loggedin"])) {
+    header("Location: /login.php");
+    die();
+} else if ($_SESSION["admin"] == false) {
+    header("Location: /admin/");
+    die();
+}
+
 $inputFactuurEditID = filter_input(INPUT_POST, "factuurtEditedID");
 $klantID = filter_input(INPUT_GET, "klantID");
 $serviceNieuw = filter_input(INPUT_POST, "service");
