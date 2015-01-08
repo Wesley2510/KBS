@@ -4,29 +4,28 @@ Wesley Oosterveen
 -->
 <?php
 include_once("global.php");
-
-//voegt het factuur toe aan de database
 $inputFactuurEditID = filter_input(INPUT_POST, "factuurtEditedID");
-$service = filter_input(INPUT_POST, "service");
 $klantID = filter_input(INPUT_GET, "klantID");
+$serviceNieuw = filter_input(INPUT_POST, "service");
+$bedragNieuw = filter_input(INPUT_POST, "bedrag");
+$betaaldNieuw = filter_input(INPUT_POST, "betaald");
+$errorMsg = "Vul gegevens in!";
+$checker = TRUE;
 
-
+//voegt het bewerkte factuur toe aan de database
 if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
     $factuurFormService = filter_input(INPUT_POST, "factuurServiceEdited", FILTER_SANITIZE_ENCODED);
     $factuurFormBedrag = filter_input(INPUT_POST, "factuurBedragEdited", FILTER_SANITIZE_ENCODED);
     $radioB = filter_input(INPUT_POST, "betaald", FILTER_SANITIZE_ENCODED);
     $klantID = filter_input(INPUT_POST, "klantID");
-    // $klantID = filter_input(INPUT_POST, "klantIDEdit");
     if ($radioB === "betaald") {
-        $betaald = 0;
-    } else {
         $betaald = 1;
+    } else {
+        $betaald = 0;
     }
 
-
-
-    //Controleer of input niet alleen uit spaties bestaat
-    if (!(ltrim($factuurFormService, ' ') === '')) {
+//Controleer of input niet alleen uit spaties bestaat
+    if (!(ltrim($factuurFormService, ' ') === '') && !(ltrim($factuurFormBedrag, ' ') === '')) {
         if (!$link->query("UPDATE factuur SET service = '" . $factuurFormService . "', prijs = " . $factuurFormBedrag . ", betaald = " . $betaald . " WHERE factuurID = " . $inputFactuurEditID)) {
             trigger_error("Fout bij bewerken factuur: " . $link->error, E_USER_ERROR);
         }
@@ -34,25 +33,44 @@ if ($inputFactuurEditID != NULL && is_numeric($inputFactuurEditID)) {
     }
 }
 
-if ($service != NULL) {
-    $bedrag = filter_input(INPUT_POST, "bedrag");
-    $service = filter_input(INPUT_POST, "service");
-    $betaald = filter_input(INPUT_POST, "betaald");
-    $klantID = filter_input(INPUT_POST, "klantID");
 
 
-    if ($betaald == "betaald") {
-        $betaald = 1;
-    } else {
-        $betaald = 0;
+
+//Voegt een nieuw factuur toe aan de database
+if ($serviceNieuw != NULL || $bedragNieuw != NULL || $betaaldNieuw != NULL) {
+    $klantIDNieuw = filter_input(INPUT_POST, "klantID");
+    if (!is_numeric($bedragNieuw) || $bedragNieuw == "") {
+        $errorMsg = "bedrag";
+        $checker = FALSE;
+        header("Location: factuur.php?klantID=" . $klantIDNieuw);
+    }
+    if ($serviceNieuw == "") {
+        $errorMsg = "service";
+        $checker = FALSE;
+        header("Location: factuur.php?klantID=" . $klantIDNieuw);
     }
 
-    if (!(ltrim($service, ' ') === '')) {
-        if (!$link->query("INSERT INTO factuur(klant, service, prijs, betaald, papierenfactuur) VALUES (" . $klantID . ", '" . $service . "', " . $bedrag . ", " . $betaald . ", 0)")) {
+//  als de checker nog op true staat ( er zijn dus geen fouten in de service of het bedrag gevonden
+//  voert dit stukje code uit, zodat de factuur in de db gezet kan worden.
+    if ($checker) {
+        if ($betaaldNieuw == "betaald") {
+            $betaaldNieuw = 1;
+        } else {
+            $betaaldNieuw = 0;
+        }
+        if (!$link->query("INSERT INTO factuur(klant, service, prijs, betaald) VALUES (" . $klantIDNieuw
+                        . ", '" . $serviceNieuw . "', " . $bedragNieuw . ", " . $betaaldNieuw . ")")) {
             trigger_error("Fout bij het toevoegen van het factuur: " . $link->error, E_USER_ERROR);
         }
-        header("Location: factuur.php?klantID=" . $klantID);
+//  staat checker wel op false, dan wordt dit stukje uitgevoert en wordt er dus niks aan de db toegevoegt.
+    } else {
+        if ($errorMsg === "bedrag") {
+            echo "Vul een geldig bedrag in!";
+        } else if ($errorMsg === "service") {
+            echo "Vul een service in";
+        }
     }
+    header("Location: factuur.php?klantID=" . $klantIDNieuw);
 }
 ?>
 <html>
@@ -66,32 +84,17 @@ if ($service != NULL) {
         ?>
     </head>
     <body>
-        <?php //printHeader();   ?>
+        <?php printHeader(); ?>
+
+
         <!--
-        een formulier voor het toevoegen van een factuur aan een klant, van de vorige pagina is het klantID mee
-        gekomen, hiermee kan een link tussen het factuur en de klant gelegt worden.
+        Hier is de "knop" voor het toevoegen van een factuur. Via deze "knop" wordt de factuurToevoegen functie
+        aangeroepen en ga je naar javascript(factuurbewerking.js), het klantID word mee gegeven zodat, er in het
+        form in het javascript een hidden input gemaakt kan worden. Hierdoor kan deze weer mee teruggegeven worden
+        en ze de goede facturen van de goede klant weer geladen worden.
         -->
-
-
-        <div class="pageElement" id="voegToe"> <a role="button" onclick="factuurToevoegen(<?php echo $klantID ?>)" >Test bende</a> </div>
+        <div class="pageElement" id="voegToe"> <a role="button" onclick="factuurToevoegen(<?php echo $klantID ?>)" >Nieuw factuur</a> </div>
         <?php
-//deze funcitie kijkt of er iets in $_POST staat, zodra deze er is ( er is dus info mee gekomen van de vorige pagina
-        // dan kijkt die of er op submit of cancel is ingedrukt. Is het submit kijkt die of alle velden zijn ingevuld, zo niet
-        // krijgt de gebruiker een melding.
-        if ($_POST) {
-            if (isset($_POST['submit'])) {
-                if (!empty($_POST["service"]) && !empty($_POST["bedrag"]) && $_POST["service"] != "" && $_POST["bedrag"] != "" && !empty($_POST["betaald"]) && $_POST["betaald"] != "") {
-                    submit();
-                } else if (isset($_POST['cancel'])) {
-                    cancel();
-                } else {
-                    echo 'ALLE VELDEN INVULLEN!';
-                }
-            }
-        }
-
-        $klantID = filter_input(INPUT_GET, "klantID");
-        //de facturen$_GET worden hier opgehaald uit de database, zodat ze mooi op de pagina weer gegeven kunnen worden
         $query = "SELECT klant, factuurID, service, prijs, betaald, voornaam, achternaam,woonplaats,huisnummer,postcode,adres "
                 . "FROM factuur JOIN klant ON klantID = klant "
                 . "WHERE klantID = " . $klantID . " ORDER BY factuurID DESC";
@@ -104,15 +107,17 @@ if ($service != NULL) {
 
             echo "\n\t<div id ='factuur" . $databaserij["factuurID"] . "' class = 'pageElement'>";
             echo "<a onclick ='factuurBewerken(" . $databaserij["factuurID"] . ", " . $klantID . ");'>";
-            echo "<img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a>";
-            echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij["achternaam"] . "</span>";
-            echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij["huisnummer"] . "</span>";
-            echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["postcode"] . " " . $databaserij["woonplaats"] . "</span></br>";
+            echo "<div><img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a>";
+            echo "<a onclick ='factuurBewerken(" . $databaserij["factuurID"] . ", " . $klantID . ");'>";
+            echo "<img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a></div>";
+            echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij ["achternaam"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij ["huisnummer"] . "</span>";
+            echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["postcode"] . " " . $databaserij ["woonplaats"] . "</span></br>";
             echo "<br/>\n\t\t<span id='factuurService" . $databaserij["factuurID"] . "' class = 'content'>" . urldecode($databaserij["service"]) . "</span>";
-            echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij["prijs"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij ["prijs"] . "</span>";
 
 
-            if ($databaserij["betaald"] == 1) {
+            if ($databaserij ["betaald"] == 1) {
                 echo "<br/>\n\t\t<span id='radioB" . $databaserij["factuurID"] . "' class = 'content'>Betaald</span>";
             } else {
                 echo "<br/>\n\t\t<span id='radioB" . $databaserij["factuurID"] . "' class = 'content'>Niet betaald</span>";
@@ -126,11 +131,9 @@ if ($service != NULL) {
         echo "</table>";
 
         mysqli_free_result($result);
-
         mysqli_close($link);
+        printFooter();
         ?>
-
-        <?php printFooter(); ?>
 
 
 
