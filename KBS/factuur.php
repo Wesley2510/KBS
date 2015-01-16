@@ -115,27 +115,28 @@ if ($serviceNieuw != NULL || $bedragNieuw != NULL || $betaaldNieuw != NULL) {
         while ($databaserij) {
 
             echo "\n\t<div id ='factuur" . $databaserij["factuurID"] . "' class = 'pageElement'>";
-            echo "<a onclick ='factuurBewerken(" . $databaserij["factuurID"] . ", " . $klantID . ");'>";
-            echo "<div><img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a>";
-            echo "<a onclick ='factuurBewerken(" . $databaserij["factuurID"] . ", " . $klantID . ");'>";
-            echo "<img class = 'iconEdit' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a></div>";
-            echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij ["achternaam"] . "</span>";
+            echo "<div class='flexRowSpace'><a onclick ='factuurBewerken(" . $databaserij["factuurID"] . ", " . $klantID . ");'>";
+    echo "<div><img class='icon' src = 'imgs/pencil1.svg' alt = 'icoon-bewerken' /></a></div>";
+    echo "<br/>\n\t\t<span id='factuurVoornaam' id= class = 'content'>" . $databaserij["voornaam"] . " " . $databaserij ["achternaam"] . "</span>";
             echo "<br/>\n\t\t<span id='factuurAdres' class = 'content'>" . $databaserij["adres"] . " " . $databaserij ["huisnummer"] . "</span>";
             echo "<br/>\n\t\t<span class = 'content'>" . $databaserij["postcode"] . " " . $databaserij ["woonplaats"] . "</span></br>";
             echo "<br/>\n\t\t<span id='factuurService" . $databaserij["factuurID"] . "' class = 'content'>" . urldecode($databaserij["service"]) . "</span>";
-            echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>" . $databaserij ["prijs"] . "</span>";
+            echo "<br/>\n\t\t<span id='factuurBedrag" . $databaserij["factuurID"] . "' class = 'content'>€" . number_format($databaserij ["prijs"], 2) . "</span>";
 
 
-            if ($databaserij ["betaald"] == 1) {
+
+
+    if ($databaserij ["betaald"] == 1) {
                 echo "<br/>\n\t\t<span id='radioB" . $databaserij["factuurID"] . "' class = 'content'>Betaald</span>";
             } else {
                 echo "<br/>\n\t\t<span id='radioB" . $databaserij["factuurID"] . "' class = 'content'>Niet betaald</span>";
             }
 
-            echo "\n\t</div>";
+            echo "<br/><a href='pdffactuur2.php?id=" . $databaserij["factuurID"] . "'>Download factuur</a>";
+    echo "\n\t</div></div>";
 
 
-            $databaserij = mysqli_fetch_assoc($result);
+    $databaserij = mysqli_fetch_assoc($result);
         }
         echo "</table>";
 

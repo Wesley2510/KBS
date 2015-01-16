@@ -6,12 +6,13 @@ include_once ('global.php');
 
 
 $link = $GLOBALS["link"];
-$query1 = "SELECT voornaam, achternaam, adres, postcode, huisnummer, woonplaats FROM factuur JOIN klant ON klant=klantid WHERE factuurID=!!! ";
-$query2 = "SELECT datum FROM factuur WHERE factuurid=!!! ";
-$query3 = "SELECT service, prijs FROM factuur WHERE factuurID=!!! ";
-$klantnaam = mysqli_fetch_assoc(mysqli_query($link, $query1));
-$datum == mysqli_fetch_assoc(mysqli_query($link, $query2));
-$dienst = mysqli_fetch_assoc(mysqli_query($link, $query3));
+$klantID = filter_input(INPUT_GET, "id");
+$query1 = "SELECT voornaam, achternaam, adres, postcode, huisnummer, woonplaats FROM factuur JOIN klant ON klant=klantid WHERE factuurID=" . $klantID;
+//$query2 = "SELECT datum FROM factuur WHERE factuurID=" . $klantID;
+$query3 = "SELECT service, prijs FROM factuur WHERE factuurID=" . $klantID;
+$klantnaam = $link->query($query1)->fetch_assoc();
+//$datum = $link->query($query2)->fetch_assoc();
+$dienst = $link->query($query3)->fetch_assoc();
 
 $mpdf = new mPDF();
 
@@ -32,7 +33,7 @@ $mpdf->WriteHTML('<head>
 </head>
 <body>
 <div> <h1>Textbug</h1></div>
-<div class="datum">Factuurdatum: ' . $datum["datum"].'<br></div>
+<div class="datum">Factuurdatum: Work in progress<br></div>
 <div class="bedrijfsgegevens">Bedrijfsnaam: Textbug<br>
 Adres: Weetikveellaan 37<br>
 E-mail: admin@textbug.com<br></div>
@@ -41,7 +42,7 @@ E-mail: admin@textbug.com<br></div>
         Adres: ' .$klantnaam["adres"]." ".$klantnaam["huisnummer"].'<br>
         postcode: '.$klantnaam["postcode"]."    ".$klantnaam["woonplaats"].'<br>
 <table><tr><th width=150mm >omschrijving</th><th width=30mm >prijs</th></tr>
-<tr><td width=150mm >'.$dienst["service"].'</td><td width=30mm >'.$dienst["prijs"].'</td></tr></table>
+<tr><td width=150mm >' . urldecode($dienst["service"]) . '</td><td width=30mm >€' . number_format($dienst ["prijs"], 2) . '</td></tr></table>
 </body>');
 
  

@@ -177,8 +177,8 @@ $browserIE = preg_match('Trident', $_SERVER['HTTP_USER_AGENT']) || preg_match('m
                         $IEClass = "ie";
                     }
                     echo "<div class='posterFooter " . $IEClass . "'  onclick='expand(this)'>";
-                    $tempPoster = "<div class='poster " . $IEClass . "'><div class='posterContent'>" . urldecode($row["adminText"]);
-                    $tempPoster .= "</div></div>";
+                    $tempPoster = "<div class='poster " . $IEClass . "'><div class='posterContent'><br/>" . urldecode($row["adminText"]);
+            $tempPoster .= "</div></div>";
                     $tempPosterName = "<span class='posterName'>";
                     $tempPosterName .= "Geplaatst door " . $row["voornaam"] . " " . $row["achternaam"] . "</span>";
                     if($browserIE) {
