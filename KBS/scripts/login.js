@@ -5,8 +5,9 @@ function login() {
     
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-            if(xmlhttp.responseText == "true") {
-                window.location.replace('/admin/');
+            if(xmlhttp.responseText !== "true") {
+                alert(xmlhttp.responseText);
+                window.location.replace("/admin/");
             }
             
             var response = JSON.parse(xmlhttp.responseText);

@@ -6,12 +6,12 @@ include_once ('global.php');
 
 
 $link = $GLOBALS["link"];
-$klantID = filter_input(INPUT_GET, "id");
-$query1 = "SELECT voornaam, achternaam, adres, postcode, huisnummer, woonplaats FROM factuur JOIN klant ON klant=klantid WHERE factuurID=" . $klantID;
-//$query2 = "SELECT datum FROM factuur WHERE factuurID=" . $klantID;
-$query3 = "SELECT service, prijs FROM factuur WHERE factuurID=" . $klantID;
+$factID = filter_input(INPUT_GET, "id");
+$query1 = "SELECT voornaam, achternaam, adres, postcode, huisnummer, woonplaats FROM factuur JOIN klant ON klant=klantid WHERE factuurID=" . $factID;
+$query2 = "SELECT voornaam, adres, emailadres FROM klant WHERE voornaam='Textbug'";
+$query3 = "SELECT service, prijs, fdatum FROM factuur WHERE factuurID=" . $factID;
 $klantnaam = $link->query($query1)->fetch_assoc();
-//$datum = $link->query($query2)->fetch_assoc();
+$contact = $link->query($query2)->fetch_assoc();
 $dienst = $link->query($query3)->fetch_assoc();
 
 $mpdf = new mPDF();
@@ -33,10 +33,10 @@ $mpdf->WriteHTML('<head>
 </head>
 <body>
 <div> <h1>Textbug</h1></div>
-<div class="datum">Factuurdatum: Work in progress<br></div>
-<div class="bedrijfsgegevens">Bedrijfsnaam: Textbug<br>
-Adres: Weetikveellaan 37<br>
-E-mail: admin@textbug.com<br></div>
+<div class="datum">Factuurdatum: '.$dienst["fdatum"].'<br></div>
+<div class="bedrijfsgegevens">Bedrijfsnaam: '.$contact["voornaam"].'<br>
+Adres: '.$contact["adres"].'<br>
+E-mail: '.$contact["emailadres"].'<br></div>
 <div class="klantgegevens">Voornaam: '.$klantnaam["voornaam"].'<br>
         Acternaam: ' . $klantnaam["achternaam"] . '<br>
         Adres: ' .$klantnaam["adres"]." ".$klantnaam["huisnummer"].'<br>

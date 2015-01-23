@@ -54,6 +54,7 @@ if ($serviceNieuw != NULL || $bedragNieuw != NULL || $betaaldNieuw != NULL) {
         header("Location: factuur.php?klantID=" . $klantIDNieuw);
     }
     if ($serviceNieuw == "") {
+       
         $errorMsg = "service";
         $checker = FALSE;
         header("Location: factuur.php?klantID=" . $klantIDNieuw);
@@ -62,13 +63,14 @@ if ($serviceNieuw != NULL || $bedragNieuw != NULL || $betaaldNieuw != NULL) {
 //  als de checker nog op true staat ( er zijn dus geen fouten in de service of het bedrag gevonden
 //  voert dit stukje code uit, zodat de factuur in de db gezet kan worden.
     if ($checker) {
+        $datumtoevoegen = date("Y-m-d H:i:s", getdate()[0]);
         if ($betaaldNieuw == "betaald") {
             $betaaldNieuw = 1;
         } else {
             $betaaldNieuw = 0;
         }
-        if (!$link->query("INSERT INTO factuur(klant, service, prijs, betaald) VALUES (" . $klantIDNieuw
-                        . ", '" . $serviceNieuw . "', " . $bedragNieuw . ", " . $betaaldNieuw . ")")) {
+        if (!$link->query("INSERT INTO factuur(klant, service, prijs, betaald, fdatum) VALUES (" . $klantIDNieuw
+                        . ", '" . $serviceNieuw . "', " . $bedragNieuw . ", " . $betaaldNieuw . ", ".$datumtoevoegen.")")) {
             trigger_error("Fout bij het toevoegen van het factuur: " . $link->error, E_USER_ERROR);
         }
 //  staat checker wel op false, dan wordt dit stukje uitgevoert en wordt er dus niks aan de db toegevoegt.

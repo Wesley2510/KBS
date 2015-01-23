@@ -94,6 +94,7 @@ if($inputEmail !== NULL) {
                 echo json_encode($returnData);
                 die();
             } else {
+                echo "true";
                 $row = $link->query("SELECT * FROM klant WHERE klantID =" . $klant["klantID"])->fetch_assoc();
                 $_SESSION["loggedin"] = true;
                 $_SESSION["userID"] = $row["klantID"];

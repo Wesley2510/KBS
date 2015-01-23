@@ -103,6 +103,7 @@ CREATE  TABLE IF NOT EXISTS `Textbug`.`factuur` (
   `prijs` FLOAT NOT NULL ,
   `betaald` TINYINT(1) NULL ,
   `papierenfactuur` TINYINT(1) NULL ,
+  `fdatum` DATETIME NULL ,  
   PRIMARY KEY (`factuurID`, `klant`) ,
   INDEX `fk_Factuur_Klant1_idx` (`klant` ASC) ,
   CONSTRAINT `fk_Factuur_Klant1`
